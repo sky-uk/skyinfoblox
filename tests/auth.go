@@ -2,8 +2,8 @@ package main
 
 import (
 	"errors"
-	"git.devops.int.ovp.bskyb.com/DevOps/skyinfoblox"
 	"github.com/fatih/color"
+	"github.com/sky-uk/skyinfoblox"
 	"os"
 )
 
