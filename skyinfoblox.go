@@ -129,9 +129,25 @@ func (ibx InfobloxClient) Get_network(network string) ([]interface{}, error) {
 	return ibx.Get_record(network, url)
 }
 
-func (ibx InfobloxClient) Get_srv_record(name string) ([]interface{}, error) {
+//Get_srv_record returns the specified SRV record
+//The name parameter is required, target can be an empty string and others set to negative to be ignored, eg -1
+func (ibx InfobloxClient) Get_srv_record(name, target string, weight, priority, port int) ([]interface{}, error) {
 
-	url := fmt.Sprintf("%s/wapi/v%s/record:srv?name=%s&view=%s", ibx.Host, ibx.Wapi_version, name, ibx.View)
+	data := "&_return_fields=ttl,target,weight,priority,port,name"
+	if target != "" {
+		data = fmt.Sprintf("%s&target=%s", data, target)
+	}
+	if weight >= 0 {
+		data = fmt.Sprintf("%s&weight=%d", data, weight)
+	}
+	if priority >= 0 {
+		data = fmt.Sprintf("%s&priority=%d", data, priority)
+	}
+	if port > 0 {
+		data = fmt.Sprintf("%s&port=%d", data, port)
+	}
+	url := fmt.Sprintf("%s/wapi/v%s/record:srv?name=%s&view=%s%s", ibx.Host, ibx.Wapi_version, name, ibx.View, data)
+
 	return ibx.Get_record(name, url)
 }
 
@@ -262,9 +278,9 @@ func (ibx InfobloxClient) Delete_cname_record(fqdn string) error {
 	return nil
 }
 
-func (ibx InfobloxClient) Delete_srv_record(name string) error {
+func (ibx InfobloxClient) Delete_srv_record(name, target string, weight, priority, port int) error {
 
-	ret, err := ibx.Get_srv_record(name)
+	ret, err := ibx.Get_srv_record(name, target, weight, priority, port)
 	if err != nil {
 		return err
 	}
@@ -310,31 +326,36 @@ func (ibx InfobloxClient) delete_record(fqdn string, ret []interface{}) error {
 		err_txt := fmt.Sprintf("Record not found: %s", fqdn)
 		return errors.New(err_txt)
 	}
-	if len(ret) > 1 {
-		err_txt := fmt.Sprintf("Multiple reocrds matched, must match only one: %s", ret)
-		return errors.New(err_txt)
-	}
-	data := ret[0].(map[string]interface{})
+	/*
+		if len(ret) > 1 {
+			err_txt := fmt.Sprintf("Multiple reocrds matched, must match only one: %s", ret)
+			return errors.New(err_txt)
+		}
+	*/
+	for _, d := range ret {
+		//data := ret[0].(map[string]interface{})
+		data := d.(map[string]interface{})
 
-	url := fmt.Sprintf("%s/wapi/v%s/%s", ibx.Host, ibx.Wapi_version, data["_ref"])
-	req, err := http.NewRequest("DELETE", url, nil)
-	if err != nil {
-		return err
-	}
+		url := fmt.Sprintf("%s/wapi/v%s/%s", ibx.Host, ibx.Wapi_version, data["_ref"])
+		req, err := http.NewRequest("DELETE", url, nil)
+		if err != nil {
+			return err
+		}
 
-	req.SetBasicAuth(ibx.Username, ibx.Password)
-	resp, err := ibx.HttpClient.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
+		req.SetBasicAuth(ibx.Username, ibx.Password)
+		resp, err := ibx.HttpClient.Do(req)
+		if err != nil {
+			return err
+		}
+		defer resp.Body.Close()
 
-	if resp.StatusCode > 299 || resp.StatusCode < 200 {
-		errresp, staterr := read_httpresponse(resp)
-		if staterr != nil {
-			return staterr
-		} else {
-			return errors.New(errresp)
+		if resp.StatusCode > 299 || resp.StatusCode < 200 {
+			errresp, staterr := read_httpresponse(resp)
+			if staterr != nil {
+				return staterr
+			} else {
+				return errors.New(errresp)
+			}
 		}
 	}
 	return nil
@@ -353,10 +374,12 @@ func (ibx InfobloxClient) Create_network(network string) (string, error) {
 func (ibx InfobloxClient) Create_srv_record(name, target string, weight, priority, port, ttl int) (string, error) {
 
 	url := fmt.Sprintf("%s/wapi/v%s/record:srv", ibx.Host, ibx.Wapi_version)
+
 	ttl_data := ""
 	if ttl >= 0 {
 		ttl_data = fmt.Sprintf(",\"ttl\": %d, \"use_ttl\": %t", ttl, true)
 	}
+
 	payload := fmt.Sprintf("{\"name\": \"%s\", \"target\": \"%s\", \"view\": \"%s\", \"weight\": %d, \"priority\": %d, \"port\": %d  %s}", name, target, ibx.View, weight, priority, port, ttl_data)
 
 	return ibx.create_record(payload, url)
@@ -371,13 +394,13 @@ func (ibx InfobloxClient) Create_srv_record(name, target string, weight, priorit
 func (ibx InfobloxClient) Create_host_record(fqdn string, address string, ttl float64) (string, error) {
 
 	url := fmt.Sprintf("%s/wapi/v%s/record:host?_return_fields=ipv4addrs", ibx.Host, ibx.Wapi_version)
-	payload := ""
+
+	ttl_data := ""
 	if ttl >= 0 {
-		ttl_data := fmt.Sprintf("%.0f", ttl)
-		payload = fmt.Sprintf("{\"ipv4addrs\": [{\"configure_for_dhcp\": false,\"ipv4addr\": \"%s\"}],\"name\": \"%s\",\"view\": \"%s\", \"ttl\": %s, \"use_ttl\": %t}", address, fqdn, ibx.View, ttl_data, true)
-	} else {
-		payload = fmt.Sprintf("{\"ipv4addrs\": [{\"configure_for_dhcp\": false,\"ipv4addr\": \"%s\"}],\"name\": \"%s\",\"view\": \"%s\"}", address, fqdn, ibx.View)
+		ttl_data = fmt.Sprintf(",\"ttl\": %.0f, \"use_ttl\": %t", ttl, true)
 	}
+
+	payload := fmt.Sprintf("{\"ipv4addrs\": [{\"configure_for_dhcp\": false,\"ipv4addr\": \"%s\"}],\"name\": \"%s\",\"view\": \"%s\" %s}", address, fqdn, ibx.View, ttl_data)
 
 	return ibx.create_record(payload, url)
 }

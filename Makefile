@@ -18,8 +18,11 @@ zone:
 network:
 	go run tests/auth.go tests/ibxnetwork.go
 
+srv:
+	go run tests/auth.go tests/ibxsrv.go
+
 check:
 	go fmt skyinfoblox.go
 	go vet -v skyinfoblox.go
 
-all: check host cname text zone network
+all: check host cname text zone network srv
