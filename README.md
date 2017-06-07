@@ -40,3 +40,11 @@ $ ./skyinfoblox-cli -server=https://serverhostnameOrIP  -username=admin -passwor
 {record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnNHRlc3QsMTAuMTAuMTAuNA:craig4test.test-ovp.bskyb.com/default 10.10.10.4 craig4test.test-ovp.bskyb.com default}
 
 ```
+
+Development
+
+during your development, you can run the cli with following command.
+```
+go run cli/*.go -server=https://infobloxserver.com  -username=admin -password=pass records-list
+
+```
