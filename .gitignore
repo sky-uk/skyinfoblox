@@ -1,0 +1,5 @@
+.idea
+*.bak
+*.secret
+*.gopath*
+skyinfoblox-cli
