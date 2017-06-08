@@ -1,0 +1,12 @@
+[
+  {
+    "_ref": "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default",
+    "network": "10.10.10.0/24",
+    "network_view": "default"
+  },
+  {
+    "_ref": "network/ZG5zLm5ldHdvcmskMTAuMTAuMS4wLzI5LzA:10.10.1.0/29/default",
+    "network": "10.10.1.0/29",
+    "network_view": "default"
+  }
+]
