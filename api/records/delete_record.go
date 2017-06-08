@@ -1,7 +1,7 @@
 package records
 
 import (
-	"github.com/sky-uk/go-infoblox/api"
+	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 )
 
