@@ -15,13 +15,13 @@ import (
 
 // NewInfobloxClient  Creates a new nsxclient object.
 func NewInfobloxClient(url string, user string, password string, ignoreSSL bool, debug bool) *InfobloxClient {
-	nsxClient := new(InfobloxClient)
-	nsxClient.URL = url
-	nsxClient.User = user
-	nsxClient.Password = password
-	nsxClient.IgnoreSSL = ignoreSSL
-	nsxClient.Debug = debug
-	return nsxClient
+	ibxClient := new(InfobloxClient)
+	ibxClient.URL = url
+	ibxClient.User = user
+	ibxClient.Password = password
+	ibxClient.IgnoreSSL = ignoreSSL
+	ibxClient.Debug = debug
+	return ibxClient
 }
 
 // InfobloxClient struct.
