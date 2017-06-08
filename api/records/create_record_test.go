@@ -5,13 +5,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-
 )
 
 func createARecordSetup() *CreateRecordAPI {
 	newARecord := GenericRecord{
-		IPv4: "1.1.1.1",
-		Name: "test.example.com",
+		IPv4:    "1.1.1.1",
+		Name:    "test.example.com",
 		Comment: "test comment",
 	}
 	return NewCreateRecord("a", newARecord)
@@ -41,4 +40,3 @@ func TestCreateRecordUnmarshalling(t *testing.T) {
 	createRecordAPI.SetResponseObject(&responseString)
 	assert.Equal(t, responseString, createRecordAPI.GetResponse())
 }
-

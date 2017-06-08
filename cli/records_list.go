@@ -17,10 +17,11 @@ var (
 	listOpts recordsListOptions
 )
 
-
 func recordsList(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	if client.Debug { fmt.Println("listOptions:", listOpts) }
+	if client.Debug {
+		fmt.Println("listOptions:", listOpts)
+	}
 
 	if listOpts.all {
 		listAllRecords(client)
@@ -37,7 +38,7 @@ func listAllRecords(client *skyinfoblox.InfobloxClient) {
 	if client.Debug {
 		fmt.Println("Listing All 'a' type of Records")
 	}
-	fields := []string{"name","ipv4addr"}
+	fields := []string{"name", "ipv4addr"}
 	getAllARecordsAPI := records.NewGetAllARecords(fields)
 
 	err := client.Do(getAllARecordsAPI)
@@ -107,7 +108,6 @@ func listSRVRecords(client *skyinfoblox.InfobloxClient) {
 		fmt.Println("Status code: ", getSRVRecordsAPI.StatusCode())
 		fmt.Println("Response: ", getSRVRecordsAPI.ResponseObject())
 	}
-
 
 	headers := []string{"Name", "Port", "Target", "Ref"}
 	rows := []map[string]interface{}{}

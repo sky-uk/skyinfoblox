@@ -47,6 +47,7 @@ type SRVRecord struct {
 	Comment  string `json:"comment,omitempty"`
 }
 
+// GenericRecord : GenericRecord data structure
 type GenericRecord struct {
 	Ref       string `json:"_ref,omitempty"`
 	Name      string `json:"name,omitempty"`

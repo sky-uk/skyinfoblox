@@ -10,7 +10,6 @@ import (
 var recordRef string
 var recordType string
 
-
 func listRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	if recordRef == "" {
@@ -34,7 +33,7 @@ func listARecord(client *skyinfoblox.InfobloxClient) {
 	if client.Debug {
 		fmt.Println("Listing single 'a' type record of reference:", recordRef)
 	}
-	fields := []string{"name","ipv4addr"}
+	fields := []string{"name", "ipv4addr"}
 	getSingleARecordsAPI := records.NewGetARecord(recordRef, fields)
 
 	err := client.Do(getSingleARecordsAPI)
@@ -60,7 +59,7 @@ func listTXTRecord(client *skyinfoblox.InfobloxClient) {
 	if client.Debug {
 		fmt.Println("Listing single 'txt' type record of reference:", recordRef)
 	}
-	fields := []string{"name","text"}
+	fields := []string{"name", "text"}
 	getSingleTXTRecordsAPI := records.NewGetTXTRecord(recordRef, fields)
 
 	err := client.Do(getSingleTXTRecordsAPI)
@@ -85,7 +84,7 @@ func listSRVRecord(client *skyinfoblox.InfobloxClient) {
 	if client.Debug {
 		fmt.Println("Listing single 'srv' type record of reference:", recordRef)
 	}
-	fields := []string{"name","port","target"}
+	fields := []string{"name", "port", "target"}
 	getSingleSRVRecordsAPI := records.NewGetSRVRecord(recordRef, fields)
 
 	err := client.Do(getSingleSRVRecordsAPI)

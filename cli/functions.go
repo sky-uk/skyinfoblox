@@ -1,6 +1,8 @@
 package main
 
-import ("github.com/crackcomm/go-clitable")
+import (
+	"github.com/crackcomm/go-clitable"
+)
 
 func PrettyPrintMany(headers []string, rows []map[string]interface{}) {
 	table := clitable.New(headers)
