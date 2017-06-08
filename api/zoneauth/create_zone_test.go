@@ -1,4 +1,4 @@
-package zone_auth
+package zoneauth
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var createZoneAuthAPI *CreateZoneAPI
+var createZoneAuthAPI *CreateZoneAuthAPI
 
 func createSetup() {
 	newZone := DNSZone{FQDN: "testing.paas.bskyb.com"}

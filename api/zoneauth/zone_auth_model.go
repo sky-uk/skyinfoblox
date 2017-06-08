@@ -1,5 +1,4 @@
-package zone_auth
-
+package zoneauth
 
 // DNSZone : Contains zone configuration.
 type DNSZone struct {
