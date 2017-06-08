@@ -40,7 +40,7 @@ func RegisterCliCommand(name string, flagSet *flag.FlagSet, exec ExecFunc) {
 
 // InitFlags - initiall cli flags.
 func InitFlags() {
-	flag.StringVar(&ibxServer, "server", "localhost",
+	flag.StringVar(&ibxServer, "server", os.Getenv("IBX_SERVER"),
 		"Infoblox API server hostname or address")
 	flag.IntVar(&ibxPort, "port", 443,
 		"Infoblox API server port. Default:443")
