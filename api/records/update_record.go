@@ -1,0 +1,23 @@
+package records
+
+import (
+	"github.com/sky-uk/go-infoblox/api"
+	"net/http"
+)
+
+// UpdateRecordAPI base object.
+type UpdateRecordAPI struct {
+	*api.BaseAPI
+}
+
+// NewUpdateRecord returns a new object of UpdateRecordAPI.
+func NewUpdateRecord(recordReference string, requestPayload GenericRecord) *UpdateRecordAPI {
+	this := new(UpdateRecordAPI)
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/wapi/v2.3.1/"+recordReference, requestPayload, new(string))
+	return this
+}
+
+// GetResponse returns ResponseObject of UpdateARecordAPI.
+func (u UpdateRecordAPI) GetResponse() string {
+	return *u.ResponseObject().(*string)
+}

@@ -18,7 +18,10 @@ var (
 )
 
 func recordsList(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
-	getAllARecordsAPI := records.NewGetAllARecords()
+
+	fields := []string{"name"}
+
+	getAllARecordsAPI := records.NewGetAllARecords(fields)
 
 	err := client.Do(getAllARecordsAPI)
 
