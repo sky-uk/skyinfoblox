@@ -18,8 +18,8 @@ var infobloxClient *InfobloxClient
 var server *httptest.Server
 
 const (
-	unauthorizedStatusCode = http.StatusForbidden
-	unauthorizedResponse   = `<html><head><title>Pivotal tc Runtime 3.1.2.RELEASE/7.0.64.B.RELEASE - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 403 - VC user does not have any role on NSX Manager.</h1><HR size="1" noshade="noshade"><p><b>type</b> Status report</p><p><b>message</b> <u>VC user does not have any role on NSX Manager.</u></p><p><b>description</b> <u>Access to the specified resource has been forbidden.</u></p><HR size="1" noshade="noshade"><h3>Pivotal tc Runtime 3.1.2.RELEASE/7.0.64.B.RELEASE</h3></body></html>`
+	unauthorizedStatusCode = http.StatusUnauthorized
+	unauthorizedResponse   = `<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"><html><head><title>401 Authorization Required</title></head><body><h1>Authorization Required</h1><p>This server could not verify that youare authorized to access the documentrequested.  Either you supplied the wrongcredentials (e.g., bad password), or yourbrowser doesn't understand how to supplythe credentials required.</p></body></html>`
 )
 
 func hasHeader(req *http.Request, name string, value string) bool {
@@ -58,7 +58,7 @@ func TestBasicAuthFailure(t *testing.T) {
 	apiRequest := api.NewBaseAPI(http.MethodGet, "/", nil, nil)
 	infobloxClient.Do(apiRequest)
 
-	assert.Equal(t, 403, apiRequest.StatusCode())
+	assert.Equal(t, 401, apiRequest.StatusCode())
 	assert.Equal(t, unauthorizedResponse, string(apiRequest.RawResponse()))
 
 }
