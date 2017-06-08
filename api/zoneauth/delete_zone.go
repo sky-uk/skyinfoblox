@@ -1,4 +1,4 @@
-package zone_auth
+package zoneauth
 
 import (
 	"github.com/sky-uk/skyinfoblox/api"
