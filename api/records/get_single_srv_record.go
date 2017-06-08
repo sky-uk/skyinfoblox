@@ -18,11 +18,11 @@ func NewGetSRVRecord(recordReference string, returnFields []string) *GetSingleSR
 		recordReference += returnFields
 	}
 	this := new(GetSingleSRVRecordAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(ARecord))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(SRVRecord))
 	return this
 }
 
 // GetResponse returns ResponseObject of GetSingleSRVRecordAPI.
-func (gs GetSingleSRVRecordAPI) GetResponse() *SRVRecord {
-	return gs.ResponseObject().(*SRVRecord)
+func (gs GetSingleSRVRecordAPI) GetResponse() SRVRecord {
+	return *gs.ResponseObject().(*SRVRecord)
 }

@@ -18,11 +18,11 @@ func NewGetTXTRecord(recordReference string, returnFields []string) *GetSingleTX
 		recordReference += returnFields
 	}
 	this := new(GetSingleTXTRecordAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(ARecord))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(TXTRecord))
 	return this
 }
 
 // GetResponse returns ResponseObject of GetSingleTXTRecordAPI.
-func (gs GetSingleTXTRecordAPI) GetResponse() *TXTRecord {
-	return gs.ResponseObject().(*TXTRecord)
+func (gs GetSingleTXTRecordAPI) GetResponse() TXTRecord {
+	return *gs.ResponseObject().(*TXTRecord)
 }

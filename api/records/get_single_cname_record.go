@@ -23,6 +23,6 @@ func NewGetCNAMERecord(recordReference string, returnFields []string) *GetSingle
 }
 
 // GetResponse returns ResponseObject of GetSingleCNAMERecordAPI.
-func (gs GetSingleCNAMERecordAPI) GetResponse() *CNAMERecord {
-	return gs.ResponseObject().(*CNAMERecord)
+func (gs GetSingleCNAMERecordAPI) GetResponse() CNAMERecord {
+	return *gs.ResponseObject().(*CNAMERecord)
 }

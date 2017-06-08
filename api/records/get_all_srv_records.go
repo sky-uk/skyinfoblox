@@ -13,16 +13,19 @@ type GetAllSRVRecordsAPI struct {
 
 // NewGetAllSRVRecords returns a new object of GetAllSRVRecordsAPI.
 func NewGetAllSRVRecords(fields []string) *GetAllSRVRecordsAPI {
-	returnFields := ""
-	if fields != nil {
-		returnFields = "?_return_fields=" + strings.Join(fields, ",")
+	var url string
+	if len(fields) >= 1 {
+		url = "/wapi/v2.3.1/record:srv?_return_fields=" + strings.Join(fields, ",")
+	} else {
+		url = "/wapi/v2.3.1/record:srv"
 	}
+
 	this := new(GetAllSRVRecordsAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/record:srv"+returnFields, nil, new([]SRVRecord))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, url, nil, new([]SRVRecord))
 	return this
 }
 
 // GetResponse returns ResponseObject of GetAllSRVRecordsAPI.
-func (ga GetAllSRVRecordsAPI) GetResponse() *[]SRVRecord {
-	return ga.ResponseObject().(*[]SRVRecord)
+func (ga GetAllSRVRecordsAPI) GetResponse() []SRVRecord {
+	return *ga.ResponseObject().(*[]SRVRecord)
 }

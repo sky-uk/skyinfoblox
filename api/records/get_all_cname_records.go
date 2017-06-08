@@ -23,6 +23,6 @@ func NewGetAllCNAMERecords(fields []string) *GetAllCNAMERecordsAPI {
 }
 
 // GetResponse returns ResponseObject of GetAllARecordsAPI.
-func (ga GetAllCNAMERecordsAPI) GetResponse() *[]CNAMERecord {
-	return ga.ResponseObject().(*[]CNAMERecord)
+func (ga GetAllCNAMERecordsAPI) GetResponse() []CNAMERecord {
+	return *ga.ResponseObject().(*[]CNAMERecord)
 }
