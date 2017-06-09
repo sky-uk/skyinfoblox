@@ -14,9 +14,8 @@ type CreateNetworkAPI struct {
 // NewCreateNetwork returns a new object of type CreateNetworkAPI.
 func NewCreateNetwork(ipAddr string, cidr string) *CreateNetworkAPI {
 	this := new(CreateNetworkAPI)
-	this.Method(http.MethodPost)
-	qPath := fmt.Sprintf("/wapi/v2.3.1/network?network=\"%s/%s\"", ipAddr, cidr)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, qPath, nil, new(string))
+	qPath := fmt.Sprintf("/wapi/v2.3.1/network?network=%s/%s", ipAddr, cidr)
+	this.BaseAPI = api.NewBaseAPI(http.MethodPost, qPath, nil, new(string))
 	return this
 }
 
