@@ -108,8 +108,8 @@ func listSRVRecord(client *skyinfoblox.InfobloxClient) {
 }
 
 func init() {
-	listFlags := flag.NewFlagSet("record", flag.ExitOnError)
+	listFlags := flag.NewFlagSet("record-show", flag.ExitOnError)
 	listFlags.StringVar(&recordRef, "ref", "", "Reference of the record to get")
 	listFlags.StringVar(&recordType, "type", "", "Type of the record to get. i.e  txt,a,srv")
-	RegisterCliCommand("record", listFlags, listRecord)
+	RegisterCliCommand("record-show", listFlags, listRecord)
 }

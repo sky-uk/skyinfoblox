@@ -29,15 +29,36 @@ $ ./skyinfoblox-cli
   -username string
     	Authentication username (Env: IBX_USERNAME)
   Commands:
-    records-list
+      zone-show
+      zone-show-all
+      zone-update
+      record-show
+      records-show-all
+      zone-create
+      zone-delete
 
 ```
 
 ```
-$ ./skyinfoblox-cli -server=https://serverhostnameOrIP  -username=admin -password=password records-list
-{record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLnNreS5vdnAubnAsdGVzdC55b3JnLDEwLjEwLjEwLjEw:yorg.test.np.ovp.sky.com/default 10.10.10.10 yorg.test.np.ovp.sky.com default}
-{record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnMnRlc3QsMTAuMTAuMTAuMg:craig2test.test-ovp.bskyb.com/default 10.10.10.2 craig2test.test-ovp.bskyb.com default}
-{record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnNHRlc3QsMTAuMTAuMTAuNA:craig4test.test-ovp.bskyb.com/default 10.10.10.4 craig4test.test-ovp.bskyb.com default}
+./skyinfoblox-cli -server=https://serverhostnameOrIP  -username=admin -password=password records-list -a
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name                                  | IPv4        | Ref                                                                                                                                                   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| yorg.test.np.ovp.sky.com              | 10.10.10.10 | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLnNreS5vdnAubnAsdGVzdC55b3JnLDEwLjEwLjEwLjEw:yorg.test.np.ovp.sky.com/default                                |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| h1ins01.devops.int.ovp.bskyb.com      | 10.77.58.10 | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLm92cCxpbnQuZGV2b3BzLmgxaW5zMDEsMTAuNzcuNTguMTA:h1ins01.devops.int.ovp.bskyb.com/default             |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| s1ins01.devops.int.ovp.bskyb.com      | 10.93.58.10 | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLm92cCxpbnQuZGV2b3BzLnMxaW5zMDEsMTAuOTMuNTguMTA:s1ins01.devops.int.ovp.bskyb.com/default             |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| h1ifbr02-v01.devops.int.ovp.bskyb.com | 10.77.58.20 | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLm92cCxpbnQuZGV2b3BzLmgxaWZicjAyLXYwMSwxMC43Ny41OC4yMA:h1ifbr02-v01.devops.int.ovp.bskyb.com/default |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| craigtest.test-ovp.bskyb.com          | 10.10.10.1  | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlndGVzdCwxMC4xMC4xMC4x:craigtest.test-ovp.bskyb.com/default                        |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| craig2test.test-ovp.bskyb.com         | 10.10.10.2  | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnMnRlc3QsMTAuMTAuMTAuMg:craig2test.test-ovp.bskyb.com/default                     |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| craig3test.test-ovp.bskyb.com         | 10.10.1.80  | record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnM3Rlc3QsMTAuMTAuMS44MA:craig3test.test-ovp.bskyb.com/default                     |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
 
 ```
 

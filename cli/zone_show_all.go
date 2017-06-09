@@ -7,15 +7,15 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/zoneauth"
 )
 
-func readAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func showAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	readAllZoneAuthAPI := zoneauth.NewGetAllZones()
-	err := client.Do(readAllZoneAuthAPI)
+	showAllZoneAuthAPI := zoneauth.NewGetAllZones()
+	err := client.Do(showAllZoneAuthAPI)
 	if err != nil {
 		spew.Dump("Error retrieving a list of all zones")
 	}
-	if readAllZoneAuthAPI.StatusCode() == 200 {
-		allZoneReferences := readAllZoneAuthAPI.GetResponse()
+	if showAllZoneAuthAPI.StatusCode() == 200 {
+		allZoneReferences := showAllZoneAuthAPI.GetResponse()
 		for _, zoneReference := range *allZoneReferences {
 			spew.Dump("Zone FQDN: " + zoneReference.FQDN + " Reference: " + zoneReference.Reference)
 		}
@@ -25,7 +25,7 @@ func readAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
-	readAllZoneFlags := flag.NewFlagSet("read-all-zones", flag.ExitOnError)
+	readAllZoneFlags := flag.NewFlagSet("zone-show-all", flag.ExitOnError)
 	flag.Parse()
-	RegisterCliCommand("read-all-zones", readAllZoneFlags, readAllZones)
+	RegisterCliCommand("zone-show-all", readAllZoneFlags, showAllZones)
 }

@@ -7,8 +7,9 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/zoneauth"
 )
 
-func updateZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
-	var dnsZone zoneauth.DNSZone
+var dnsZone zoneauth.DNSZone
+
+func zoneUpdate(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	dnsZone.Comment = flagSet.Lookup("comment").Value.String()
 	dnsZone.Reference = flagSet.Lookup("ref").Value.String()
 
@@ -29,10 +30,9 @@ func updateZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
-	var dnsZone zoneauth.DNSZone
-	updateZoneFlags := flag.NewFlagSet("updatezone", flag.ExitOnError)
-	updateZoneFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
-	updateZoneFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
+	zoneUpdateFlags := flag.NewFlagSet("zone-update", flag.ExitOnError)
+	zoneUpdateFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
+	zoneUpdateFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
 	flag.Parse()
-	RegisterCliCommand("updatezone", updateZoneFlags, updateZone)
+	RegisterCliCommand("zone-update", zoneUpdateFlags, zoneUpdate)
 }

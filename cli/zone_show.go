@@ -30,7 +30,7 @@ func findZone(fqdn string, client *skyinfoblox.InfobloxClient) string {
 	return foundZoneReference
 }
 
-func readZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func zoneShow(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	zoneReference := flagSet.Lookup("ref").Value.String()
 	if zoneReference == "" {
@@ -55,9 +55,9 @@ func readZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	var dnsZone zoneauth.DNSZone
-	readZoneFlags := flag.NewFlagSet("deletezone", flag.ExitOnError)
-	readZoneFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
-	readZoneFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
+	zoneShowFlags := flag.NewFlagSet("zoneShow", flag.ExitOnError)
+	zoneShowFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
+	zoneShowFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
 	flag.Parse()
-	RegisterCliCommand("readzone", readZoneFlags, readZone)
+	RegisterCliCommand("zone-show", zoneShowFlags, zoneShow)
 }
