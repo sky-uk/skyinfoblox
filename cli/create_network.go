@@ -29,7 +29,7 @@ func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	createFlags := flag.NewFlagSet("network-create", flag.ExitOnError)
-	ipAddr := createFlags.String("ip_addr", "", "the new network address")
-	cidr := createFlags.String("cidr", "", "the new network Classless Inter-Domain Routing")
+	createFlags.String("ip_addr", "", "the new network address")
+	createFlags.String("cidr", "", "the new network Classless Inter-Domain Routing")
 	RegisterCliCommand("network-create", createFlags, createNetwork)
 }
