@@ -11,7 +11,7 @@ func findZone(fqdn string, client *skyinfoblox.InfobloxClient) string {
 
 	//TODO probably want to search on FQDN and View?
 	var foundZoneReference string
-	readAllZoneAuthAPI := zoneauth.NewGetAll()
+	readAllZoneAuthAPI := zoneauth.NewGetAllZones()
 	err := client.Do(readAllZoneAuthAPI)
 	if err != nil {
 		spew.Dump("Error retrieving a list of all zones when searching for FQDN: " + fqdn)

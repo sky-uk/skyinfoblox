@@ -9,7 +9,7 @@ import (
 
 func readAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	readAllZoneAuthAPI := zoneauth.NewGetAll()
+	readAllZoneAuthAPI := zoneauth.NewGetAllZones()
 	err := client.Do(readAllZoneAuthAPI)
 	if err != nil {
 		spew.Dump("Error retrieving a list of all zones")
