@@ -10,8 +10,8 @@ type GetAllZoneAuthAPI struct {
 	*api.BaseAPI
 }
 
-// NewGetAll : returns an object containing all zones.
-func NewGetAll() *GetAllZoneAuthAPI {
+// NewGetAllZones : returns an object containing all zones.
+func NewGetAllZones() *GetAllZoneAuthAPI {
 	this := new(GetAllZoneAuthAPI)
 	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/zone_auth?_return_fields=fqdn", nil, new(DNSZoneReferences))
 	return this
