@@ -10,9 +10,9 @@ import (
 func updateZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	var dnsZone zoneauth.DNSZone
 	dnsZone.Comment = flagSet.Lookup("comment").Value.String()
-	zoneReference := flagSet.Lookup("ref").Value.String()
+	dnsZone.Reference = flagSet.Lookup("ref").Value.String()
 
-	updateZoneAuthAPI := zoneauth.NewUpdate(dnsZone, zoneReference)
+	updateZoneAuthAPI := zoneauth.NewUpdate(dnsZone)
 	err := client.Do(updateZoneAuthAPI)
 	if err != nil {
 		spew.Dump("Error updating zone " + dnsZone.Reference + ": " + err.Error())
@@ -23,7 +23,7 @@ func updateZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 			spew.Dump(updateZoneAuthAPI.GetResponse())
 		}
 	} else {
-		spew.Dump("Error status code != 200 when updating reference " + zoneReference)
+		spew.Dump("Error status code != 200 when updating reference " + dnsZone.Reference)
 		spew.Dump(updateZoneAuthAPI.GetResponse())
 	}
 }

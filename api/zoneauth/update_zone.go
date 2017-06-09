@@ -1,7 +1,6 @@
 package zoneauth
 
 import (
-	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 )
@@ -12,13 +11,13 @@ type UpdateZoneAuthAPI struct {
 }
 
 // NewUpdate : Update zone
-func NewUpdate(updateDNSZone DNSZone, zoneReference string) *UpdateZoneAuthAPI {
+func NewUpdate(updateDNSZone DNSZone) *UpdateZoneAuthAPI {
 	this := new(UpdateZoneAuthAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/wapi/v2.3.1/"+zoneReference+"?_return_fields=fqdn,view,comment", updateDNSZone, new(json.RawMessage))
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, "/wapi/v2.3.1/"+updateDNSZone.Reference+"?_return_fields=fqdn,view,comment", updateDNSZone, new(DNSZone))
 	return this
 }
 
 // GetResponse : returns the response from UpdateZoneAPI
-func (UpdateZoneAPI UpdateZoneAuthAPI) GetResponse() *string {
-	return UpdateZoneAPI.ResponseObject().(*string)
+func (UpdateZoneAPI UpdateZoneAuthAPI) GetResponse() *DNSZone {
+	return UpdateZoneAPI.ResponseObject().(*DNSZone)
 }

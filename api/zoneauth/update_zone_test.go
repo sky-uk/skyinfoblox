@@ -9,13 +9,13 @@ import (
 
 var updateZoneAuthAPI *UpdateZoneAuthAPI
 var updateDNSRef string
+var updateDNSZone DNSZone
 
 func setupTestUpdateZoneAuth() {
-	updateDNSZone := DNSZone{Comment: "An updated comment"}
 	updateDNSRef = "zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5za3kub3ZwLm5w:np.ovp.sky.com/default"
-	updateZoneAuthAPI = NewUpdate(updateDNSZone, updateDNSRef)
-	requestObject := "An updated comment"
-	updateZoneAuthAPI.SetResponseObject(&requestObject)
+	updateDNSZone = DNSZone{Comment: "An updated comment", Reference: updateDNSRef}
+	updateZoneAuthAPI = NewUpdate(updateDNSZone)
+	updateZoneAuthAPI.SetResponseObject(&updateDNSZone)
 }
 
 func TestUpdateZoneAuthMethod(t *testing.T) {
@@ -30,7 +30,7 @@ func TestUpdateZoneAuthEndpoint(t *testing.T) {
 
 func TestUpdateZoneAuthMarshalling(t *testing.T) {
 	setupTestUpdateZoneAuth()
-	expectedJSON := `{"comment":"An updated comment"}`
+	expectedJSON := `{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5za3kub3ZwLm5w:np.ovp.sky.com/default","comment":"An updated comment"}`
 	jsonBytes, err := json.Marshal(updateZoneAuthAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
@@ -39,5 +39,5 @@ func TestUpdateZoneAuthMarshalling(t *testing.T) {
 func TestUpdateZoneAuthGetResponse(t *testing.T) {
 	setupTestUpdateZoneAuth()
 	getResponse := updateZoneAuthAPI.GetResponse()
-	assert.Equal(t, "An updated comment", *getResponse)
+	assert.Equal(t, updateDNSZone, *getResponse)
 }

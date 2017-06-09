@@ -1,6 +1,6 @@
 package zoneauth
 
-// DNSZone : Contains zone configuration.
+// DNSZone : Contains zone configuration. Reference is used during updates and when retriving the zone.
 type DNSZone struct {
 	Reference string `json:"_ref,omitempty"`
 	FQDN      string `json:"fqdn,omitempty"`
@@ -8,7 +8,7 @@ type DNSZone struct {
 	Comment   string `json:"comment,omitempty"`
 }
 
-// DNSZoneReference : A zone, it's reference and associated FQDN.
+// DNSZoneReference : A zone, it's reference and associated FQDN used for finding a zone when getting a list of all zones
 type DNSZoneReference struct {
 	Reference string `json:"_ref"`
 	FQDN      string `json:"fqdn"`
