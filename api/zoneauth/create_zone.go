@@ -18,6 +18,6 @@ func NewCreate(newZone DNSZone) *CreateZoneAuthAPI {
 }
 
 // GetResponse : get response object from created zone
-func (cza CreateZoneAuthAPI) GetResponse() string {
-	return cza.ResponseObject().(string)
+func (cza CreateZoneAuthAPI) GetResponse() *string {
+	return cza.ResponseObject().(*string)
 }
