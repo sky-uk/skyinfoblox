@@ -123,9 +123,9 @@ func listSRVRecords(client *skyinfoblox.InfobloxClient) {
 }
 
 func init() {
-	listFlags := flag.NewFlagSet("records-list", flag.ExitOnError)
+	listFlags := flag.NewFlagSet("records-show-all", flag.ExitOnError)
 	listFlags.BoolVar(&listOpts.all, "a", false, "List all a records")
 	listFlags.BoolVar(&listOpts.txt, "txt", false, "List all txt records")
 	listFlags.BoolVar(&listOpts.srv, "srv", false, "List all srv records")
-	RegisterCliCommand("records-list", listFlags, recordsList)
+	RegisterCliCommand("records-show-all", listFlags, recordsList)
 }

@@ -32,10 +32,10 @@ func createZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	var dnsZone zoneauth.DNSZone
-	createZoneFlags := flag.NewFlagSet("createzone", flag.ExitOnError)
+	createZoneFlags := flag.NewFlagSet("zonecreate", flag.ExitOnError)
 	createZoneFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
 	createZoneFlags.StringVar(&dnsZone.View, "view", "default", "usage: -view default")
 	createZoneFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	flag.Parse()
-	RegisterCliCommand("createzone", createZoneFlags, createZone)
+	RegisterCliCommand("zone-create", createZoneFlags, createZone)
 }
