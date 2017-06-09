@@ -13,7 +13,7 @@ type CreateZoneAuthAPI struct {
 // NewCreate : Create a new zone
 func NewCreate(newZone DNSZone) *CreateZoneAuthAPI {
 	this := new(CreateZoneAuthAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPost, "/wapi/v2.3.1/zone_auth?_return_fields=fqdn", newZone, new(DNSZone))
+	this.BaseAPI = api.NewBaseAPI(http.MethodPost, "/wapi/v2.3.1/zone_auth?_return_fields=fqdn", newZone, new(string))
 	return this
 }
 
