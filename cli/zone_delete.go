@@ -2,35 +2,40 @@ package main
 
 import (
 	"flag"
-	"github.com/davecgh/go-spew/spew"
+	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/zoneauth"
+	"os"
 )
+
+var zoneDeleteReference string
+var zoneDeleteUsageMessage = "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW"
 
 func deleteZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	zoneReference := flagSet.Lookup("ref").Value.String()
+	if zoneDeleteReference == "" {
+		fmt.Println(zoneDeleteUsageMessage)
+		os.Exit(1)
+	}
 
-	deleteZoneAuthAPI := zoneauth.NewDelete(zoneReference)
+	deleteZoneAuthAPI := zoneauth.NewDelete(zoneDeleteReference)
 	err := client.Do(deleteZoneAuthAPI)
 	if err != nil {
-		spew.Dump("Error deleting zone reference " + zoneReference + err.Error())
+		fmt.Println("Error deleting zone reference: " + zoneDeleteReference + err.Error())
 	}
 	if deleteZoneAuthAPI.StatusCode() == 200 {
-		spew.Dump("Successfully deleted zone reference " + zoneReference)
+		fmt.Println("Successfully deleted zone reference: " + zoneDeleteReference)
 		if client.Debug {
-			spew.Dump(deleteZoneAuthAPI.ResponseObject())
+			fmt.Println(deleteZoneAuthAPI.GetResponse())
 		}
 	} else {
-		spew.Dump("Error status code != 200 when deleting zone reference " + zoneReference)
-		spew.Dump(deleteZoneAuthAPI.ResponseObject())
+		fmt.Println("Error status code != 200 when deleting zone reference: " + zoneDeleteReference)
+		fmt.Println(deleteZoneAuthAPI.ResponseObject())
 	}
 }
 
 func init() {
-	var zoneReference string
 	deleteZoneFlags := flag.NewFlagSet("deletezone", flag.ExitOnError)
-	deleteZoneFlags.StringVar(&zoneReference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
-	flag.Parse()
+	deleteZoneFlags.StringVar(&zoneDeleteReference, "ref", "", zoneDeleteUsageMessage)
 	RegisterCliCommand("zone-delete", deleteZoneFlags, deleteZone)
 }
