@@ -63,7 +63,7 @@ type Network struct {
 type DHCPOptions struct {
 	Name        string `json:"name,omitempty"`
 	Num         uint   `json:"num,,omitempty"`
-	useOption   *bool  `json:"use_option,omitempty"`
+	UseOption   *bool  `json:"use_option,omitempty"`
 	Value       string `json:"value,omitempty"`
 	VendorClass string `json:"vendor_class,omitempty"`
 }
