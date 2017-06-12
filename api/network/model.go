@@ -72,6 +72,6 @@ type DHCPOptions struct {
 //
 type ZoneAssociation struct {
 	Fqdn      string `json:"fqdn"`
-	isDefault bool   `json:"is_default"`
-	view      string `json:"view"`
+	IsDefault bool   `json:"is_default"`
+	View      string `json:"view"`
 }
