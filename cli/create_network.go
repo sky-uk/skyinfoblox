@@ -11,7 +11,11 @@ import (
 func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	ipAddr := flagSet.Lookup("ip_addr").Value.String()
 	cidr := flagSet.Lookup("cidr").Value.String()
-	createNetworkAPI := network.NewCreateNetwork(ipAddr, cidr)
+	net := network.Network{
+		Network:     ipAddr + '/' + cidr,
+		NetworkView: "default",
+	}
+	createNetworkAPI := network.NewCreateNetwork(net)
 
 	err := client.Do(createNetworkAPI)
 	if err != nil {
