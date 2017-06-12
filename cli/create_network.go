@@ -12,7 +12,7 @@ func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	ipAddr := flagSet.Lookup("ip_addr").Value.String()
 	cidr := flagSet.Lookup("cidr").Value.String()
 	net := network.Network{
-		Network:     ipAddr + '/' + cidr,
+		Network:     ipAddr + "/" + cidr,
 		NetworkView: "default",
 	}
 	createNetworkAPI := network.NewCreateNetwork(net)
