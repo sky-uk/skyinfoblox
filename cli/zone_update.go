@@ -36,7 +36,6 @@ func zoneUpdate(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	zoneUpdateFlags := flag.NewFlagSet("zone-update", flag.ExitOnError)
-	//TODO we need to say if -comment do update, otherwise nothing
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Reference, "ref", "", zoneUpdateReferenceMessage)
 	RegisterCliCommand("zone-update", zoneUpdateFlags, zoneUpdate)
