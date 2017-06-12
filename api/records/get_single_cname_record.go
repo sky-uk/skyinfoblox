@@ -18,7 +18,7 @@ func NewGetCNAMERecord(recordReference string, returnFields []string) *GetSingle
 		recordReference += returnFields
 	}
 	this := new(GetSingleCNAMERecordAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(ARecord))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+recordReference, nil, new(CNAMERecord))
 	return this
 }
 
