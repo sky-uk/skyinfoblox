@@ -35,6 +35,6 @@ func TestGetAllNetworksUnmarshalling(t *testing.T) {
 
 	networks := []Network{net1, net2}
 
-	GetNetworkAPI.SetResponseObject(networks)
+	GetNetworkAPI.SetResponseObject(&networks)
 	assert.Equal(t, networks, GetNetworkAPI.GetResponse())
 }

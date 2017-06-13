@@ -18,7 +18,8 @@ func TestDeleteNetworkEndpoint(t *testing.T) {
 
 func TestDeleteNetworkUnmarshalling(t *testing.T) {
 	client := NewDeleteNetwork("network/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default")
-	client.SetResponseObject("network/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default")
+	r := "network/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default"
+	client.SetResponseObject(&r)
 	resp := client.GetResponse()
 	assert.Equal(t, resp, "network/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default")
 }
