@@ -20,5 +20,5 @@ func NewDeleteNetwork(objRef string) *DeleteNetAPI {
 // GetResponse casts the response object and
 // returns the single network object
 func (gn DeleteNetAPI) GetResponse() string {
-	return gn.ResponseObject().(string)
+	return *gn.ResponseObject().(*string)
 }

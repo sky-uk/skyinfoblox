@@ -13,12 +13,17 @@ type GetAllNetworksAPI struct {
 // NewGetAllNetworks returns a new object of GetAllARecordsAPI.
 func NewGetAllNetworks() *GetAllNetworksAPI {
 	this := new(GetAllNetworksAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/network", nil, new([]Network))
+	this.BaseAPI = api.NewBaseAPI(
+		http.MethodGet,
+		"/wapi/v2.3.1/network",
+		nil,
+		new([]Network),
+	)
 	return this
 }
 
 // GetResponse casts the response object and
 // returns ResponseObject of GetAllARecordsAPI.
-func (ga GetAllNetworksAPI) GetResponse() *[]Network {
-	return ga.ResponseObject().(*[]Network)
+func (ga GetAllNetworksAPI) GetResponse() []Network {
+	return *ga.ResponseObject().(*[]Network)
 }

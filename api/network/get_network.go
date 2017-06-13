@@ -11,14 +11,14 @@ type GetNetworkAPI struct {
 }
 
 // NewGetNetwork returns a new object of type GetNetworkAPI.
-func NewGetNetwork(net Network) *GetNetworkAPI {
+func NewGetNetwork(objRef string) *GetNetworkAPI {
 	this := new(GetNetworkAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+net.Ref, nil, new(Network))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+objRef, nil, new(Network))
 	return this
 }
 
 // GetResponse casts the response object and
 // returns the single network object
-func (gn GetNetworkAPI) GetResponse() *Network {
-	return gn.ResponseObject().(*Network)
+func (gn GetNetworkAPI) GetResponse() Network {
+	return *gn.ResponseObject().(*Network)
 }

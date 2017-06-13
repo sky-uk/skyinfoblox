@@ -20,9 +20,8 @@ func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
-	resp := createNetworkAPI.GetResponse()
-	fmt.Println("Status code: ", createNetworkAPI.StatusCode())
-	fmt.Println("Response string: ", resp)
+	fmt.Println("Status Code: ", createNetworkAPI.StatusCode())
+	fmt.Printf("Response : %v", createNetworkAPI.GetResponse())
 }
 
 func init() {

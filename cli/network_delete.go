@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/network"
 )
@@ -16,14 +15,8 @@ func deleteNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
-	if deleteNetworkAPI.StatusCode() == 200 {
-		if client.Debug {
-			spew.Dump(deleteNetworkAPI.ResponseObject())
-		}
-	} else {
-		fmt.Println("Status code: ", deleteNetworkAPI.StatusCode())
-		fmt.Println("Response: ", deleteNetworkAPI.ResponseObject())
-	}
+	fmt.Println("Status code: ", deleteNetworkAPI.StatusCode())
+	fmt.Printf("Response: %+v\n", deleteNetworkAPI.GetResponse())
 }
 
 func init() {

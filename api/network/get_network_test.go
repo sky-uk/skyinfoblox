@@ -7,13 +7,8 @@ import (
 )
 
 func getNetworkSetup() *GetNetworkAPI {
-	net := Network{
-		Ref:         "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default",
-		Network:     "10.10.10.1",
-		NetworkView: "default",
-		Comment:     "Test network",
-	}
-	return NewGetNetwork(net)
+	objRef := "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w"
+	return NewGetNetwork(objRef)
 }
 
 func TestGetNetworkMethod(t *testing.T) {
@@ -23,7 +18,7 @@ func TestGetNetworkMethod(t *testing.T) {
 
 func TestGetNetworkEndpoint(t *testing.T) {
 	GetNetworkAPI := getNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default", GetNetworkAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w", GetNetworkAPI.Endpoint())
 }
 
 func TestGetNetworkUnmarshalling(t *testing.T) {
@@ -34,5 +29,5 @@ func TestGetNetworkUnmarshalling(t *testing.T) {
 		NetworkView: "default",
 	}
 	GetNetworkAPI.SetResponseObject(&responseObject)
-	assert.Equal(t, responseObject, *GetNetworkAPI.GetResponse())
+	assert.Equal(t, responseObject, GetNetworkAPI.GetResponse())
 }
