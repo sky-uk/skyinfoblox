@@ -12,7 +12,10 @@ func createNetworkSetup() *CreateNetworkAPI {
 		NetworkView: "default",
 		Comment:     "Test network",
 	}
-	return NewCreateNetwork(net)
+	newCreateNetworkAPI := NewCreateNetwork(net)
+	responseString := "dummy response"
+	newCreateNetworkAPI.SetResponseObject(&responseString)
+	return newCreateNetworkAPI
 }
 
 func TestCreateNetworkMethod(t *testing.T) {
@@ -27,7 +30,14 @@ func TestCreateNetworkEndpoint(t *testing.T) {
 
 func TestCreateNetworkUnmarshalling(t *testing.T) {
 	NewNetwork := createNetworkSetup()
-	NewNetwork.SetResponseObject("network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default")
+	response := "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default"
+	NewNetwork.SetResponseObject(&response)
 	resp := NewNetwork.GetResponse()
 	assert.Equal(t, resp, "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default")
+}
+
+func TestGetResponse(t *testing.T) {
+	NewNetwork := createNetworkSetup()
+	resp := NewNetwork.GetResponse()
+	assert.Equal(t, resp, "dummy response")
 }

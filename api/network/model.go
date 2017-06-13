@@ -1,17 +1,6 @@
 package network
 
 // Network : base DHCP Network object model
-// See : https://h1infoblox.devops.int.ovp.bskyb.com/wapidoc/objects/network.html
-// Fields name 	| in/out| Descr
-// -------------------------------------------------------------------------------
-// Ref		|  OUT	| The unique object reference. The name part of it
-//	  	|  	| has the following components:
-//  	    	|  	| - Address of the network
-//  	    	|  	| - CIDR of the network
-//  	    	|  	| - Name of the network view
-// Network	|  IN	| The network address, in IPv4 Address/CIDR format.
-// NetworkView	|  IN	| The name of the network view in which this network resides.
-// Comment	|	|  IN   | Object description/notes
 type Network struct {
 	Ref                              string            `json:"_ref"`
 	Network                          string            `json:"network"`
@@ -56,10 +45,7 @@ type Network struct {
 	ZoneAssociations                 []ZoneAssociation `json:"zone_association"`
 }
 
-// DHCPOptions : An option sets the value of a DHCP option that has been defined
-// in an option space. DHCP options describe network configuration settings and
-// various services available on the network. These options occur as variable-length
-// fields at the end of DHCP messages.
+// DHCPOptions : set of options
 type DHCPOptions struct {
 	Name        string `json:"name,omitempty"`
 	Num         uint   `json:"num,,omitempty"`
@@ -69,7 +55,6 @@ type DHCPOptions struct {
 }
 
 // ZoneAssociation : network association to a DNS zone
-//
 type ZoneAssociation struct {
 	Fqdn      string `json:"fqdn"`
 	IsDefault bool   `json:"is_default"`

@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/network"
 )
@@ -21,14 +20,9 @@ func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
-	if createNetworkAPI.StatusCode() == 200 {
-		if client.Debug {
-			spew.Dump(createNetworkAPI.ResponseObject())
-		}
-	} else {
-		fmt.Println("Status code: ", createNetworkAPI.StatusCode())
-		fmt.Println("Response: ", createNetworkAPI.ResponseObject())
-	}
+	resp := createNetworkAPI.GetResponse()
+	fmt.Println("Status code: ", createNetworkAPI.StatusCode())
+	fmt.Println("Response string: ", resp)
 }
 
 func init() {

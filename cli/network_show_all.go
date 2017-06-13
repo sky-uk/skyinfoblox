@@ -40,7 +40,7 @@ func networksList(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
-	listFlags := flag.NewFlagSet("networks-list", flag.ExitOnError)
+	listFlags := flag.NewFlagSet("networks-show-all", flag.ExitOnError)
 	listFlags.BoolVar(&netsListOptions.all, "all", true, "List all networks")
-	RegisterCliCommand("networks-list", listFlags, networksList)
+	RegisterCliCommand("networks-show-all", listFlags, networksList)
 }

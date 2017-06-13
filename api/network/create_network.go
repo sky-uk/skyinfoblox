@@ -22,5 +22,5 @@ func NewCreateNetwork(net Network) *CreateNetworkAPI {
 // GetResponse casts the response object and
 // returns ResponseObject of GetAllARecordsAPI.
 func (ga CreateNetworkAPI) GetResponse() string {
-	return ga.ResponseObject().(string)
+	return *ga.ResponseObject().(*string)
 }
