@@ -16,3 +16,8 @@ func NewDelete(ref string) *DeleteZoneAuthAPI {
 	this.BaseAPI = api.NewBaseAPI(http.MethodDelete, "/wapi/v2.3.1/"+ref, nil, new(string))
 	return this
 }
+
+// GetResponse : return response object
+func (dza DeleteZoneAuthAPI) GetResponse() string {
+	return *dza.ResponseObject().(*string)
+}

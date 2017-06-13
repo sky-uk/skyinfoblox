@@ -2,40 +2,42 @@ package main
 
 import (
 	"flag"
-	"github.com/davecgh/go-spew/spew"
+	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/zoneauth"
+	"os"
 )
+
+var zoneCreateDNSZone zoneauth.DNSZone
+var zoneCreateFQDNMessage = "usage: -fqdn mydomain.com"
 
 func createZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	var dnsZone zoneauth.DNSZone
-	dnsZone.FQDN = flagSet.Lookup("fqdn").Value.String()
-	dnsZone.View = flagSet.Lookup("view").Value.String()
-	dnsZone.Comment = flagSet.Lookup("comment").Value.String()
+	if zoneCreateDNSZone.FQDN == "" {
+		fmt.Println(zoneCreateFQDNMessage)
+		os.Exit(1)
+	}
 
-	createZoneAuthAPI := zoneauth.NewCreate(dnsZone)
+	createZoneAuthAPI := zoneauth.NewCreate(zoneCreateDNSZone)
 	err := client.Do(createZoneAuthAPI)
 	if err != nil {
-		spew.Dump("Error creating new zone " + dnsZone.FQDN + ": " + err.Error())
+		fmt.Println("Error creating new zone " + zoneCreateDNSZone.FQDN + ": " + err.Error())
 	}
 	if createZoneAuthAPI.StatusCode() == 201 {
-		spew.Dump("Zone " + dnsZone.FQDN + " successfully created")
+		fmt.Println("Zone " + zoneCreateDNSZone.FQDN + " successfully created")
 		if client.Debug {
-			spew.Dump(createZoneAuthAPI.GetResponse())
+			response := createZoneAuthAPI.GetResponse()
+			fmt.Printf("%s", response)
 		}
 	} else {
-		spew.Dump("Error status code != 201 when creating zone " + dnsZone.FQDN)
-		spew.Dump(createZoneAuthAPI.GetResponse())
+		fmt.Printf("\nError status code was %d when attempting to creating zone %s.\n ", createZoneAuthAPI.StatusCode(), zoneCreateDNSZone.FQDN)
 	}
 }
 
 func init() {
-	var dnsZone zoneauth.DNSZone
 	createZoneFlags := flag.NewFlagSet("zonecreate", flag.ExitOnError)
-	createZoneFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
-	createZoneFlags.StringVar(&dnsZone.View, "view", "default", "usage: -view default")
-	createZoneFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
-	flag.Parse()
+	createZoneFlags.StringVar(&zoneCreateDNSZone.FQDN, "fqdn", "", zoneCreateFQDNMessage)
+	createZoneFlags.StringVar(&zoneCreateDNSZone.View, "view", "default", "usage: -view default")
+	createZoneFlags.StringVar(&zoneCreateDNSZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	RegisterCliCommand("zone-create", createZoneFlags, createZone)
 }
