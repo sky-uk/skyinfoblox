@@ -33,6 +33,5 @@ func init() {
 	zoneUpdateFlags := flag.NewFlagSet("zone-update", flag.ExitOnError)
 	zoneUpdateFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	zoneUpdateFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
-	flag.Parse()
 	RegisterCliCommand("zone-update", zoneUpdateFlags, zoneUpdate)
 }

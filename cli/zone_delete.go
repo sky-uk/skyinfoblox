@@ -31,6 +31,5 @@ func init() {
 	var zoneReference string
 	deleteZoneFlags := flag.NewFlagSet("deletezone", flag.ExitOnError)
 	deleteZoneFlags.StringVar(&zoneReference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
-	flag.Parse()
 	RegisterCliCommand("zone-delete", deleteZoneFlags, deleteZone)
 }

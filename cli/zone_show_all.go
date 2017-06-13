@@ -26,6 +26,5 @@ func showAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	readAllZoneFlags := flag.NewFlagSet("zone-show-all", flag.ExitOnError)
-	flag.Parse()
 	RegisterCliCommand("zone-show-all", readAllZoneFlags, showAllZones)
 }

@@ -36,6 +36,5 @@ func init() {
 	createZoneFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
 	createZoneFlags.StringVar(&dnsZone.View, "view", "default", "usage: -view default")
 	createZoneFlags.StringVar(&dnsZone.Comment, "comment", "", "usage: -comment 'My Comment'")
-	flag.Parse()
 	RegisterCliCommand("zone-create", createZoneFlags, createZone)
 }

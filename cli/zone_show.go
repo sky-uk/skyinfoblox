@@ -58,6 +58,5 @@ func init() {
 	zoneShowFlags := flag.NewFlagSet("zoneShow", flag.ExitOnError)
 	zoneShowFlags.StringVar(&dnsZone.Reference, "ref", "", "usage: -ref zone_auth/XXXXXXXX:FQDN/VIEW")
 	zoneShowFlags.StringVar(&dnsZone.FQDN, "fqdn", "", "usage: -fqdn mydomain.com")
-	flag.Parse()
 	RegisterCliCommand("zone-show", zoneShowFlags, zoneShow)
 }
