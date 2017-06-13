@@ -24,6 +24,7 @@ func NewCreateARecord(requestPayload ARecord) *CreateRecordAPI {
 	return this
 }
 
+
 // GetResponse returns ResponseObject of CreateRecordAPI.
 func (c CreateRecordAPI) GetResponse() string {
 	return c.ResponseObject().(string)
