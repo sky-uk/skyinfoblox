@@ -16,7 +16,6 @@ func createGenericRecordSetup() *CreateRecordAPI {
 	return NewCreateRecord("a", newARecord)
 }
 
-
 func createARecordSetup() *CreateRecordAPI {
 	newARecord := ARecord{
 		IPv4:    "1.1.1.1",
@@ -37,8 +36,7 @@ func TestNewCreateARecord(t *testing.T) {
 	assert.Equal(t, http.MethodPost, createARecordAPI.Method())
 }
 
-
-func TestCreateARecordEndpoint(t *testing.T){
+func TestCreateARecordEndpoint(t *testing.T) {
 	createARecordAPI := createARecordSetup()
 	assert.Equal(t, "/wapi/v2.3.1/record:a", createARecordAPI.Endpoint())
 
