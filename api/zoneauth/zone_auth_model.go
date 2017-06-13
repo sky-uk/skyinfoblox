@@ -11,11 +11,11 @@ type DNSZone struct {
 	AllowGssTsigUnderScoreZone *bool       `json:"allow_gss_tsig_for_underscore_zone,omitempty"`
 	AllowGssTsigZoneUpdates    *bool       `json:"allow_gss_tsig_zone_updates,omitempty"`
 	// AllowQuery, AllowTransfer & AllowUpdate can be either AddressAC or TsigAC
-	AllowQuery                              []AddressAC           `json:"allow_query,omitempty"`
-	AllowTransfer                           []AddressAC           `json:"allow_transfer,omitempty"`
-	AllowUpdate                             []AddressAC           `json:"allow_update,omitempty"`
-	AllowUpdateForwarding                   *bool                 `json:"allow_update_forwarding,omitempty"`
-	AwsRte53ZoneInfoList                    AwsRte53ZoneInfo      `json:"aws_rte53_zone_info,omitempty"`
+	AllowQuery            []AddressAC `json:"allow_query,omitempty"`
+	AllowTransfer         []AddressAC `json:"allow_transfer,omitempty"`
+	AllowUpdate           []AddressAC `json:"allow_update,omitempty"`
+	AllowUpdateForwarding *bool       `json:"allow_update_forwarding,omitempty"`
+	//AwsRte53ZoneInfoList                    AwsRte53ZoneInfo      `json:"aws_rte53_zone_info,omitempty"`
 	CloudInfo                               []CloudInformation    `json:"cloud_info,omitempty"`
 	CopyXferToNotify                        *bool                 `json:"copy_xfer_to_notify,omitempty"`
 	CreatePtrBulkHosts                      *bool                 `json:"create_ptr_for_bulk_hosts,omitempty"`
@@ -45,11 +45,11 @@ type DNSZone struct {
 	EffectiveCheckNamesPolicy               string                `json:"effective_check_names_policy,omitempty"`
 	EffectiveRecordNamePolicy               string                `json:"effective_record_name_policy,omitempty"`
 	ExtAttrs                                string                `json:"extattrs,omitempty"`
-	ExternalPrimaries                       ExternalServer        `json:"external_primaries,omitempty"`
-	ExternalSecondaries                     ExternalServer        `json:"external_secondaries,omitempty"`
-	GridPrimary                             MemberServer          `json:"grid_primary,omitempty"`
+	ExternalPrimaries                       []ExternalServer      `json:"external_primaries,omitempty"`
+	ExternalSecondaries                     []ExternalServer      `json:"external_secondaries,omitempty"`
+	GridPrimary                             []MemberServer        `json:"grid_primary,omitempty"`
 	GridPrimarySharedWithMSParentDelegation *bool                 `json:"grid_primary_shared_with_ms_parent_delegation,omitempty"`
-	GridSecondaries                         MemberServer          `json:"grid_secondaries,omitempty"`
+	GridSecondaries                         []MemberServer        `json:"grid_secondaries,omitempty"`
 	ImportFrom                              string                `json:"import_from,omitempty"`
 	IsDNSSecEnabled                         *bool                 `json:"is_dnssec_enabled,omitempty"`
 	IsDNSSecSigned                          *bool                 `json:"is_dnssec_signed,omitempty"`
@@ -63,12 +63,12 @@ type DNSZone struct {
 	MSADIntegrated                          *bool                 `json:"ms_ad_integrated,omitempty"`
 	MSAllowTransfer                         []AddressAC           `json:"ms_allow_transfer,omitempty"`
 	MSAllowTransferMode                     string                `json:"ms_allow_transfer_mode,omitempty"`
-	MSDCNSRecordCreation                    ADController          `json:"ms_dc_ns_record_creation,omitempty"`
+	MSDCNSRecordCreation                    []ADController        `json:"ms_dc_ns_record_creation,omitempty"`
 	MSDDNSMode                              string                `json:"ms_ddns_mode,omitempty"`
 	MSManaged                               string                `json:"ms_managed,omitempty"`
-	MSPrimaries                             MSServer              `json:"ms_primaries,omitempty"`
+	MSPrimaries                             []MSServer            `json:"ms_primaries,omitempty"`
 	MSReadOnly                              *bool                 `json:"ms_read_only,omitempty"`
-	MSSecondaries                           MSServer              `json:"ms_secondaries,omitempty"`
+	MSSecondaries                           []MSServer            `json:"ms_secondaries,omitempty"`
 	MSSyncDisabled                          *bool                 `json:"ms_sync_disabled,omitempty"`
 	MSSyncMasterName                        string                `json:"ms_sync_master_name,omitempty"`
 	// NetworkAssociations is an array of network, networkcontainer, ipv6network, ipv6networkcontainer - can't be written or updated.
@@ -133,7 +133,7 @@ type TsigAC struct {
 	UseTsigKeyName *bool  `json:"use_tsig_key_name,omitempty"`
 }
 
-// AwsRteZoneInfo : Additional information for AWS Route53 zone
+// AwsRte53ZoneInfo : Additional information for AWS Route53 zone
 type AwsRte53ZoneInfo struct {
 	AssociatedVPCs  []string `json:"associated_vpcs,omitempty,omitempty"`
 	CallerReference string   `json:"caller_reference,omitempty"`
@@ -149,7 +149,7 @@ type CloudInformation struct {
 	DelegatedMember DHCPMember `json:"delegated_member,omitempty"`
 	DelegatedRoot   string     `json:"delegated_root,omitempty"`
 	DelegatedScope  string     `json:"delegated_scope,omitempty"`
-	MGMT_Platform   string     `json:"mgmt_platform,omitempty"`
+	MGMTPlatform    string     `json:"mgmt_platform,omitempty"`
 	OwnedByAdaptor  *bool      `json:"owned_by_adaptor,omitempty"`
 	Tenant          string     `json:"tenant,omitempty"`
 	Usage           string     `json:"usage,omitempty"`

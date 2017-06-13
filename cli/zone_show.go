@@ -45,7 +45,8 @@ func zoneShow(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if zoneReference == "" {
 		zoneReference = findZone(zoneShowDNSZone.FQDN, client)
 	}
-	readZoneAuthAPI := zoneauth.NewGetSingleZone(zoneReference)
+	returnFields := []string{"comment", "fqdn", "soa_default_ttl", "view"}
+	readZoneAuthAPI := zoneauth.NewGetSingleZone(zoneReference, returnFields)
 	err := client.Do(readZoneAuthAPI)
 	if err != nil {
 		fmt.Println("Error reading zone reference " + zoneReference + err.Error())
@@ -57,6 +58,7 @@ func zoneShow(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		row["View"] = readZoneResponse.View
 		row["Comment"] = readZoneResponse.Comment
 		row["Reference"] = readZoneResponse.Reference
+		row["SOA Default TTL"] = readZoneResponse.SOADefaultTTL
 		PrettyPrintSingle(row)
 	} else {
 		fmt.Println("Error status code != 200 when reading zone reference " + zoneReference + " Error: " + err.Error())
