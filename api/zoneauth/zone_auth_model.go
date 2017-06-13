@@ -4,7 +4,7 @@ package zoneauth
 AllowQuery, AllowTransfer & AllowUpdate can be either AddressAC or TsigAC
 Can't send this empty as it causes an error 'AwsRte53ZoneInfoList                    AwsRte53ZoneInfo      `json:"aws_rte53_zone_info,omitempty"`'
 NetworkAssociations is an array of network, networkcontainer, ipv6network, ipv6networkcontainer - can't be written or updated.
-UpdateForwarding can be one of the following: Address ac struct, TSIG ac struct array.  */
+UpdateForwarding can be one of the following: Address ac struct, TSIG ac struct array. */
 
 // DNSZone : Contains zone configuration. Reference is used during updates and when retriving the zone.
 type DNSZone struct {
