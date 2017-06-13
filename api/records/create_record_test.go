@@ -19,7 +19,7 @@ func createGenericRecordSetup() *CreateRecordAPI {
 func createARecordSetup() *CreateRecordAPI {
 	newARecord := ARecord{
 		IPv4:    "1.1.1.1",
-		Name:    "test",
+		Name:    "test.example.com",
 		Comment: "test comment",
 		Zone:    "example.com",
 	}
