@@ -23,6 +23,6 @@ func NewGetARecord(recordReference string, returnFields []string) *GetSingleARec
 }
 
 // GetResponse returns ResponseObject of GetSingleARecordAPI.
-func (gs GetSingleARecordAPI) GetResponse() ARecord {
+func (gs GetSingleARecordAPI) GetResponse() *ARecord {
 	return *gs.ResponseObject().(*ARecord)
 }
