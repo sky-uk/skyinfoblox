@@ -8,7 +8,7 @@ import (
 
 func getNetworkSetup() *GetNetworkAPI {
 	objRef := "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w"
-	return NewGetNetwork(objRef)
+	return NewGetNetwork(objRef, nil)
 }
 
 func TestGetNetworkMethod(t *testing.T) {

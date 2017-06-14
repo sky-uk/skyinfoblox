@@ -10,7 +10,7 @@ import (
 // GetNetwork : performs the binding logic
 func GetNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	objRef := flagSet.Lookup("objref").Value.String()
-	getNetworkAPI := network.NewGetNetwork(objRef)
+	getNetworkAPI := network.NewGetNetwork(objRef, nil)
 
 	err := client.Do(getNetworkAPI)
 

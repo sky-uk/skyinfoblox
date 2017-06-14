@@ -13,7 +13,7 @@ func createNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	net := network.Network{
 		Network:     ipAddr + "/" + cidr,
 		NetworkView: "default",
-		Comment: "Default comment",
+		Comment:     "Default comment",
 	}
 	createNetworkAPI := network.NewCreateNetwork(net)
 
