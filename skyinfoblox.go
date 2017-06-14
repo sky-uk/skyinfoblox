@@ -92,7 +92,7 @@ func (infobloxClient *InfobloxClient) handleResponse(api api.InfobloxAPI, res *h
 		log.Println(string(bodyText))
 	}
 
-	if isJSON(res.Header.Get("Content-Type")) && api.StatusCode() == 200 {
+	if isJSON(res.Header.Get("Content-Type")) && (api.StatusCode() == 200 || api.StatusCode() == 201)  {
 		JSONerr := json.Unmarshal(bodyText, api.ResponseObject())
 		if JSONerr != nil {
 			log.Println("ERROR unmarshalling response: ", JSONerr)
