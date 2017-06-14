@@ -8,7 +8,8 @@ import (
 
 func getNetworkSetup() *GetNetworkAPI {
 	objRef := "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w"
-	return NewGetNetwork(objRef, nil)
+	fields := []string{"comment"}
+	return NewGetNetwork(objRef, fields)
 }
 
 func TestGetNetworkMethod(t *testing.T) {
@@ -18,7 +19,7 @@ func TestGetNetworkMethod(t *testing.T) {
 
 func TestGetNetworkEndpoint(t *testing.T) {
 	GetNetworkAPI := getNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w", GetNetworkAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w?_return_fields=comment", GetNetworkAPI.Endpoint())
 }
 
 func TestGetNetworkUnmarshalling(t *testing.T) {
