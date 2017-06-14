@@ -28,7 +28,7 @@ func TestCreateEndpoint(t *testing.T) {
 
 func TestCreateMarshalling(t *testing.T) {
 	createSetup()
-	expectedJSON := "{\"fqdn\":\"testing.paas.bskyb.com\"}"
+	expectedJSON := `{"fqdn":"testing.paas.bskyb.com","scavenging_settings":{"scavenging_schedule":{}}}`
 	jsonBytes, err := json.Marshal(createZoneAuthAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))

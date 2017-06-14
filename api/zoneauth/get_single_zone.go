@@ -3,6 +3,7 @@ package zoneauth
 import (
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
+	"strings"
 )
 
 // GetSingleZoneAuthAPI type
@@ -11,9 +12,13 @@ type GetSingleZoneAuthAPI struct {
 }
 
 // NewGetSingleZone : returns a zone's details.
-func NewGetSingleZone(ref string) *GetSingleZoneAuthAPI {
+func NewGetSingleZone(ref string, returnFieldList []string) *GetSingleZoneAuthAPI {
+	if returnFieldList != nil {
+		returnFields := "?_return_fields=" + strings.Join(returnFieldList, ",")
+		ref += returnFields
+	}
 	this := new(GetSingleZoneAuthAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+ref+"?_return_fields=comment,fqdn,view", nil, new(DNSZone))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+ref, nil, new(DNSZone))
 	return this
 }
 

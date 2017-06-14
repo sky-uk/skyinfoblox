@@ -38,5 +38,6 @@ func init() {
 	zoneUpdateFlags := flag.NewFlagSet("zone-update", flag.ExitOnError)
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Reference, "ref", "", zoneUpdateReferenceMessage)
+	zoneUpdateFlags.IntVar(&zoneUpdateDNSZone.SOADefaultTTL, "soa-default-ttl", 0, "usage: -soa-default-ttl 30")
 	RegisterCliCommand("zone-update", zoneUpdateFlags, zoneUpdate)
 }

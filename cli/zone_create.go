@@ -35,9 +35,11 @@ func createZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
+	// Setting zoneUpdateDNSZone.SOADefaultTTL on creation is ignored by Infoblox.
 	createZoneFlags := flag.NewFlagSet("zonecreate", flag.ExitOnError)
 	createZoneFlags.StringVar(&zoneCreateDNSZone.FQDN, "fqdn", "", zoneCreateFQDNMessage)
 	createZoneFlags.StringVar(&zoneCreateDNSZone.View, "view", "default", "usage: -view default")
 	createZoneFlags.StringVar(&zoneCreateDNSZone.Comment, "comment", "", "usage: -comment 'My Comment'")
+	createZoneFlags.StringVar(&zoneCreateDNSZone.ZoneFormat, "zone-format", "FORWARD", "usage: -zone-format (FORWARD|IPV4|IPV6)")
 	RegisterCliCommand("zone-create", createZoneFlags, createZone)
 }

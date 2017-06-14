@@ -11,7 +11,8 @@ var getSingleZoneAuthAPI *GetSingleZoneAuthAPI
 var testZoneAuthReference = "zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmFycGEuaW4tYWRkci4xMC4xMC4xMA:10.10.10.0%2F24/default"
 
 func setupGetSingleZoneAuth() {
-	getSingleZoneAuthAPI = NewGetSingleZone(testZoneAuthReference)
+	returnFields := []string{"comment", "fqdn", "view"}
+	getSingleZoneAuthAPI = NewGetSingleZone(testZoneAuthReference, returnFields)
 }
 
 func TestGetZoneAuthResponseMethod(t *testing.T) {
