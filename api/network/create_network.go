@@ -1,7 +1,6 @@
 package network
 
 import (
-	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 )
@@ -14,8 +13,8 @@ type CreateNetworkAPI struct {
 // NewCreateNetwork returns a new object of type network.API.
 func NewCreateNetwork(net Network) *CreateNetworkAPI {
 	this := new(CreateNetworkAPI)
-	qPath := fmt.Sprintf("/wapi/v2.3.1/network?network=%s", net.Network)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPost, qPath, nil, new(string))
+	//qPath := fmt.Sprintf("/wapi/v2.3.1/network?network=%s", net.Network)
+	this.BaseAPI = api.NewBaseAPI(http.MethodPost, "/wapi/v2.3.1/network", net, new(string))
 	return this
 }
 
