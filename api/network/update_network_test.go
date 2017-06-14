@@ -9,35 +9,41 @@ import (
 )
 
 func updateNetworkSetup() *UpdateNetworkAPI {
-	return NewUpdateNetwork("network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA", "comment=foo")
+	netToUpdate := Network{
+		Ref:     "network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA",
+		Comment: "new comment",
+	}
+	return NewUpdateNetwork(netToUpdate)
 }
 
 func TestUpdateNetworkMethod(t *testing.T) {
-	NewNetwork := updateNetworkSetup()
-	assert.Equal(t, http.MethodPut, NewNetwork.Method())
+	NetToUpdate := updateNetworkSetup()
+	assert.Equal(t, http.MethodPut, NetToUpdate.Method())
 }
 
 func TestUpdateNetworkEndpoint(t *testing.T) {
-	NewNetwork := updateNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA", NewNetwork.Endpoint())
+	NetToUpdate := updateNetworkSetup()
+	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA", NetToUpdate.Endpoint())
 }
 
 func TestUpdateNetworkUnmarshalling(t *testing.T) {
-	NewNetwork := updateNetworkSetup()
-	NewNetwork.SetResponseObject("network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default")
-	resp := NewNetwork.GetResponse()
+	NetTOUpdate := updateNetworkSetup()
+	resp := "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default"
+	NetTOUpdate.SetResponseObject(&resp)
+	resp = NetTOUpdate.GetResponse()
 	assert.Equal(t, resp, "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default")
 }
 
 func TestUpdateNetworkUnmarshallingError(t *testing.T) {
-	NewNetwork := updateNetworkSetup()
-	NewNetwork.SetResponseObject(`
+	NetTOUpdate := updateNetworkSetup()
+	errorStr := `
 {
 	"Error": "AdmConProtoError: Field is not allowed for update: network_view",
 	"code": "Client.Ibap.Proto",
 	"text": "Field is not allowed for update: network_view"
-}`)
-	resp := NewNetwork.GetResponse()
+}`
+	NetTOUpdate.SetResponseObject(&errorStr)
+	resp := NetTOUpdate.GetResponse()
 	errorObj := new(skyinfoblox.RespError)
 	errStr := []byte(resp)
 	JSONerr := json.Unmarshal(errStr, errorObj)

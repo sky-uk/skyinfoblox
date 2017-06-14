@@ -12,13 +12,10 @@ type UpdateNetworkAPI struct {
 }
 
 // NewUpdateNetwork returns a new object of type UpdateNetworkAPI.
-// It accepts in input a valid network object reference and a
-// string representing the key,value pairs of the paramenters to
-// update (in the form k1=v1&k2=v2&...)
-func NewUpdateNetwork(objRef string, fieldsTOUpdate string) *UpdateNetworkAPI {
+func NewUpdateNetwork(updatedObj Network) *UpdateNetworkAPI {
 	this := new(UpdateNetworkAPI)
-	qPath := fmt.Sprintf("/wapi/v2.3.1/%s", objRef)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut, qPath, fieldsTOUpdate, new(string))
+	qPath := fmt.Sprintf("/wapi/v2.3.1/%s", updatedObj.Ref)
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, qPath, updatedObj, new(string))
 	return this
 }
 
@@ -26,5 +23,5 @@ func NewUpdateNetwork(objRef string, fieldsTOUpdate string) *UpdateNetworkAPI {
 // returns the string representing the updated object reference
 // or nil in case of errors
 func (ga UpdateNetworkAPI) GetResponse() string {
-	return ga.ResponseObject().(string)
+	return *ga.ResponseObject().(*string)
 }

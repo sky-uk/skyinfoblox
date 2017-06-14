@@ -3,8 +3,8 @@ package network
 // Network : base DHCP Network object model
 type Network struct {
 	Ref                              string            `json:"_ref"`
-	Network                          string            `json:"network"`
-	NetworkView                      string            `json:"network_view"`
+	Network                          string            `json:"network,omitempty"`
+	NetworkView                      string            `json:"network_view,omitempty"`
 	Comment                          string            `json:"comment,omitempty"`
 	Authority                        *bool             `json:"authority,omitempty"`
 	AutoCreateReversezone            *bool             `json:"auto_create_reversezone,omitempty"`
@@ -42,7 +42,7 @@ type Network struct {
 	UseSubscribeSettings             *bool             `json:"use_subscribe_settings,omitempty"`
 	UseUpdateDNSOnLeaseRenewal       *bool             `json:"use_update_dns_on_lease_renewal,omitempty"`
 	UseZoneAssociations              *bool             `json:"use_zone_associations,omitempty"`
-	ZoneAssociations                 []ZoneAssociation `json:"zone_association"`
+	ZoneAssociations                 []ZoneAssociation `json:"zone_associations,omitempty"`
 }
 
 // DHCPOptions : set of options
