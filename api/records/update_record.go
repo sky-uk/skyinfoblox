@@ -24,7 +24,6 @@ func NewUpdateARecord(recordReference string, requestPayload ARecord) *UpdateRec
 	return this
 }
 
-
 // GetResponse returns ResponseObject of UpdateARecordAPI.
 func (u UpdateRecordAPI) GetResponse() string {
 	return *u.ResponseObject().(*string)
