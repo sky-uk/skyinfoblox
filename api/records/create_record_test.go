@@ -57,6 +57,6 @@ func TestCreateMarshalling(t *testing.T) {
 func TestCreateRecordUnmarshalling(t *testing.T) {
 	createRecordAPI := createGenericRecordSetup()
 	responseString := "record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLnNreS5vdnAubnAsdGVzdC55b3JnLDEwLjEwLjEwLjEw:yorg.test.np.ovp.sky.com/default"
-	createRecordAPI.SetResponseObject(responseString)
+	createRecordAPI.SetResponseObject(&responseString)
 	assert.Equal(t, responseString, createRecordAPI.GetResponse())
 }
