@@ -85,13 +85,13 @@ type DNSZone struct {
 	RRNotQueriedEnabledTime string                `json:"rr_not_queried_enabled_time,omitempty"`
 	ScavengingSettings      DNSScavengingSettings `json:"scavenging_settings,omitempty"`
 	SetSOASerialNumber      *bool                 `json:"set_soa_serial_number,omitempty"`
-	SOADefaultTTL           int                   `json:"soa_default_ttl,omitempty"`
+	SOADefaultTTL           uint                  `json:"soa_default_ttl,omitempty"`
 	SOAEmail                string                `json:"soa_email,omitempty"`
 	SOAExpire               int                   `json:"soa_expire,omitempty"`
-	SOANegativeTTL          int                   `json:"soa_negative_ttl,omitempty"`
-	SOARefresh              int                   `json:"soa_refresh,omitempty"`
-	SOARetry                int                   `json:"soa_retry,omitempty"`
-	SOASerialNumber         int                   `json:"soa_serial_number,omitempty"`
+	SOANegativeTTL          uint                  `json:"soa_negative_ttl,omitempty"`
+	SOARefresh              uint                  `json:"soa_refresh,omitempty"`
+	SOARetry                uint                  `json:"soa_retry,omitempty"`
+	SOASerialNumber         uint                  `json:"soa_serial_number,omitempty"`
 	SRGS                    string                `json:"srgs,omitempty"`
 	// UpdateForwarding can be one of the following: Address ac struct, TSIG ac struct array.
 	UpdateForwarding           []AddressAC `json:"update_forwarding,omitempty"`
