@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/zoneauth"
+	"net/http"
 	"os"
 )
 
@@ -18,15 +19,17 @@ func zoneUpdate(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
-	updateZoneAuthAPI := zoneauth.NewUpdate(zoneUpdateDNSZone)
+	returnFields := []string{"comment", "fqdn", "soa_default_ttl"}
+	updateZoneAuthAPI := zoneauth.NewUpdate(zoneUpdateDNSZone, returnFields)
 	err := client.Do(updateZoneAuthAPI)
 	if err != nil {
 		fmt.Println("Error updating zone " + zoneUpdateDNSZone.Reference + ": " + err.Error())
 	}
-	if updateZoneAuthAPI.StatusCode() == 200 {
+	if updateZoneAuthAPI.StatusCode() == http.StatusOK {
 		fmt.Println("Zone " + zoneUpdateDNSZone.FQDN + " successfully updated")
 		if client.Debug {
-			fmt.Println(updateZoneAuthAPI.GetResponse())
+			response := updateZoneAuthAPI.GetResponse()
+			fmt.Printf("%s", response)
 		}
 	} else {
 		fmt.Println("Error status code != 200 when updating reference " + zoneUpdateDNSZone.Reference)
@@ -38,6 +41,6 @@ func init() {
 	zoneUpdateFlags := flag.NewFlagSet("zone-update", flag.ExitOnError)
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Comment, "comment", "", "usage: -comment 'My Comment'")
 	zoneUpdateFlags.StringVar(&zoneUpdateDNSZone.Reference, "ref", "", zoneUpdateReferenceMessage)
-	zoneUpdateFlags.IntVar(&zoneUpdateDNSZone.SOADefaultTTL, "soa-default-ttl", 0, "usage: -soa-default-ttl 30")
+	zoneUpdateFlags.UintVar(&zoneUpdateDNSZone.SOADefaultTTL, "soa-default-ttl", 0, "usage: -soa-default-ttl 30")
 	RegisterCliCommand("zone-update", zoneUpdateFlags, zoneUpdate)
 }

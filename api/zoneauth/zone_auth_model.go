@@ -33,7 +33,7 @@ type DNSZone struct {
 	DisplayDomain                           string                `json:"display_domain,omitempty"`
 	DNSFqdn                                 string                `json:"dns_fqdn,omitempty"`
 	DNSIntegrityEnable                      *bool                 `json:"dns_integrity_enable,omitempty"`
-	DNSIntegrityFrequency                   int                   `json:"dns_integrity_frequency,omitempty"`
+	DNSIntegrityFrequency                   uint                  `json:"dns_integrity_frequency,omitempty"`
 	DNSIntegrityMember                      string                `json:"dns_integrity_member,omitempty"`
 	DNSIntegrityVerboseLogging              *bool                 `json:"dns_integrity_verbose_logging,omitempty"`
 	DNSSoaEmail                             string                `json:"dns_soa_email,omitempty"`
@@ -74,7 +74,7 @@ type DNSZone struct {
 	// NetworkAssociations is an array of network, networkcontainer, ipv6network, ipv6networkcontainer - can't be written or updated.
 	NetworkAssociations     []string              `json:"network_associations,omitempty"`
 	NetworkView             string                `json:"network_view,omitempty"`
-	NotifyDelay             int                   `json:"notify_delay,omitempty"`
+	NotifyDelay             uint                  `json:"notify_delay,omitempty"`
 	NSGroup                 string                `json:"ns_group,omitempty"`
 	Parent                  string                `json:"parent,omitempty"`
 	Prefix                  string                `json:"prefix,omitempty"`
@@ -87,7 +87,7 @@ type DNSZone struct {
 	SetSOASerialNumber      *bool                 `json:"set_soa_serial_number,omitempty"`
 	SOADefaultTTL           uint                  `json:"soa_default_ttl,omitempty"`
 	SOAEmail                string                `json:"soa_email,omitempty"`
-	SOAExpire               int                   `json:"soa_expire,omitempty"`
+	SOAExpire               uint                  `json:"soa_expire,omitempty"`
 	SOANegativeTTL          uint                  `json:"soa_negative_ttl,omitempty"`
 	SOARefresh              uint                  `json:"soa_refresh,omitempty"`
 	SOARetry                uint                  `json:"soa_retry,omitempty"`
