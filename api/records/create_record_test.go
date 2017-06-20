@@ -48,7 +48,7 @@ func TestCreateEndpoint(t *testing.T) {
 
 func TestCreateMarshalling(t *testing.T) {
 	createRecordAPI := createGenericRecordSetup()
-	expectedJSON := "{\"name\":\"test.example.com\",\"comment\":\"test comment\",\"ipv4addr\":\"1.1.1.1\"}"
+	expectedJSON := `{"name":"test.example.com","comment":"test comment","ipv4addr":"1.1.1.1"}`
 	jsonBytes, err := json.Marshal(createRecordAPI.RequestObject())
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
@@ -58,5 +58,6 @@ func TestCreateRecordUnmarshalling(t *testing.T) {
 	createRecordAPI := createGenericRecordSetup()
 	responseString := "record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLnNreS5vdnAubnAsdGVzdC55b3JnLDEwLjEwLjEwLjEw:yorg.test.np.ovp.sky.com/default"
 	createRecordAPI.SetResponseObject(&responseString)
-	assert.Equal(t, responseString, createRecordAPI.GetResponse())
+	response := createRecordAPI.GetResponse()
+	assert.Equal(t, responseString, response)
 }

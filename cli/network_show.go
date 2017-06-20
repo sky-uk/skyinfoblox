@@ -14,7 +14,7 @@ var fields arrayFlags
 
 // GetNetwork : performs the binding logic
 func GetNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
-	objRef := flagSet.Lookup("objref").Value.String()
+	objRef := flagSet.Lookup("ref").Value.String()
 	fields := flagSet.Lookup("fields").Value.String()
 	var fieldArray []string
 	fieldArray = strings.Split(fields, ",")
@@ -32,7 +32,7 @@ func GetNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	showFlags := flag.NewFlagSet("network-show", flag.ExitOnError)
-	showFlags.String("objref", "", "the reference of the object to get")
+	showFlags.String("ref", "", "the reference of the object to get")
 	showFlags.Var(&fields, "fields", "other fields you like to get back...")
 	RegisterCliCommand("network-show", showFlags, GetNetwork)
 }
