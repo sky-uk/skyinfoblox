@@ -12,8 +12,8 @@ var createZoneAuthAPI *CreateZoneAuthAPI
 func createSetup() {
 	newZone := DNSZone{FQDN: "testing.paas.bskyb.com"}
 	createZoneAuthAPI = NewCreate(newZone)
-	responseObject := `{"_ref": "zone_auth/ZG5zLnpvbmUkLjEuY29tLnNreS5vdnAudGVzdC5wYWFzMg:paas2.test.ovp.sky.com/dev","fqdn": "paas2.test.ovp.sky.com"}`
-	createZoneAuthAPI.SetResponseObject(responseObject)
+	responseObject := `"zone_auth/ZG5zLnpvbmUkLjEuY29tLnNreS5vdnAudGVzdC5wYWFzMg:paas2.test.ovp.sky.com/dev"`
+	createZoneAuthAPI.SetResponseObject(&responseObject)
 }
 
 func TestCreateMethod(t *testing.T) {
@@ -23,7 +23,7 @@ func TestCreateMethod(t *testing.T) {
 
 func TestCreateEndpoint(t *testing.T) {
 	createSetup()
-	assert.Equal(t, "/wapi/v2.3.1/zone_auth?_return_fields=fqdn", createZoneAuthAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/zone_auth", createZoneAuthAPI.Endpoint())
 }
 
 func TestCreateMarshalling(t *testing.T) {
@@ -37,5 +37,5 @@ func TestCreateMarshalling(t *testing.T) {
 func TestGetResponse(t *testing.T) {
 	createSetup()
 	getResponse := createZoneAuthAPI.GetResponse()
-	assert.Equal(t, `{"_ref": "zone_auth/ZG5zLnpvbmUkLjEuY29tLnNreS5vdnAudGVzdC5wYWFzMg:paas2.test.ovp.sky.com/dev","fqdn": "paas2.test.ovp.sky.com"}`, getResponse)
+	assert.Equal(t, `"zone_auth/ZG5zLnpvbmUkLjEuY29tLnNreS5vdnAudGVzdC5wYWFzMg:paas2.test.ovp.sky.com/dev"`, getResponse)
 }

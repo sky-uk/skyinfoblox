@@ -31,6 +31,7 @@ func createZone(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		}
 	} else {
 		fmt.Printf("\nError status code was %d when attempting to creating zone %s.\n ", createZoneAuthAPI.StatusCode(), zoneCreateDNSZone.FQDN)
+		fmt.Printf("Response: %s\n", createZoneAuthAPI.GetResponse())
 	}
 }
 
