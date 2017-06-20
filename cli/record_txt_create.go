@@ -30,9 +30,6 @@ func createTxtRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) 
 		return
 	}
 
-	if useTTLStr == "" {
-		useTTLStr = "false"
-	}
 	useTTL, err := strconv.ParseBool(useTTLStr)
 	if err != nil {
 		fmt.Println("Error parsing use_ttl value: ", useTTLStr)
@@ -64,7 +61,7 @@ func init() {
 	createTXTFlags.String("text", "", "Text associated with the record. It can contain up to 255 bytes per substring, up to a total of 512 bytes.")
 	createTXTFlags.String("view", "", "The name of the DNS View in which the record resides.")
 	createTXTFlags.String("ttl", "", "the new network Classless Inter-Domain Routing")
-	createTXTFlags.String("use_ttl", "", "Associated with TTL, if false TTL is not taken into consideration")
+	createTXTFlags.String("use_ttl", "false", "Associated with TTL, if false TTL is not taken into consideration")
 	createTXTFlags.String("comment", "", "Comment for the record; maximum 256 characters.")
 	RegisterCliCommand("record-txt-create", createTXTFlags, createTxtRecord)
 }
