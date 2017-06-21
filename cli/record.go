@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/sky-uk/skyinfoblox/api/records"
 )
 
@@ -43,15 +44,15 @@ func listARecord(client *skyinfoblox.InfobloxClient) {
 	}
 	if getSingleARecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getSingleARecordsAPI.StatusCode())
-		fmt.Println("Response: ", getSingleARecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getSingleARecordsAPI.GetResponse().(api.RespError))
+	} else {
+		record := getSingleARecordsAPI.GetResponse().(records.ARecord)
+		row := map[string]interface{}{}
+		row["Name"] = record.Name
+		row["IPv4"] = record.IPv4
+		row["Ref"] = record.Ref
+		PrettyPrintSingle(row)
 	}
-
-	record := getSingleARecordsAPI.GetResponse()
-	row := map[string]interface{}{}
-	row["Name"] = record.Name
-	row["IPv4"] = record.IPv4
-	row["Ref"] = record.Ref
-	PrettyPrintSingle(row)
 
 }
 
@@ -69,15 +70,16 @@ func listTXTRecord(client *skyinfoblox.InfobloxClient) {
 	}
 	if getSingleTXTRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getSingleTXTRecordsAPI.StatusCode())
-		fmt.Println("Response: ", getSingleTXTRecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getSingleTXTRecordsAPI.GetResponse().(api.RespError))
+	} else {
+		record := getSingleTXTRecordsAPI.GetResponse().(records.TXTRecord)
+		row := map[string]interface{}{}
+		row["Name"] = record.Name
+		row["Text"] = record.Text
+		row["Ref"] = record.Ref
+		PrettyPrintSingle(row)
 	}
 
-	record := getSingleTXTRecordsAPI.GetResponse()
-	row := map[string]interface{}{}
-	row["Name"] = record.Name
-	row["Text"] = record.Text
-	row["Ref"] = record.Ref
-	PrettyPrintSingle(row)
 }
 
 func listSRVRecord(client *skyinfoblox.InfobloxClient) {
@@ -94,17 +96,18 @@ func listSRVRecord(client *skyinfoblox.InfobloxClient) {
 	}
 	if getSingleSRVRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getSingleSRVRecordsAPI.StatusCode())
-		fmt.Println("Response: ", getSingleSRVRecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getSingleSRVRecordsAPI.GetResponse().(api.RespError))
+	} else {
+		record := getSingleSRVRecordsAPI.GetResponse().(records.SRVRecord)
+		row := map[string]interface{}{}
+		row["Name"] = record.Name
+		row["Port"] = record.Port
+		row["Target"] = record.Target
+		row["Priority"] = record.Priority
+		row["Ref"] = record.Ref
+		PrettyPrintSingle(row)
 	}
 
-	record := getSingleSRVRecordsAPI.GetResponse()
-	row := map[string]interface{}{}
-	row["Name"] = record.Name
-	row["Port"] = record.Port
-	row["Target"] = record.Target
-	row["Priority"] = record.Priority
-	row["Ref"] = record.Ref
-	PrettyPrintSingle(row)
 }
 
 func init() {

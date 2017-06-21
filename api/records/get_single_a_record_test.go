@@ -24,6 +24,7 @@ func TestGetARecordEndpoint(t *testing.T) {
 
 func TestGetARecordUnmarshalling(t *testing.T) {
 	GetSingleARecordAPI := getARecordSetup()
+	GetSingleARecordAPI.SetStatusCode(http.StatusOK)
 	responseObject := ARecord{Ref: "record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnM3Rlc3QsMTAuMTAuMS44MA:craig3test.test-ovp.bskyb.com/default", Name: "craig3test.test-ovp.bskyb.com", IPv4: "10.10.1.80"}
 	GetSingleARecordAPI.SetResponseObject(&responseObject)
 	assert.Equal(t, responseObject, GetSingleARecordAPI.GetResponse())

@@ -25,10 +25,11 @@ func TestGetAllEndpoint(t *testing.T) {
 
 func TestGetAllZonesUnmarshalling(t *testing.T) {
 	setupReadAllZones()
+	getAllZoneAuthAPI.SetStatusCode(http.StatusOK)
 	jsonContent := []byte(`[{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmFycGEuaW4tYWRkci4xMC4xMC4xMA:10.10.10.0%2F24/default","fqdn":"10.10.10.0/24"},{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5za3kub3ZwLm5w:np.ovp.sky.com/default","fqdn":"np.ovp.sky.com"},{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5ic2t5Yi50ZXN0LW92cA:test-ovp.bskyb.com/default","fqdn":"test-ovp.bskyb.com"},{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5ic2t5Yi5vdnA:ovp.bskyb.com/default","fqdn":"ovp.bskyb.com"},{"_ref":"zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5ic2t5Yi5vdnAudGVzdA:test.ovp.bskyb.com/default","fqdn":"test.ovp.bskyb.com"}]`)
 	jsonErr := json.Unmarshal(jsonContent, getAllZoneAuthAPI.ResponseObject())
 
-	getAllZoneAuthAPIResponse := *getAllZoneAuthAPI.GetResponse()
+	getAllZoneAuthAPIResponse := getAllZoneAuthAPI.GetResponse().(DNSZoneReferences)
 
 	assert.Nil(t, jsonErr)
 	assert.Len(t, getAllZoneAuthAPIResponse, 5)

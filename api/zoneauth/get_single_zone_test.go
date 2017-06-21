@@ -27,11 +27,12 @@ func TestGetZoneAuthEndpoint(t *testing.T) {
 
 func TestGetZoneAuthResponse(t *testing.T) {
 	setupGetSingleZoneAuth()
+	getSingleZoneAuthAPI.SetStatusCode(http.StatusOK)
 	jsonContent := []byte(`{"_ref": "zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5za3kub3ZwLm5w:np.ovp.sky.com/default","fqdn": "np.ovp.sky.com","view": "default","comment": "A Comment"}`)
 	jsonErr := json.Unmarshal(jsonContent, getSingleZoneAuthAPI.ResponseObject())
 
 	assert.Nil(t, jsonErr)
-	response := getSingleZoneAuthAPI.GetResponse()
+	response := getSingleZoneAuthAPI.GetResponse().(DNSZone)
 	assert.Equal(t, "np.ovp.sky.com", response.FQDN)
 	assert.Equal(t, "default", response.View)
 	assert.Equal(t, "A Comment", response.Comment)

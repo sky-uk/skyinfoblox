@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/sky-uk/skyinfoblox/api/records"
 )
 
@@ -48,27 +49,27 @@ func listAllRecords(client *skyinfoblox.InfobloxClient) {
 	}
 	if getAllARecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getAllARecordsAPI.StatusCode())
-		fmt.Println("Response: ", getAllARecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getAllARecordsAPI.GetResponse().(api.RespError))
+	} else {
+		headers := []string{"Name", "IPv4", "Ref"}
+		rows := []map[string]interface{}{}
+		for _, obj := range getAllARecordsAPI.GetResponse().([]records.ARecord) {
+			row := map[string]interface{}{}
+			row["Name"] = obj.Name
+			row["IPv4"] = obj.IPv4
+			row["Ref"] = obj.Ref
+			rows = append(rows, row)
+		}
+		PrettyPrintMany(headers, rows)
 	}
-
-	headers := []string{"Name", "IPv4", "Ref"}
-	rows := []map[string]interface{}{}
-	for _, obj := range getAllARecordsAPI.GetResponse() {
-		row := map[string]interface{}{}
-		row["Name"] = obj.Name
-		row["IPv4"] = obj.IPv4
-		row["Ref"] = obj.Ref
-		rows = append(rows, row)
-	}
-	PrettyPrintMany(headers, rows)
-
 }
 
 func listTXTRecords(client *skyinfoblox.InfobloxClient) {
 	if client.Debug {
 		fmt.Println("Listing All 'txt' type of Records")
 	}
-	getTXTRecordsAPI := records.NewGetAllTXTRecords([]string{})
+	fields := []string{"name", "view", "zone", "ttl", "use_ttl", "text"}
+	getTXTRecordsAPI := records.NewGetAllTXTRecords(fields)
 
 	err := client.Do(getTXTRecordsAPI)
 
@@ -77,20 +78,21 @@ func listTXTRecords(client *skyinfoblox.InfobloxClient) {
 	}
 	if getTXTRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getTXTRecordsAPI.StatusCode())
-		fmt.Println("Response: ", getTXTRecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getTXTRecordsAPI.GetResponse().(api.RespError))
+	} else {
+		headers := []string{"Name", "Text", "Ref", "Zone", "View"}
+		rows := []map[string]interface{}{}
+		for _, obj := range getTXTRecordsAPI.GetResponse().([]records.TXTRecord) {
+			row := map[string]interface{}{}
+			row["Name"] = obj.Name
+			row["Text"] = obj.Text
+			row["Ref"] = obj.Ref
+			row["Zone"] = obj.Zone
+			row["View"] = obj.View
+			rows = append(rows, row)
+		}
+		PrettyPrintMany(headers, rows)
 	}
-
-	headers := []string{"Name", "Text", "Ref"}
-	rows := []map[string]interface{}{}
-	for _, obj := range getTXTRecordsAPI.GetResponse() {
-		row := map[string]interface{}{}
-		row["Name"] = obj.Name
-		row["Text"] = obj.Text
-		row["Ref"] = obj.Ref
-		rows = append(rows, row)
-	}
-	PrettyPrintMany(headers, rows)
-
 }
 
 func listSRVRecords(client *skyinfoblox.InfobloxClient) {
@@ -106,20 +108,20 @@ func listSRVRecords(client *skyinfoblox.InfobloxClient) {
 	}
 	if getSRVRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getSRVRecordsAPI.StatusCode())
-		fmt.Println("Response: ", getSRVRecordsAPI.ResponseObject())
+		fmt.Printf("Response: %v\n", getSRVRecordsAPI.GetResponse().(api.RespError))
+	} else {
+		headers := []string{"Name", "Port", "Target", "Ref"}
+		rows := []map[string]interface{}{}
+		for _, obj := range getSRVRecordsAPI.GetResponse().([]records.SRVRecord) {
+			row := map[string]interface{}{}
+			row["Name"] = obj.Name
+			row["Port"] = obj.Port
+			row["Target"] = obj.Target
+			row["Ref"] = obj.Ref
+			rows = append(rows, row)
+		}
+		PrettyPrintMany(headers, rows)
 	}
-
-	headers := []string{"Name", "Port", "Target", "Ref"}
-	rows := []map[string]interface{}{}
-	for _, obj := range getSRVRecordsAPI.GetResponse() {
-		row := map[string]interface{}{}
-		row["Name"] = obj.Name
-		row["Port"] = obj.Port
-		row["Target"] = obj.Target
-		row["Ref"] = obj.Ref
-		rows = append(rows, row)
-	}
-	PrettyPrintMany(headers, rows)
 }
 
 func init() {

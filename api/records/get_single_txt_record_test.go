@@ -24,6 +24,7 @@ func TestGetTXTRecordEndpoint(t *testing.T) {
 
 func TestGetTXTRecordUnmarshalling(t *testing.T) {
 	GetSingleTXTRecordAPI := getTXTRecordSetup()
+	GetSingleTXTRecordAPI.SetStatusCode(http.StatusOK)
 	responseObject := TXTRecord{Ref: "record:txt/ZG5zLmJpbmRfdHh0JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAuY3JhaWd0ZXN0MS4iY3JhaWciICJ0ZXN0IiAiMSI:craigtest1.test-ovp.bskyb.com/default", Name: "craigtest1.test-ovp.bskyb.com", Text: "craig test 1"}
 	GetSingleTXTRecordAPI.SetResponseObject(&responseObject)
 	assert.Equal(t, responseObject, GetSingleTXTRecordAPI.GetResponse())

@@ -15,11 +15,11 @@ func showAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Println("Error retrieving a list of all zones")
 	}
 	if showAllZoneAuthAPI.StatusCode() == 200 {
-		allZoneReferences := showAllZoneAuthAPI.GetResponse()
+		allZoneReferences := showAllZoneAuthAPI.GetResponse().(zoneauth.DNSZoneReferences)
 		rows := []map[string]interface{}{}
 		headers := []string{"FQDN", "Reference"}
 
-		for _, zoneReference := range *allZoneReferences {
+		for _, zoneReference := range allZoneReferences {
 			row := map[string]interface{}{}
 			row["FQDN"] = zoneReference.FQDN
 			row["Reference"] = zoneReference.Reference

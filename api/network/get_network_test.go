@@ -24,6 +24,7 @@ func TestGetNetworkEndpoint(t *testing.T) {
 
 func TestGetNetworkUnmarshalling(t *testing.T) {
 	GetNetworkAPI := getNetworkSetup()
+	GetNetworkAPI.SetStatusCode(http.StatusOK)
 	responseObject := Network{
 		Ref:         "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:10.10.10.0/24/default",
 		Network:     "10.10.10.0/24",

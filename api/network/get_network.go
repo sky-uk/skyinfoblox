@@ -1,6 +1,7 @@
 package network
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -24,6 +25,14 @@ func NewGetNetwork(objRef string, returnFields []string) *GetNetworkAPI {
 
 // GetResponse casts the response object and
 // returns the single network object
-func (gn GetNetworkAPI) GetResponse() Network {
-	return *gn.ResponseObject().(*Network)
+func (ga GetNetworkAPI) GetResponse() interface{} {
+	if ga.StatusCode() == http.StatusOK {
+		return *ga.ResponseObject().(*Network)
+	}
+	var errStruct api.RespError
+	err := json.Unmarshal(ga.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }
