@@ -25,7 +25,9 @@ func NewGetSingleZone(ref string, returnFieldList []string) *GetSingleZoneAuthAP
 
 // GetResponse : returns response obeject from GetSingleZone
 func (gsz GetSingleZoneAuthAPI) GetResponse() interface{} {
-	return *gsz.ResponseObject().(*DNSZone)
+	if gsz.StatusCode() == http.StatusOK {
+		return *gsz.ResponseObject().(*DNSZone)
+	}
 
 	var errStruct api.RespError
 	err := json.Unmarshal(gsz.RawResponse(), &errStruct)
