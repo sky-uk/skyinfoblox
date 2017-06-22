@@ -1,21 +1,24 @@
 package zoneauth
 
+// Notes:
+// AllowQuery, AllowTransfer & AllowUpdate can be either AddressAC or TsigAC
+// Can't send this empty as it causes an error 'AwsRte53ZoneInfoList                    AwsRte53ZoneInfo      `json:"aws_rte53_zone_info,omitempty"`'
+// NetworkAssociations is an array of network, networkcontainer, ipv6network, ipv6networkcontainer - can't be written or updated.
+// UpdateForwarding can be one of the following: Address ac struct, TSIG ac struct array.
 // DNSZone : Contains zone configuration. Reference is used during updates and when retriving the zone.
 type DNSZone struct {
-	Reference                  string      `json:"_ref,omitempty"`
-	FQDN                       string      `json:"fqdn,omitempty"`
-	View                       string      `json:"view,omitempty"`
-	Comment                    string      `json:"comment,omitempty"`
-	Address                    string      `json:"address,omitempty"`
-	AllowActiveDir             []AddressAC `json:"allow_active_dir,omitempty"`
-	AllowGssTsigUnderScoreZone *bool       `json:"allow_gss_tsig_for_underscore_zone,omitempty"`
-	AllowGssTsigZoneUpdates    *bool       `json:"allow_gss_tsig_zone_updates,omitempty"`
-	// AllowQuery, AllowTransfer & AllowUpdate can be either AddressAC or TsigAC
-	AllowQuery            []AddressAC `json:"allow_query,omitempty"`
-	AllowTransfer         []AddressAC `json:"allow_transfer,omitempty"`
-	AllowUpdate           []AddressAC `json:"allow_update,omitempty"`
-	AllowUpdateForwarding *bool       `json:"allow_update_forwarding,omitempty"`
-	//AwsRte53ZoneInfoList                    AwsRte53ZoneInfo      `json:"aws_rte53_zone_info,omitempty"`
+	Reference                               string                `json:"_ref,omitempty"`
+	FQDN                                    string                `json:"fqdn,omitempty"`
+	View                                    string                `json:"view,omitempty"`
+	Comment                                 string                `json:"comment,omitempty"`
+	Address                                 string                `json:"address,omitempty"`
+	AllowActiveDir                          []AddressAC           `json:"allow_active_dir,omitempty"`
+	AllowGssTsigUnderScoreZone              *bool                 `json:"allow_gss_tsig_for_underscore_zone,omitempty"`
+	AllowGssTsigZoneUpdates                 *bool                 `json:"allow_gss_tsig_zone_updates,omitempty"`
+	AllowQuery                              []AddressAC           `json:"allow_query,omitempty"`
+	AllowTransfer                           []AddressAC           `json:"allow_transfer,omitempty"`
+	AllowUpdate                             []AddressAC           `json:"allow_update,omitempty"`
+	AllowUpdateForwarding                   *bool                 `json:"allow_update_forwarding,omitempty"`
 	CloudInfo                               []CloudInformation    `json:"cloud_info,omitempty"`
 	CopyXferToNotify                        *bool                 `json:"copy_xfer_to_notify,omitempty"`
 	CreatePtrBulkHosts                      *bool                 `json:"create_ptr_for_bulk_hosts,omitempty"`
@@ -71,52 +74,50 @@ type DNSZone struct {
 	MSSecondaries                           []MSServer            `json:"ms_secondaries,omitempty"`
 	MSSyncDisabled                          *bool                 `json:"ms_sync_disabled,omitempty"`
 	MSSyncMasterName                        string                `json:"ms_sync_master_name,omitempty"`
-	// NetworkAssociations is an array of network, networkcontainer, ipv6network, ipv6networkcontainer - can't be written or updated.
-	NetworkAssociations     []string              `json:"network_associations,omitempty"`
-	NetworkView             string                `json:"network_view,omitempty"`
-	NotifyDelay             uint                  `json:"notify_delay,omitempty"`
-	NSGroup                 string                `json:"ns_group,omitempty"`
-	Parent                  string                `json:"parent,omitempty"`
-	Prefix                  string                `json:"prefix,omitempty"`
-	PrimaryType             string                `json:"primary_type,omitempty"`
-	RecordNamePolicy        string                `json:"record_name_policy,omitempty"`
-	RecordsMonitored        *bool                 `json:"records_monitored,omitempty"`
-	RestartIfNeeded         *bool                 `json:"restart_if_needed,omitempty"`
-	RRNotQueriedEnabledTime string                `json:"rr_not_queried_enabled_time,omitempty"`
-	ScavengingSettings      DNSScavengingSettings `json:"scavenging_settings,omitempty"`
-	SetSOASerialNumber      *bool                 `json:"set_soa_serial_number,omitempty"`
-	SOADefaultTTL           uint                  `json:"soa_default_ttl,omitempty"`
-	SOAEmail                string                `json:"soa_email,omitempty"`
-	SOAExpire               uint                  `json:"soa_expire,omitempty"`
-	SOANegativeTTL          uint                  `json:"soa_negative_ttl,omitempty"`
-	SOARefresh              uint                  `json:"soa_refresh,omitempty"`
-	SOARetry                uint                  `json:"soa_retry,omitempty"`
-	SOASerialNumber         uint                  `json:"soa_serial_number,omitempty"`
-	SRGS                    string                `json:"srgs,omitempty"`
-	// UpdateForwarding can be one of the following: Address ac struct, TSIG ac struct array.
-	UpdateForwarding           []AddressAC `json:"update_forwarding,omitempty"`
-	UseAllowActiveDir          *bool       `json:"use_allow_active_dir,omitempty"`
-	UseAllowQuery              *bool       `json:"use_allow_query,omitempty"`
-	UseAllowTransfer           *bool       `json:"use_allow_transfer,omitempty"`
-	UseAllowUpdate             *bool       `json:"use_allow_update,omitempty"`
-	UseAllowUpdateForwarding   *bool       `json:"use_allow_update_forwarding,omitempty"`
-	UseCheckNamesPolicy        *bool       `json:"use_check_names_policy,omitempty"`
-	UseCopyXferNotify          *bool       `json:"use_copy_xfer_to_notify,omitempty"`
-	UseDDNSPatternsRestriction *bool       `json:"use_ddns_patterns_restriction,omitempty"`
-	UseDDNSPrincipleSecurity   *bool       `json:"use_ddns_principal_security,omitempty"`
-	UseDDNSRestrictProtected   *bool       `json:"use_ddns_restrict_protected,omitempty"`
-	UseDDNSrestrictStatic      *bool       `json:"use_ddns_restrict_static,omitempty"`
-	UseDDNSSecKeyParams        *bool       `json:"use_dnssec_key_params,omitempty"`
-	UseExternalPrimary         *bool       `json:"use_external_primary,omitempty"`
-	UseGridZoneTimer           *bool       `json:"use_grid_zone_timer,omitempty"`
-	UseImportFrom              *bool       `json:"use_import_from,omitempty"`
-	UseNotifyDelay             *bool       `json:"use_notify_delay,omitempty"`
-	UseRecordNamePolicy        *bool       `json:"use_record_name_policy,omitempty"`
-	UseScavengingSettings      *bool       `json:"use_scavenging_settings,omitempty"`
-	UseSOAEmail                *bool       `json:"use_soa_email,omitempty"`
-	UsingSrgAssociations       *bool       `json:"using_srg_associations,omitempty"`
-	ZoneFormat                 string      `json:"zone_format,omitempty"`
-	ZoneNotQueriedEnabledTime  string      `json:"zone_not_queried_enabled_time,omitempty"`
+	NetworkAssociations                     []string              `json:"network_associations,omitempty"`
+	NetworkView                             string                `json:"network_view,omitempty"`
+	NotifyDelay                             uint                  `json:"notify_delay,omitempty"`
+	NSGroup                                 string                `json:"ns_group,omitempty"`
+	Parent                                  string                `json:"parent,omitempty"`
+	Prefix                                  string                `json:"prefix,omitempty"`
+	PrimaryType                             string                `json:"primary_type,omitempty"`
+	RecordNamePolicy                        string                `json:"record_name_policy,omitempty"`
+	RecordsMonitored                        *bool                 `json:"records_monitored,omitempty"`
+	RestartIfNeeded                         *bool                 `json:"restart_if_needed,omitempty"`
+	RRNotQueriedEnabledTime                 string                `json:"rr_not_queried_enabled_time,omitempty"`
+	ScavengingSettings                      DNSScavengingSettings `json:"scavenging_settings,omitempty"`
+	SetSOASerialNumber                      *bool                 `json:"set_soa_serial_number,omitempty"`
+	SOADefaultTTL                           uint                  `json:"soa_default_ttl,omitempty"`
+	SOAEmail                                string                `json:"soa_email,omitempty"`
+	SOAExpire                               uint                  `json:"soa_expire,omitempty"`
+	SOANegativeTTL                          uint                  `json:"soa_negative_ttl,omitempty"`
+	SOARefresh                              uint                  `json:"soa_refresh,omitempty"`
+	SOARetry                                uint                  `json:"soa_retry,omitempty"`
+	SOASerialNumber                         uint                  `json:"soa_serial_number,omitempty"`
+	SRGS                                    string                `json:"srgs,omitempty"`
+	UpdateForwarding                        []AddressAC           `json:"update_forwarding,omitempty"`
+	UseAllowActiveDir                       *bool                 `json:"use_allow_active_dir,omitempty"`
+	UseAllowQuery                           *bool                 `json:"use_allow_query,omitempty"`
+	UseAllowTransfer                        *bool                 `json:"use_allow_transfer,omitempty"`
+	UseAllowUpdate                          *bool                 `json:"use_allow_update,omitempty"`
+	UseAllowUpdateForwarding                *bool                 `json:"use_allow_update_forwarding,omitempty"`
+	UseCheckNamesPolicy                     *bool                 `json:"use_check_names_policy,omitempty"`
+	UseCopyXferNotify                       *bool                 `json:"use_copy_xfer_to_notify,omitempty"`
+	UseDDNSPatternsRestriction              *bool                 `json:"use_ddns_patterns_restriction,omitempty"`
+	UseDDNSPrincipleSecurity                *bool                 `json:"use_ddns_principal_security,omitempty"`
+	UseDDNSRestrictProtected                *bool                 `json:"use_ddns_restrict_protected,omitempty"`
+	UseDDNSrestrictStatic                   *bool                 `json:"use_ddns_restrict_static,omitempty"`
+	UseDDNSSecKeyParams                     *bool                 `json:"use_dnssec_key_params,omitempty"`
+	UseExternalPrimary                      *bool                 `json:"use_external_primary,omitempty"`
+	UseGridZoneTimer                        *bool                 `json:"use_grid_zone_timer,omitempty"`
+	UseImportFrom                           *bool                 `json:"use_import_from,omitempty"`
+	UseNotifyDelay                          *bool                 `json:"use_notify_delay,omitempty"`
+	UseRecordNamePolicy                     *bool                 `json:"use_record_name_policy,omitempty"`
+	UseScavengingSettings                   *bool                 `json:"use_scavenging_settings,omitempty"`
+	UseSOAEmail                             *bool                 `json:"use_soa_email,omitempty"`
+	UsingSrgAssociations                    *bool                 `json:"using_srg_associations,omitempty"`
+	ZoneFormat                              string                `json:"zone_format,omitempty"`
+	ZoneNotQueriedEnabledTime               string                `json:"zone_not_queried_enabled_time,omitempty"`
 }
 
 // AddressAC : Access control rule for an address
@@ -140,7 +141,7 @@ type AwsRte53ZoneInfo struct {
 	DelegationSetID string   `json:"delegation_set_id,omitempty"`
 	HostedZoneID    string   `json:"hosted_zone_id,omitempty"`
 	NameServers     []string `json:"name_servers,omitempty"`
-	RecordSetCount  int      `json:"record_set_count,omitempty"`
+	RecordSetCount  uint     `json:"record_set_count,omitempty"`
 	Type            string   `json:"type,omitempty"`
 }
 
@@ -168,32 +169,32 @@ type DNSSecKeyParameters struct {
 	KskAlgorithm                  string               `json:"ksk_algorithm,omitempty"`
 	KskAlgorithms                 []DNSSecKeyAlgorithm `json:"ksk_algorithms,omitempty"`
 	KskEmailNotificationEnabled   *bool                `json:"ksk_email_notification_enabled,omitempty"`
-	KskRollover                   int                  `json:"ksk_rollover,omitempty"`
+	KskRollover                   uint                 `json:"ksk_rollover,omitempty"`
 	KskRolloverNotificationConfig string               `json:"ksk_rollover_notification_config,omitempty"`
-	KskSize                       int                  `json:"ksk_size,omitempty"`
+	KskSize                       uint                 `json:"ksk_size,omitempty"`
 	KskSnmpNotificationEnabled    *bool                `json:"ksk_snmp_notification_enabled,omitempty"`
 	NextSecureType                string               `json:"next_secure_type,omitempty"`
-	NSec3Iterations               int                  `json:"nsec3_iterations,omitempty"`
-	NSec3SaltMaxLength            int                  `json:"nsec3_salt_max_length,omitempty"`
-	NSec3SaltMinLength            int                  `json:"nsec3_salt_min_length,omitempty"`
-	SignatureExpiration           int                  `json:"signature_expiration,omitempty"`
+	NSec3Iterations               uint                 `json:"nsec3_iterations,omitempty"`
+	NSec3SaltMaxLength            uint                 `json:"nsec3_salt_max_length,omitempty"`
+	NSec3SaltMinLength            uint                 `json:"nsec3_salt_min_length,omitempty"`
+	SignatureExpiration           uint                 `json:"signature_expiration,omitempty"`
 	ZskAlgorithmString            string               `json:"zsk_algorithm,omitempty"`
 	ZskAlgorithms                 []ZskAlgorithm       `json:"zsk_algorithms,omitempty"`
-	ZskRollover                   int                  `json:"zsk_rollover,omitempty"`
+	ZskRollover                   uint                 `json:"zsk_rollover,omitempty"`
 	ZskRolloverMechanism          string               `json:"zsk_rollover_mechanism,omitempty"`
-	ZskSize                       int                  `json:"zsk_size,omitempty"`
+	ZskSize                       uint                 `json:"zsk_size,omitempty"`
 }
 
 // ZskAlgorithm : zone signing key algorithm
 type ZskAlgorithm struct {
 	Algorithm string `json:"algorithm,omitempty"`
-	Size      int    `json:"size,omitempty"`
+	Size      uint   `json:"size,omitempty"`
 }
 
 // DNSSecKeyAlgorithm : algorithm structure for key signing and zone signing keys
 type DNSSecKeyAlgorithm struct {
 	Algorithm string `json:"algorithm,omitempty"`
-	Size      int    `json:"size,omitempty"`
+	Size      uint   `json:"size,omitempty"`
 }
 
 // DNSSecKey : DNS Sec Key
@@ -202,7 +203,7 @@ type DNSSecKey struct {
 	NextEventDate string `json:"next_event_date,omitempty"`
 	PublicKey     string `json:"public_key,omitempty"`
 	Status        string `json:"status,omitempty"`
-	Tag           int    `json:"tag,omitempty"`
+	Tag           uint   `json:"tag,omitempty"`
 	Type          string `json:"type,omitempty"`
 }
 
@@ -234,7 +235,7 @@ type SOAMName struct {
 type GridMemberSOASerial struct {
 	GridPrimary     string `json:"grid_primary,omitempty"`
 	MSServerPrimary string `json:"ms_server_primary,omitempty"`
-	Serial          int    `json:"serial,omitempty"`
+	Serial          uint   `json:"serial,omitempty"`
 }
 
 // ADController : Active Directory controller object
@@ -274,18 +275,18 @@ type DNSScavengingSettings struct {
 
 // ScheduleSetting : Schedule settings
 type ScheduleSetting struct {
-	DayOfMonth      int    `json:"day_of_month,omitempty"`
+	DayOfMonth      uint   `json:"day_of_month,omitempty"`
 	Disable         *bool  `json:"disable,omitempty"`
-	Every           int    `json:"every,omitempty"`
+	Every           uint   `json:"every,omitempty"`
 	Frequency       string `json:"frequency,omitempty"`
-	HourOfDay       int    `json:"hour_of_day,omitempty"`
-	MinutesPastHour int    `json:"minutes_past_hour,omitempty"`
-	Month           int    `json:"month,omitempty"`
+	HourOfDay       uint   `json:"hour_of_day,omitempty"`
+	MinutesPastHour uint   `json:"minutes_past_hour,omitempty"`
+	Month           uint   `json:"month,omitempty"`
 	RecurringTime   string `json:"recurring_time,omitempty"`
 	Repeat          string `json:"repeat,omitempty"`
 	TimeZone        string `json:"time_zone,omitempty"`
 	Weekdays        string `json:"weekdays,omitempty"`
-	Year            int    `json:"year,omitempty"`
+	Year            uint   `json:"year,omitempty"`
 }
 
 // ExpressionOp : the extensible attribute operand structure
