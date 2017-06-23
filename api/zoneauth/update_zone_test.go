@@ -14,7 +14,8 @@ var updateDNSZone DNSZone
 func setupTestUpdateZoneAuth() {
 	updateDNSRef = "zone_auth/ZG5zLnpvbmUkLl9kZWZhdWx0LmNvbS5za3kub3ZwLm5w:np.ovp.sky.com/default"
 	updateDNSZone = DNSZone{Comment: "An updated comment", Reference: updateDNSRef}
-	updateZoneAuthAPI = NewUpdate(updateDNSZone)
+	updateReturnFields := []string{"comment", "fqdn"}
+	updateZoneAuthAPI = NewUpdate(updateDNSZone, updateReturnFields)
 	updateZoneAuthAPI.SetResponseObject(&updateDNSZone)
 }
 
@@ -25,7 +26,7 @@ func TestUpdateZoneAuthMethod(t *testing.T) {
 
 func TestUpdateZoneAuthEndpoint(t *testing.T) {
 	setupTestUpdateZoneAuth()
-	assert.Equal(t, "/wapi/v2.3.1/"+updateDNSRef+"?_return_fields=fqdn,view,comment", updateZoneAuthAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/"+updateDNSRef+"?_return_fields=comment,fqdn", updateZoneAuthAPI.Endpoint())
 }
 
 func TestUpdateZoneAuthMarshalling(t *testing.T) {
@@ -39,6 +40,5 @@ func TestUpdateZoneAuthMarshalling(t *testing.T) {
 func TestUpdateZoneAuthGetResponse(t *testing.T) {
 	setupTestUpdateZoneAuth()
 	getResponse := updateZoneAuthAPI.GetResponse()
-	assert.Equal(t, updateDNSZone.Comment, getResponse.Comment)
 	assert.Equal(t, updateDNSZone.Reference, getResponse.Reference)
 }
