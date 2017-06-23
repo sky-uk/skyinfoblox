@@ -13,12 +13,12 @@ type DNSZone struct {
 	View                                    string                `json:"view,omitempty"`
 	Comment                                 string                `json:"comment,omitempty"`
 	Address                                 string                `json:"address,omitempty"`
-	AllowActiveDir                          []AddressAC           `json:"allow_active_dir,omitempty"`
+	AllowActiveDir                          []interface{}         `json:"allow_active_dir,omitempty"`
 	AllowGssTsigUnderScoreZone              *bool                 `json:"allow_gss_tsig_for_underscore_zone,omitempty"`
 	AllowGssTsigZoneUpdates                 *bool                 `json:"allow_gss_tsig_zone_updates,omitempty"`
-	AllowQuery                              []AddressAC           `json:"allow_query,omitempty"`
-	AllowTransfer                           []AddressAC           `json:"allow_transfer,omitempty"`
-	AllowUpdate                             []AddressAC           `json:"allow_update,omitempty"`
+	AllowQuery                              []interface{}         `json:"allow_query,omitempty"`
+	AllowTransfer                           []interface{}         `json:"allow_transfer,omitempty"`
+	AllowUpdate                             []interface{}         `json:"allow_update,omitempty"`
 	AllowUpdateForwarding                   *bool                 `json:"allow_update_forwarding,omitempty"`
 	CloudInfo                               []CloudInformation    `json:"cloud_info,omitempty"`
 	CopyXferToNotify                        *bool                 `json:"copy_xfer_to_notify,omitempty"`
@@ -65,7 +65,7 @@ type DNSZone struct {
 	MemberSOAMNames                         []SOAMName            `json:"member_soa_mnames,omitempty"`
 	MemberSOASerials                        []GridMemberSOASerial `json:"member_soa_serials,omitempty"`
 	MSADIntegrated                          *bool                 `json:"ms_ad_integrated,omitempty"`
-	MSAllowTransfer                         []AddressAC           `json:"ms_allow_transfer,omitempty"`
+	MSAllowTransfer                         []interface{}         `json:"ms_allow_transfer,omitempty"`
 	MSAllowTransferMode                     string                `json:"ms_allow_transfer_mode,omitempty"`
 	MSDCNSRecordCreation                    []ADController        `json:"ms_dc_ns_record_creation,omitempty"`
 	MSDDNSMode                              string                `json:"ms_ddns_mode,omitempty"`
@@ -96,7 +96,7 @@ type DNSZone struct {
 	SOARetry                                uint                  `json:"soa_retry,omitempty"`
 	SOASerialNumber                         uint                  `json:"soa_serial_number,omitempty"`
 	SRGS                                    string                `json:"srgs,omitempty"`
-	UpdateForwarding                        []AddressAC           `json:"update_forwarding,omitempty"`
+	UpdateForwarding                        []interface{}         `json:"update_forwarding,omitempty"`
 	UseAllowActiveDir                       *bool                 `json:"use_allow_active_dir,omitempty"`
 	UseAllowQuery                           *bool                 `json:"use_allow_query,omitempty"`
 	UseAllowTransfer                        *bool                 `json:"use_allow_transfer,omitempty"`
@@ -123,12 +123,14 @@ type DNSZone struct {
 
 // AddressAC : Access control rule for an address
 type AddressAC struct {
+	StructType string `json:"_struct,omitempty"`
 	Address    string `json:"address,omitempty"`
 	Permission string `json:"permission,omitempty"`
 }
 
 // TsigAC : TSIG key
 type TsigAC struct {
+	StructType     string `json:"_struct,omitemtpy"`
 	TsigKey        string `json:"tsig_key,omitempty"`
 	TsigKeyAlg     string `json:"tsig_key_alg,omitempty"`
 	TsigKeyName    string `json:"tsig_key_name,omitempty"`
