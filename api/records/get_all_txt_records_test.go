@@ -23,6 +23,7 @@ func TestGetAllTXTRecordsEndpoint(t *testing.T) {
 
 func TestGetAllTXTRecordsUnmarshalling(t *testing.T) {
 	GetAllTXTRecordsAPI := getAllTXTRecordsSetup()
+	GetAllTXTRecordsAPI.SetStatusCode(http.StatusOK)
 	responseObject := []TXTRecord{{Ref: "record:txt/ZG5zLmJpbmRfdHh0JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAuY3JhaWd0ZXN0MS4iY3JhaWciICJ0ZXN0IiAiMSI:craigtest1.test-ovp.bskyb.com/default", Name: "craigtest1.test-ovp.bskyb.com", Text: "craig test 1"}, {Ref: "record:txt/ZG5zLmJpbmRfdHh0JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAuY3JhaWcgdGVzdCAyLiJjcmFpZyIgInRlc3QiICIyIg:craig%20test%202.test-ovp.bskyb.com/default", Name: "craig test 2.test-ovp.bskyb.com", Text: "craig test 2"}}
 	GetAllTXTRecordsAPI.SetResponseObject(&responseObject)
 	assert.Equal(t, responseObject, GetAllTXTRecordsAPI.GetResponse())

@@ -2,7 +2,7 @@ package network
 
 import (
 	"encoding/json"
-	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -44,7 +44,7 @@ func TestUpdateNetworkUnmarshallingError(t *testing.T) {
 }`
 	NetTOUpdate.SetResponseObject(&errorStr)
 	resp := NetTOUpdate.GetResponse()
-	errorObj := new(skyinfoblox.RespError)
+	errorObj := new(api.RespError)
 	errStr := []byte(resp)
 	JSONerr := json.Unmarshal(errStr, errorObj)
 	if JSONerr != nil {

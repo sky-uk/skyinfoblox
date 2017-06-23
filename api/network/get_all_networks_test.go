@@ -1,13 +1,16 @@
 package network
 
 import (
+	"encoding/json"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 )
 
 func getAllNetworksSetup() *GetAllNetworksAPI {
-	return NewGetAllNetworks()
+	var fields []string
+	return NewGetAllNetworks(fields)
 }
 
 func TestGetAllNetworksMethod(t *testing.T) {
@@ -22,6 +25,7 @@ func TestGetAllNetworksEndpoint(t *testing.T) {
 
 func TestGetAllNetworksUnmarshalling(t *testing.T) {
 	GetNetworkAPI := getAllNetworksSetup()
+	GetNetworkAPI.SetStatusCode(http.StatusOK)
 	net1 := Network{
 		Ref:         "network/foo:10.10.10.0/24/default",
 		Network:     "10.10.10.0/24",
@@ -36,5 +40,23 @@ func TestGetAllNetworksUnmarshalling(t *testing.T) {
 	networks := []Network{net1, net2}
 
 	GetNetworkAPI.SetResponseObject(&networks)
-	assert.Equal(t, networks, GetNetworkAPI.GetResponse())
+	assert.Equal(t, networks, GetNetworkAPI.GetResponse().([]Network))
+}
+
+func TestGetAllNetworksUnmarshallingError(t *testing.T) {
+	GetNetworkAPI := getAllNetworksSetup()
+	GetNetworkAPI.SetStatusCode(http.StatusNotFound)
+
+	errorString := `
+{
+  "Error": "AdmConProtoError: Unknown object type (fo)",
+  "code": "Client.Ibap.Proto",
+  "text": "Unknown object type (fo)"
+}`
+	GetNetworkAPI.SetRawResponse([]byte(errorString))
+	var errStruct api.RespError
+	err := json.Unmarshal(GetNetworkAPI.RawResponse(), &errStruct)
+	if err == nil {
+		assert.Equal(t, errStruct, GetNetworkAPI.GetResponse().(api.RespError), "Got same error structure back...")
+	}
 }

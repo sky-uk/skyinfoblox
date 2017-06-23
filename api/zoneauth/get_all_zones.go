@@ -1,6 +1,7 @@
 package zoneauth
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 )
@@ -18,6 +19,15 @@ func NewGetAllZones() *GetAllZoneAuthAPI {
 }
 
 // GetResponse : returns the response object of GetAllZones
-func (gaz GetAllZoneAuthAPI) GetResponse() *DNSZoneReferences {
-	return gaz.ResponseObject().(*DNSZoneReferences)
+func (gaz GetAllZoneAuthAPI) GetResponse() interface{} {
+	if gaz.StatusCode() == http.StatusOK {
+		return *gaz.ResponseObject().(*DNSZoneReferences)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(gaz.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

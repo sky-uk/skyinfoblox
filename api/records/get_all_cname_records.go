@@ -1,6 +1,7 @@
 package records
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -23,6 +24,16 @@ func NewGetAllCNAMERecords(fields []string) *GetAllCNAMERecordsAPI {
 }
 
 // GetResponse returns ResponseObject of GetAllARecordsAPI.
-func (ga GetAllCNAMERecordsAPI) GetResponse() []CNAMERecord {
-	return *ga.ResponseObject().(*[]CNAMERecord)
+func (ga GetAllCNAMERecordsAPI) GetResponse() interface{} {
+
+	if ga.StatusCode() == http.StatusOK {
+		return *ga.ResponseObject().(*[]CNAMERecord)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(ga.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

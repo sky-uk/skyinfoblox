@@ -66,4 +66,5 @@ type GenericRecord struct {
 	Priority  int    `json:"priority,omitempty"`
 	Target    string `json:"target,omitempty"`
 	Weight    int    `json:"weight,omitempty"`
+	Zone      string `json:"zone,omitempty"`
 }

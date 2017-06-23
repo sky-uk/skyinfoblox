@@ -1,6 +1,7 @@
 package records
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -23,6 +24,15 @@ func NewGetCNAMERecord(recordReference string, returnFields []string) *GetSingle
 }
 
 // GetResponse returns ResponseObject of GetSingleCNAMERecordAPI.
-func (gs GetSingleCNAMERecordAPI) GetResponse() CNAMERecord {
-	return *gs.ResponseObject().(*CNAMERecord)
+func (gs GetSingleCNAMERecordAPI) GetResponse() interface{} {
+	if gs.StatusCode() == http.StatusOK {
+		return *gs.ResponseObject().(*CNAMERecord)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(gs.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

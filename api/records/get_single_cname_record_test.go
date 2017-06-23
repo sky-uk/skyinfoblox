@@ -24,6 +24,7 @@ func TestGetCNAMERecordEndpoint(t *testing.T) {
 
 func TestGetCNAMERecordUnmarshalling(t *testing.T) {
 	GetSingleCNAMERecordAPI := getCNAMERecordSetup()
+	GetSingleCNAMERecordAPI.SetStatusCode(http.StatusOK)
 	responseObject := CNAMERecord{Ref: "record:cname/ZG5zLmJpbmRfY25hbWUkLl9kZWZhdWx0LmNvbS5ic2t5Yi50ZXN0LW92cC5jcmFpZzV0ZXN0:craig5test.test-ovp.bskyb.com/default", Name: "craig5test.test-ovp.bskyb.com", Canonical: "test-ovp.bskyb.com"}
 	GetSingleCNAMERecordAPI.SetResponseObject(&responseObject)
 	assert.Equal(t, responseObject, GetSingleCNAMERecordAPI.GetResponse())

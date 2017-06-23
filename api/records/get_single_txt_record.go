@@ -1,6 +1,7 @@
 package records
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -23,6 +24,15 @@ func NewGetTXTRecord(recordReference string, returnFields []string) *GetSingleTX
 }
 
 // GetResponse returns ResponseObject of GetSingleTXTRecordAPI.
-func (gs GetSingleTXTRecordAPI) GetResponse() TXTRecord {
-	return *gs.ResponseObject().(*TXTRecord)
+func (gs GetSingleTXTRecordAPI) GetResponse() interface{} {
+	if gs.StatusCode() == http.StatusOK {
+		return *gs.ResponseObject().(*TXTRecord)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(gs.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

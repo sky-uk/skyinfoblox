@@ -1,6 +1,7 @@
 package records
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -26,6 +27,15 @@ func NewGetAllSRVRecords(fields []string) *GetAllSRVRecordsAPI {
 }
 
 // GetResponse returns ResponseObject of GetAllSRVRecordsAPI.
-func (ga GetAllSRVRecordsAPI) GetResponse() []SRVRecord {
-	return *ga.ResponseObject().(*[]SRVRecord)
+func (ga GetAllSRVRecordsAPI) GetResponse() interface{} {
+	if ga.StatusCode() == http.StatusOK {
+		return *ga.ResponseObject().(*[]SRVRecord)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(ga.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

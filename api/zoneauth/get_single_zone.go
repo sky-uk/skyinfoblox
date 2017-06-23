@@ -1,6 +1,7 @@
 package zoneauth
 
 import (
+	"encoding/json"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
@@ -23,6 +24,15 @@ func NewGetSingleZone(ref string, returnFieldList []string) *GetSingleZoneAuthAP
 }
 
 // GetResponse : returns response obeject from GetSingleZone
-func (gsz GetSingleZoneAuthAPI) GetResponse() *DNSZone {
-	return gsz.ResponseObject().(*DNSZone)
+func (gsz GetSingleZoneAuthAPI) GetResponse() interface{} {
+	if gsz.StatusCode() == http.StatusOK {
+		return *gsz.ResponseObject().(*DNSZone)
+	}
+
+	var errStruct api.RespError
+	err := json.Unmarshal(gsz.RawResponse(), &errStruct)
+	if err != nil {
+		return nil
+	}
+	return errStruct
 }

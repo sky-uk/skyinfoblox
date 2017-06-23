@@ -23,6 +23,7 @@ func TestGetAllSRVRecordsEndpoint(t *testing.T) {
 
 func TestGetAllSRVRecordsUnmarshalling(t *testing.T) {
 	GetAllSRVRecordsAPI := getAllSRVRecordsSetup()
+	GetAllSRVRecordsAPI.SetStatusCode(http.StatusOK)
 	responseObject := []SRVRecord{{Ref: "record:srv/ZG5zLmJpbmRfc3J2JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAvY3JhaWc3dGVzdC8xMC81LzgwL2NyYWlnNHRlc3QudGVzdC1vdnAuYnNreWIuY29t:craig7test.test-ovp.bskyb.com/default", Name: "craig7test.test-ovp.bskyb.com", Port: 80, Priority: 10, Target: "craig4test.test-ovp.bskyb.com", Weight: 5}, {Ref: "record:srv/ZG5zLmJpbmRfc3J2JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAvY3JhaWc4dGVzdC8xMC81LzgwL2NyYWlnNHRlc3QudGVzdC1vdnAuYnNreWIuY29t:craig8test.test-ovp.bskyb.com/default", Name: "craig8test.test-ovp.bskyb.com", Port: 80, Priority: 10, Target: "craig4test.test-ovp.bskyb.com", Weight: 5}}
 	GetAllSRVRecordsAPI.SetResponseObject(&responseObject)
 	assert.Equal(t, responseObject, GetAllSRVRecordsAPI.GetResponse())

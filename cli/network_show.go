@@ -4,7 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/sky-uk/skyinfoblox/api/network"
+	"net/http"
 	"strings"
 )
 
@@ -18,15 +20,24 @@ func GetNetwork(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	fields := flagSet.Lookup("fields").Value.String()
 	var fieldArray []string
 	fieldArray = strings.Split(fields, ",")
+	fieldArray = append(fieldArray, "network", "network_view", "ipv4addr")
 	getNetworkAPI := network.NewGetNetwork(objRef, fieldArray)
 
 	err := client.Do(getNetworkAPI)
-
 	if err != nil {
 		fmt.Println("Error: ", err)
 	} else {
-		fmt.Println("Status code: ", getNetworkAPI.StatusCode())
-		fmt.Printf("Response:\n%+v\n ", getNetworkAPI.ResponseObject())
+		if getNetworkAPI.StatusCode() == http.StatusOK {
+			object := getNetworkAPI.GetResponse().(network.Network)
+			row := map[string]interface{}{}
+			row["Network"] = object.Network
+			row["View"] = object.NetworkView
+			row["Ipv4addr"] = object.Ipv4addr
+			PrettyPrintSingle(row)
+		} else {
+			fmt.Println("Status code: ", getNetworkAPI.StatusCode())
+			fmt.Printf("Response:\n%+v\n ", getNetworkAPI.GetResponse().(api.RespError))
+		}
 	}
 }
 
