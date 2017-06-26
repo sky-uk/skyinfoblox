@@ -7,7 +7,8 @@ import (
 )
 
 func getAllNetworksSetup() *GetAllNetworksAPI {
-	return NewGetAllNetworks()
+	var fields []string
+	return NewGetAllNetworks(fields)
 }
 
 func TestGetAllNetworksMethod(t *testing.T) {
