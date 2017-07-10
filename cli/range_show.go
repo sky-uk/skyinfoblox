@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api/dhcp_range"
 	"net/http"
 	"strings"
-	"github.com/sky-uk/skyinfoblox/api/dhcp_range"
 )
 
 // GetDHCPRange gets a single DHCP Range
