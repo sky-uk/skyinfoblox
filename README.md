@@ -36,6 +36,12 @@ $ ./skyinfoblox-cli
       records-show-all
       zone-create
       zone-delete
+      network-show
+      network-delete
+      network-create
+      range-show
+      range-create
+      range-delete
 
 ```
 
