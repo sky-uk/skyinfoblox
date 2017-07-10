@@ -11,7 +11,7 @@ type GetDHCPRangeAPI struct {
 	*api.BaseAPI
 }
 
-// GetDHCPRangeAPI returns a new object of type GetNetworkAPI.
+// NewGetDHCPRangeAPI returns a new object of type GetNetworkAPI.
 func NewGetDHCPRangeAPI(objRef string, returnFields []string) *GetDHCPRangeAPI {
 	if returnFields != nil {
 		returnFields := "?_return_fields=" + strings.Join(returnFields, ",")
