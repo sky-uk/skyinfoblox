@@ -29,8 +29,10 @@ func GetDHCPRange(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 			row["Network View"] = object.NetworkView
 			row["Start"] = object.Start
 			row["End"] = object.End
-			row["Member Address"] = object.Member.Address
+			row["Member IPv4Addr"] = object.Member.IPv4Address
+			row["Member IPv6Addr"] = object.Member.IPv6Address
 			row["Member Name"] = object.Member.Name
+			row["Member Type"] = object.Member.ElementType
 			PrettyPrintSingle(row)
 		} else {
 			fmt.Println("Status code: ", getDHCPRangeAPI.StatusCode())
