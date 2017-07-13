@@ -49,6 +49,7 @@ func listAllRecords(client *skyinfoblox.InfobloxClient) {
 	if getAllARecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getAllARecordsAPI.StatusCode())
 		fmt.Println("Response: ", getAllARecordsAPI.ResponseObject())
+		return
 	}
 
 	headers := []string{"Name", "IPv4", "Ref"}
@@ -78,6 +79,7 @@ func listTXTRecords(client *skyinfoblox.InfobloxClient) {
 	if getTXTRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getTXTRecordsAPI.StatusCode())
 		fmt.Println("Response: ", getTXTRecordsAPI.ResponseObject())
+		return
 	}
 
 	headers := []string{"Name", "Text", "Ref"}
@@ -107,6 +109,7 @@ func listSRVRecords(client *skyinfoblox.InfobloxClient) {
 	if getSRVRecordsAPI.StatusCode() != 200 {
 		fmt.Println("Status code: ", getSRVRecordsAPI.StatusCode())
 		fmt.Println("Response: ", getSRVRecordsAPI.ResponseObject())
+		return
 	}
 
 	headers := []string{"Name", "Port", "Target", "Ref"}
