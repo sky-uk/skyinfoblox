@@ -12,6 +12,7 @@ type Network struct {
 	EnableDdns                       *bool             `json:"enable_ddns,omitempty"`
 	EnableDhcpThresholds             *bool             `json:"enable_dhcp_thresholds,omitempty"`
 	EnableDiscovery                  *bool             `json:"enable_discovery,omitempty"`
+	DiscoveryMember                  string		   `json:"discovery_member,omitempty"`
 	Ipv4addr                         string            `json:"ipv4addr,omitempty"`
 	LeaseScavengeTime                int               `json:"lease_scavenge_time,omitempty"`
 	Netmask                          uint              `json:"netmask,omitempty"`
