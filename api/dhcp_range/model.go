@@ -16,8 +16,8 @@ type DHCPRange struct {
 // All members in the array must be of the same type.
 // the struct type must be indicated in each element, by setting the “_struct” member to the struct type.
 type Member struct {
-	ElementType  string `json:"_struct"`
-	IPv4Address  string `json:"ipv4addr,omitempty"`
-	IPv6Address  string `json:"ipv6addr,omitempty"`
-	Name         string `json:"name,omitempty"`
+	ElementType string `json:"_struct"`
+	IPv4Address string `json:"ipv4addr,omitempty"`
+	IPv6Address string `json:"ipv6addr,omitempty"`
+	Name        string `json:"name,omitempty"`
 }

@@ -1,16 +1,16 @@
 package network
 
 import (
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"encoding/json"
 )
 
 func createNetworkSetup() *CreateNetworkAPI {
 	members := []Member{
-		{ElementType:"dhcpmember", Name:"infoblox1.example.com", IPv4Address:"192.168.0.1"},
-		{ElementType:"dhcpmember", Name:"infoblox2.example.com", IPv4Address:"192.168.0.2"},
+		{ElementType: "dhcpmember", Name: "infoblox1.example.com", IPv4Address: "192.168.0.1"},
+		{ElementType: "dhcpmember", Name: "infoblox2.example.com", IPv4Address: "192.168.0.2"},
 	}
 	net := Network{
 		Network:     "10.10.10.1/24",

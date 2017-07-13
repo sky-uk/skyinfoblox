@@ -1,10 +1,10 @@
 package dhcprange
 
 import (
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"encoding/json"
 )
 
 func getDHCPRangeSetup() *GetDHCPRangeAPI {
@@ -48,7 +48,7 @@ func TestGetDHCPRangeUnmarshalling(t *testing.T) {
 
 	err := json.Unmarshal(responseBytes, responseObject)
 	assert.Nil(t, err)
-	assert.NotNil(t,responseObject)
+	assert.NotNil(t, responseObject)
 	assert.Equal(t, "192.168.0.0/24", responseObject.Network)
 	assert.Equal(t, "default", responseObject.NetworkView)
 	assert.Equal(t, "192.168.0.50", responseObject.Start)
