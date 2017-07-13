@@ -44,7 +44,7 @@ func TestCreateNetworkUnmarshalling(t *testing.T) {
 
 func TestCreateNetworkMarshalling(t *testing.T) {
 	NewNetwork := createNetworkSetup()
-	expectedJSON := "{\"_ref\":\"\",\"network\":\"10.10.10.1/24\",\"network_view\":\"default\",\"comment\":\"Test network\",\"members\":[{\"_struct\":\"dhcpmember\",\"ipv4addr\":\"192.168.0.1\",\"ipv6addr\":\"\",\"name\":\"infoblox1.example.com\"},{\"_struct\":\"dhcpmember\",\"ipv4addr\":\"192.168.0.2\",\"ipv6addr\":\"\",\"name\":\"infoblox2.example.com\"}]}"
+	expectedJSON := `{"_ref":"","network":"10.10.10.1/24","network_view":"default","comment":"Test network","members":[{"_struct":"dhcpmember","ipv4addr":"192.168.0.1","name":"infoblox1.example.com"},{"_struct":"dhcpmember","ipv4addr":"192.168.0.2","name":"infoblox2.example.com"}]}`
 	jsonBytes, err := json.Marshal(NewNetwork.RequestObject().(Network))
 	assert.Nil(t, err)
 	assert.Equal(t, expectedJSON, string(jsonBytes))
