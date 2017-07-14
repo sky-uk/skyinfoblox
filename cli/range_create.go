@@ -23,7 +23,7 @@ func createDHCPRange(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) 
 	}
 
 	if memberFQDN != "" {
-		dhcpMember := dhcprange.Member{InternalType: "dhcpmember", Name: memberFQDN, Address: memberAddress}
+		dhcpMember := dhcprange.Member{ElementType: "dhcpmember", Name: memberFQDN, IPv4Address: memberAddress}
 		dhcpRange.Member = dhcpMember
 		dhcpRange.ServerAssociation = "MEMBER"
 	}

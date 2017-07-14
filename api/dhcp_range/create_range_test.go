@@ -14,7 +14,7 @@ func createRangeSetup() *CreateDHCPRangeAPI {
 		End:         "192.168.0.60",
 		Restart:     true,
 	}
-	dhcpMember := Member{InternalType: "dhcpmember", Name: "test.example.com", Address: "192.168.0.10"}
+	dhcpMember := Member{ElementType: "dhcpmember", Name: "test.example.com", IPv4Address: "192.168.0.10"}
 	dhcpRange.Member = dhcpMember
 	dhcpRange.ServerAssociation = "MEMBER"
 
