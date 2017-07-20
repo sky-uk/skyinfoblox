@@ -1,9 +1,9 @@
 package dhcprange
 
 import (
+	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
-	"fmt"
 )
 
 // UpdateDHCPRangeAPI base object.
@@ -14,8 +14,8 @@ type UpdateDHCPRangeAPI struct {
 // NewUpdateDHCPRange updates an existing object
 func NewUpdateDHCPRange(dhcpRange DHCPRange) *UpdateDHCPRangeAPI {
 	this := new(UpdateDHCPRangeAPI)
-	updateEndpoint:= fmt.Sprintf("/wapi/v2.3.1/range/%s", dhcpRange.Ref)
-	this.BaseAPI = api.NewBaseAPI(http.MethodPut,updateEndpoint , dhcpRange, new(string))
+	updateEndpoint := fmt.Sprintf("/wapi/v2.3.1/range/%s", dhcpRange.Ref)
+	this.BaseAPI = api.NewBaseAPI(http.MethodPut, updateEndpoint, dhcpRange, new(string))
 	return this
 }
 
@@ -23,4 +23,3 @@ func NewUpdateDHCPRange(dhcpRange DHCPRange) *UpdateDHCPRangeAPI {
 func (ga UpdateDHCPRangeAPI) GetResponse() string {
 	return *ga.ResponseObject().(*string)
 }
-
