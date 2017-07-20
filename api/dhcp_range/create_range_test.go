@@ -1,6 +1,7 @@
 package dhcprange
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -17,7 +18,7 @@ func createRangeSetup() *CreateDHCPRangeAPI {
 	dhcpMember := Member{ElementType: "dhcpmember", Name: "test.example.com", IPv4Address: "192.168.0.10"}
 	dhcpRange.Member = dhcpMember
 	dhcpRange.ServerAssociation = "MEMBER"
-
+	fmt.Println(dhcpRange)
 	newCreateDHCPRangeAPI := NewCreateDHCPRange(dhcpRange)
 	responseString := "dummy response"
 	newCreateDHCPRangeAPI.SetResponseObject(&responseString)
