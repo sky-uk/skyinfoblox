@@ -40,5 +40,6 @@ func TestUpdateZoneAuthMarshalling(t *testing.T) {
 func TestUpdateZoneAuthGetResponse(t *testing.T) {
 	setupTestUpdateZoneAuth()
 	getResponse := updateZoneAuthAPI.GetResponse()
+	assert.Equal(t, updateDNSZone.Comment, getResponse.Comment)
 	assert.Equal(t, updateDNSZone.Reference, getResponse.Reference)
 }
