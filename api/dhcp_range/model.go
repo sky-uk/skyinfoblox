@@ -9,6 +9,8 @@ type DHCPRange struct {
 	NetworkView       string `json:"network_view"`
 	Restart           bool   `json:"restart_if_needed,omitempty"`
 	ServerAssociation string `json:"server_association_type,omitempty"`
+	Name              string `json:"name,omitempty"`
+	Comment           string `json:"comment,omitempty"`
 	Member            Member `json:"member,omitempty"`
 }
 
