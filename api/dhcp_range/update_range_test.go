@@ -16,11 +16,11 @@ func UpdateDHCPRangeSetup() *UpdateDHCPRangeAPI {
 		Restart:     true,
 	}
 	dhcpMember := Member{ElementType: "dhcpmember", Name: "test.example.com", IPv4Address: "192.168.0.10"}
-	dhcpRange.Ref = "ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default"
+	dhcpRange.Ref = "range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default"
 	dhcpRange.Member = dhcpMember
 	dhcpRange.ServerAssociation = "MEMBER"
 	newUpdateRangeAPI := NewUpdateDHCPRange(dhcpRange)
-	responseString := "ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default"
+	responseString := "range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default"
 	newUpdateRangeAPI.SetResponseObject(&responseString)
 	return newUpdateRangeAPI
 }
@@ -39,6 +39,6 @@ func TestEndpointDHCPRange(t *testing.T) {
 
 func TestNewUpdateDHCPRangeResponse(t *testing.T) {
 	testRelay := UpdateDHCPRangeSetup()
-	assert.Equal(t, "ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default", testRelay.GetResponse())
+	assert.Equal(t, "range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default", testRelay.GetResponse())
 
 }
