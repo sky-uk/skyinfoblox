@@ -29,7 +29,7 @@ func zoneUpdate(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Println("Zone " + zoneUpdateDNSZone.FQDN + " successfully updated")
 		if client.Debug {
 			response := updateZoneAuthAPI.GetResponse()
-			fmt.Printf("%s", response)
+			fmt.Printf("%v", response)
 		}
 	} else {
 		fmt.Println("Error status code != 200 when updating reference " + zoneUpdateDNSZone.Reference)
