@@ -1,5 +1,5 @@
 # skyinfoblox - Go library for the Infoblox appliance
-[![Build Status](http://jenkins.paas.int.ovp.bskyb.com/job/pipelines/job/skyinfoblox/job/master/badge/icon)](http://jenkins.paas.int.ovp.bskyb.com/job/pipelines/job/skyinfoblox/job/master/)
+
 This is the GoLang API wrapper for Infoblox. This is currently used for building terraform provider for the same.
 This package is based on the Infoblox WAPI library version 2.3.1.
 Wapi library documentation can be accessed here:
