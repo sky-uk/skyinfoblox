@@ -15,13 +15,14 @@ func updateDHCPRange(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) 
 	memberFQDN := flagSet.Lookup("member-fqdn").Value.String()
 	memberAddress := flagSet.Lookup("member-addr").Value.String()
 	ref := flagSet.Lookup("ref").Value.String()
+	allowRestart := true
 	dhcpRange := dhcprange.DHCPRange{
 		Ref:         ref,
 		Network:     network,
 		NetworkView: networkView,
 		Start:       startAddr,
 		End:         endAddr,
-		Restart:     true,
+		Restart:     &allowRestart,
 	}
 
 	if memberFQDN != "" {
