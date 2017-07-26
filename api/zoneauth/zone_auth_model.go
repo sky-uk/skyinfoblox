@@ -218,12 +218,12 @@ type ExternalServer struct {
 
 // MemberServer : Grid member struct
 type MemberServer struct {
-	EnablePreferedPrimaries *bool          `json:"enable_preferred_primaries,omitempty"`
-	GridReplicate           *bool          `json:"grid_replicate,omitempty"`
-	Lead                    *bool          `json:"lead,omitempty"`
-	Name                    string         `json:"name,omitempty"`
-	PreferredPrimaries      ExternalServer `json:"preferred_primaries,omitempty"`
-	Stealth                 *bool          `json:"stealth,omitempty"`
+	GridReplicate           *bool            `json:"grid_replicate,omitempty"`
+	Lead                    *bool            `json:"lead,omitempty"`
+	Name                    string           `json:"name,omitempty"`
+	EnablePreferedPrimaries *bool            `json:"enable_preferred_primaries,omitempty"`
+	PreferredPrimaries      []ExternalServer `json:"preferred_primaries,omitempty"`
+	Stealth                 *bool            `json:"stealth,omitempty"`
 }
 
 // SOAMName : SOA MNAME and primary server for the zone
