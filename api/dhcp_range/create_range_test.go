@@ -7,12 +7,13 @@ import (
 )
 
 func createRangeSetup() *CreateDHCPRangeAPI {
+	allowRestart := true
 	dhcpRange := DHCPRange{
 		Network:     "192.168.0.0/24",
 		NetworkView: "default",
 		Start:       "192.168.0.50",
 		End:         "192.168.0.60",
-		Restart:     true,
+		Restart:     &allowRestart,
 	}
 	dhcpMember := Member{ElementType: "dhcpmember", Name: "test.example.com", IPv4Address: "192.168.0.10"}
 	dhcpRange.Member = dhcpMember

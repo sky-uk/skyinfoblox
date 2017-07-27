@@ -24,12 +24,13 @@ func TestGetDHCPRangeEndpoint(t *testing.T) {
 }
 
 func TestGetDHCPRangeMarshalling(t *testing.T) {
+	allowRestart := true
 	requestData := DHCPRange{
 		Network:     "192.168.0.0/24",
 		NetworkView: "default",
 		Start:       "192.168.0.50",
 		End:         "192.168.0.60",
-		Restart:     true,
+		Restart:     &allowRestart,
 	}
 	dhcpMember := Member{ElementType: "dhcpmember", Name: "test.example.com", IPv4Address: "192.168.0.10"}
 	requestData.Member = dhcpMember
