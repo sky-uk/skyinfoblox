@@ -1,6 +1,5 @@
 package adminuser
 
-
 // AdminUser struct
 type AdminUser struct {
 	Ref      string   `json:"_ref"`
