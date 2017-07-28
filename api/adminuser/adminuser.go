@@ -42,7 +42,6 @@ func NewDeleteAdminUser(ref string) *BaseAdminUserAPI {
 	return this
 }
 
-
 // NewUpdateAdminUser - Updates the user
 func NewUpdateAdminUser(updateUser AdminUser) *BaseAdminUserAPI {
 	this := new(BaseAdminUserAPI)
