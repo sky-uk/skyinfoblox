@@ -34,6 +34,7 @@ func NewGetAdminUser(ref string, returnFields []string) *BaseAdminUserAPI {
 	return this
 }
 
+//NewDeleteAdminUse - Deletes the user
 func NewDeleteAdminUser(ref string) *BaseAdminUserAPI {
 	this := new(BaseAdminUserAPI)
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", ref)
@@ -41,6 +42,8 @@ func NewDeleteAdminUser(ref string) *BaseAdminUserAPI {
 	return this
 }
 
+
+// NewUpdateAdminUser - Updates the user
 func NewUpdateAdminUser(updateUser AdminUser) *BaseAdminUserAPI {
 	this := new(BaseAdminUserAPI)
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", updateUser.Ref)
