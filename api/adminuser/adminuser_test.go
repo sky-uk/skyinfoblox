@@ -1,11 +1,11 @@
 package adminuser
 
 import (
+	"fmt"
+	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"github.com/sky-uk/skyinfoblox/api"
-	"fmt"
 )
 
 func userSetup(action string) *api.BaseAPI {
