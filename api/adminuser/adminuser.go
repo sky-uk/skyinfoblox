@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-//AdminUserAPI - Base struce
+//BaseAdminUserAPI - Base struce
 type BaseAdminUserAPI struct {
 	*api.BaseAPI
 }
@@ -34,7 +34,7 @@ func NewGetAdminUser(ref string, returnFields []string) *BaseAdminUserAPI {
 	return this
 }
 
-//NewDeleteAdminUse - Deletes the user
+//NewDeleteAdminUser - Deletes the user
 func NewDeleteAdminUser(ref string) *BaseAdminUserAPI {
 	this := new(BaseAdminUserAPI)
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", ref)
