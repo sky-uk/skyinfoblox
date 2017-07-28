@@ -30,8 +30,8 @@ func setupAdminGroupTest() {
 	reference = "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test"
 
 	getAllAdminGroupReference := IBXAdminGroupReference{
-		Reference: "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
-		AdminGroupName:      "test",
+		Reference:      "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
+		AdminGroupName: "test",
 	}
 	getAllResponseObject := new(IBXAdminGroupReferences)
 	adminGroupList := make([]IBXAdminGroupReference, 0)
