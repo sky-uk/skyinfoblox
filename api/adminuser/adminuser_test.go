@@ -4,9 +4,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"github.com/sky-uk/skyinfoblox/api"
+	"fmt"
 )
 
-func userSetup(action string) *AdminUserAPI {
+func userSetup(action string) *api.BaseAPI {
 	disableUser := true
 	groupList := []string{"Group1"}
 	adminUser := AdminUser{
@@ -66,7 +68,9 @@ func TestUserDeleteEndpoint(t *testing.T) {
 
 func TestUserResponse(t *testing.T) {
 	newUser := userSetup("create")
-	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST", newUser.GetResponse())
+	fmt.Println(newUser)
+	response := *newUser.ResponseObject().(*string)
+	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST", response)
 }
 
 func TestGetUserMethod(t *testing.T) {
