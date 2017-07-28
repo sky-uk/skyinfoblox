@@ -1,5 +1,7 @@
 package adminuser
 
+
+// AdminUSer struct
 type AdminUser struct {
 	Ref      string   `json:"_ref"`
 	Name     string   `json:"name"`
