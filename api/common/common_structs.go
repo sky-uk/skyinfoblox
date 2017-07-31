@@ -1,3 +1,5 @@
+package common
+
 // ExternalServer : external DNS server
 type ExternalServer struct {
 	Address                      string `json:"address"`
@@ -19,5 +21,3 @@ type MemberServer struct {
 	PreferredPrimaries      []ExternalServer `json:"preferred_primaries,omitempty"`
 	Stealth                 *bool            `json:"stealth,omitempty"`
 }
-
-
