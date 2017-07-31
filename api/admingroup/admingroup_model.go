@@ -5,7 +5,7 @@ const adminGroupEndpoint = "/wapi/v2.3.1"
 // IBXAdminGroup : Admin group definition
 type IBXAdminGroup struct {
 	Reference      string   `json:"_ref,omitempty"`
-	AccessMethod   string   `json:"access_method,omitempty"`
+	AccessMethod   []string `json:"access_method,omitempty"`
 	Comment        string   `json:"comment,omitempty"`
 	Disable        *bool    `json:"disable,omitempty"`
 	EmailAddresses []string `json:"email_addresses,omitempty"`
@@ -13,9 +13,6 @@ type IBXAdminGroup struct {
 	Roles          []string `json:"roles,omitempty"`
 	SuperUser      *bool    `json:"superuser,omitempty"`
 }
-
-// IBXAdminGroupReferences : A list of admin group references
-type IBXAdminGroupReferences []IBXAdminGroupReference
 
 // IBXAdminGroupReference : A reference object for an admin group
 type IBXAdminGroupReference struct {

@@ -14,7 +14,7 @@ func NewCreate(admingroup IBXAdminGroup) *api.BaseAPI {
 
 // NewGetAll : used to get all admin groups
 func NewGetAll() *api.BaseAPI {
-	getAllAdminGroupAPI := api.NewBaseAPI(http.MethodGet, adminGroupEndpoint+"/admingroup", nil, new(IBXAdminGroupReferences))
+	getAllAdminGroupAPI := api.NewBaseAPI(http.MethodGet, adminGroupEndpoint+"/admingroup", nil, new([]IBXAdminGroupReference))
 	return getAllAdminGroupAPI
 }
 

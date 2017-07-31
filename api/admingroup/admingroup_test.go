@@ -18,7 +18,7 @@ func setupAdminGroupTest() {
 	disable := false
 	adminGroup := IBXAdminGroup{
 		Reference:      "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
-		AccessMethod:   "API",
+		AccessMethod:   []string{"API"},
 		Comment:        "API Access only",
 		Disable:        &disable,
 		EmailAddresses: []string{"test@example-test.com"},
@@ -33,17 +33,14 @@ func setupAdminGroupTest() {
 		Reference:      "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
 		AdminGroupName: "test",
 	}
-	getAllResponseObject := new(IBXAdminGroupReferences)
 	adminGroupList := make([]IBXAdminGroupReference, 0)
 	adminGroupList = append(adminGroupList, getAllAdminGroupReference)
-
-	//getAllResponseObject = adminGroupList
 
 	createAdminGroupAPI = NewCreate(adminGroup)
 	createAdminGroupAPI.SetResponseObject(&reference)
 
 	getAllAdminGroupAPI = NewGetAll()
-	getAllAdminGroupAPI.SetResponseObject(&getAllResponseObject)
+	getAllAdminGroupAPI.SetResponseObject(&adminGroupList)
 
 	getAdminGroupAPI = NewGet(reference, returnFields)
 	getAdminGroupAPI.SetResponseObject(&adminGroup)
@@ -81,14 +78,13 @@ func TestAdminGroupNewGetAllEndpoint(t *testing.T) {
 	assert.Equal(t, adminGroupEndpoint+"/admingroup", getAllAdminGroupAPI.Endpoint())
 }
 
-/*
 func TestAdminGroupNewGetAllResponse(t *testing.T) {
 	setupAdminGroupTest()
-	response := getAllAdminGroupAPI.ResponseObject().(*AdminGroupReferences)
+	response := *getAllAdminGroupAPI.ResponseObject().(*[]IBXAdminGroupReference)
 
-	assert.Equal(t, "test", response)
+	assert.Equal(t, "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test", response[0].Reference)
+	assert.Equal(t, "test", response[0].AdminGroupName)
 }
-*/
 
 func TestAdminGroupNewGetMethod(t *testing.T) {
 	setupAdminGroupTest()
@@ -105,7 +101,7 @@ func TestAdminGroupNewGetResponse(t *testing.T) {
 	response := getAdminGroupAPI.ResponseObject().(*IBXAdminGroup)
 
 	assert.Equal(t, "test", response.Name)
-	assert.Equal(t, "API", response.AccessMethod)
+	assert.Equal(t, "API", response.AccessMethod[0])
 	assert.Equal(t, "API Access only", response.Comment)
 	assert.Equal(t, false, *response.Disable)
 	assert.Equal(t, "test@example-test.com", response.EmailAddresses[0])
@@ -123,6 +119,20 @@ func TestAdminGroupNewUpdateEndpoint(t *testing.T) {
 	assert.Equal(t, adminGroupEndpoint+"/"+reference+"?_return_fields="+strings.Join(returnFields, ","), updateAdminGroupAPI.Endpoint())
 }
 
+func TestAdminGroupNewUpdateResponse(t *testing.T) {
+	setupAdminGroupTest()
+
+	response := updateAdminGroupAPI.ResponseObject().(*IBXAdminGroup)
+
+	assert.Equal(t, "test", response.Name)
+	assert.Equal(t, "API", response.AccessMethod[0])
+	assert.Equal(t, "API Access only", response.Comment)
+	assert.Equal(t, false, *response.Disable)
+	assert.Equal(t, "test@example-test.com", response.EmailAddresses[0])
+	assert.Equal(t, "test-role", response.Roles[0])
+	assert.Equal(t, true, *response.SuperUser)
+}
+
 func TestAdminGroupNewDeleteMethod(t *testing.T) {
 	setupAdminGroupTest()
 	assert.Equal(t, http.MethodDelete, deleteAdminGroupAPI.Method())
@@ -131,18 +141,4 @@ func TestAdminGroupNewDeleteMethod(t *testing.T) {
 func TestAdminGroupNewDeleteEndpoint(t *testing.T) {
 	setupAdminGroupTest()
 	assert.Equal(t, adminGroupEndpoint+"/"+reference, deleteAdminGroupAPI.Endpoint())
-}
-
-func TestAdminGroupNewUpdateResponse(t *testing.T) {
-	setupAdminGroupTest()
-
-	response := updateAdminGroupAPI.ResponseObject().(*IBXAdminGroup)
-
-	assert.Equal(t, "test", response.Name)
-	assert.Equal(t, "API", response.AccessMethod)
-	assert.Equal(t, "API Access only", response.Comment)
-	assert.Equal(t, false, *response.Disable)
-	assert.Equal(t, "test@example-test.com", response.EmailAddresses[0])
-	assert.Equal(t, "test-role", response.Roles[0])
-	assert.Equal(t, true, *response.SuperUser)
 }
