@@ -30,13 +30,13 @@ func NewGetAdminUser(ref string, returnFields []string) *api.BaseAPI {
 //NewDeleteAdminUser - Deletes the user
 func NewDeleteAdminUser(ref string) *api.BaseAPI {
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", ref)
-	deleteUserAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(AdminUser))
+	deleteUserAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(string))
 	return deleteUserAPI
 }
 
 // NewUpdateAdminUser - Updates the user
 func NewUpdateAdminUser(updateUser AdminUser) *api.BaseAPI {
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", updateUser.Ref)
-	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, nil, new(AdminUser))
+	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateUser, new(AdminUser))
 	return updateUserAPI
 }

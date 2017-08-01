@@ -25,13 +25,13 @@ func updateAdminUser(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) 
 		Password: password,
 		Groups:   []string{"test"},
 	}
-	createUserAPI := adminuser.NewUpdateAdminUser(updateUser)
-	err := client.Do(createUserAPI)
+	updateUserAPI := adminuser.NewUpdateAdminUser(updateUser)
+	err := client.Do(updateUserAPI)
 	if err != nil {
 		fmt.Println("Could not create the user ")
 	}
-	fmt.Println("Status Code: ", createUserAPI.StatusCode())
-	fmt.Printf("Response : %s", *createUserAPI.ResponseObject().(*string))
+	fmt.Println("Status Code: ", updateUserAPI.StatusCode())
+	fmt.Printf("Response : %s", *updateUserAPI.ResponseObject().(*adminuser.AdminUser))
 }
 
 func init() {
@@ -42,5 +42,5 @@ func init() {
 	createFlags.String("comment", "", "a comment for the user")
 	createFlags.String("password", "", "user's password")
 	createFlags.String("ref", "", "user's unique ref")
-	RegisterCliCommand("adminuser-create", createFlags, updateAdminUser)
+	RegisterCliCommand("adminuser-update", createFlags, updateAdminUser)
 }
