@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/admingroup"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -21,8 +22,9 @@ func showAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	adminGroupShowAPI := admingroup.NewGet(adminGroupReference, returnFields)
 	err := client.Do(adminGroupShowAPI)
-	if err != nil {
-		fmt.Printf("\nError whilst retrieving admin group reference %s", adminGroupReference)
+	httpStatus := adminGroupShowAPI.StatusCode()
+	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
+		fmt.Printf("\nError whilst retrieving admin group reference %s. HTTP status: %d. Error: %+v", adminGroupReference, httpStatus, err)
 		os.Exit(2)
 	}
 	response := *adminGroupShowAPI.ResponseObject().(*admingroup.IBXAdminGroup)

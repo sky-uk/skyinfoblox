@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/admingroup"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -14,6 +15,8 @@ var updateAdminGroupAccessMethods, updateAdminGroupEmailAddresses, updateAdminGr
 var updateAdminGroupSuperUser, updateAdminGroupDisable bool
 
 func updateAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+
+	returnFields := []string{"name", "comment", "disable", "roles", "email_addresses", "superuser", "access_method"}
 
 	if updateAdminGroupObject.Reference == "" {
 		fmt.Printf("\nError ref argument is required\n")
@@ -32,10 +35,11 @@ func updateAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	updateAdminGroupObject.Disable = &updateAdminGroupDisable
 	updateAdminGroupObject.SuperUser = &updateAdminGroupSuperUser
 
-	updateAdminGroupAPI := admingroup.NewUpdate(updateAdminGroupObject, nil)
+	updateAdminGroupAPI := admingroup.NewUpdate(updateAdminGroupObject, returnFields)
 	err := client.Do(updateAdminGroupAPI)
-	if err != nil {
-		fmt.Printf("\nError updating admin group %s: %+v\n", updateAdminGroupObject.Name, err)
+	httpStatus := updateAdminGroupAPI.StatusCode()
+	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
+		fmt.Printf("\nError updating admin group %s. HTTP status: %d. Error: %+v\n", updateAdminGroupObject.Name, httpStatus, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully updated admin group %s\n", updateAdminGroupObject.Name)

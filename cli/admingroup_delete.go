@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/admingroup"
+	"net/http"
 	"os"
 )
 
@@ -18,8 +19,9 @@ func deleteAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 
 	deleteAdminGroupAPI := admingroup.NewDelete(adminGroupReference)
 	err := client.Do(deleteAdminGroupAPI)
-	if err != nil {
-		fmt.Printf("\nError whilst deleting admin group %s\n", adminGroupReference)
+	httpStatus := deleteAdminGroupAPI.StatusCode()
+	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
+		fmt.Printf("\nError whilst deleting admin group %s. HTTP status: %d. Error: %+v\n", adminGroupReference, httpStatus, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully deleted admin group %s\n", adminGroupReference)

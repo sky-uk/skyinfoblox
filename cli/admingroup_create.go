@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/admingroup"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -34,8 +35,9 @@ func createAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 
 	createAdminGroupAPI := admingroup.NewCreate(createAdminGroupObject)
 	err := client.Do(createAdminGroupAPI)
-	if err != nil {
-		fmt.Printf("\nError creating admin group %s: %+v\n", createAdminGroupObject.Name, err)
+	httpStatus := createAdminGroupAPI.StatusCode()
+	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
+		fmt.Printf("\nError creating admin group %s. HTTP status: %d. Error: %+v\n", createAdminGroupObject.Name, httpStatus, err)
 		os.Exit(2)
 	}
 	fmt.Printf("\nSuccessfully created admin group %s\n", createAdminGroupObject.Name)
