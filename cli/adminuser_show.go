@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/adminuser"
+	"net/http"
 )
 
 func getAdminUser(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
@@ -15,9 +16,18 @@ func getAdminUser(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if getUserErr != nil {
 		fmt.Println("Could not get the user")
 	}
-	fmt.Println("Status Code: ", getUserAPI.StatusCode())
-	fmt.Printf("Response : %s", *getUserAPI.ResponseObject().(*adminuser.AdminUser))
-
+	if getUserAPI.StatusCode() != http.StatusOK {
+		fmt.Println(*getUserAPI.ResponseObject().(*string))
+	} else {
+		userToShow := *getUserAPI.ResponseObject().(*adminuser.AdminUser)
+		row := map[string]interface{}{}
+		row["ref"] = userToShow.Ref
+		row["username"] = userToShow.Name
+		row["comment"] = userToShow.Comment
+		row["admin_grups"] = userToShow.Groups
+		row["email"] = userToShow.Email
+		PrettyPrintSingle(row)
+	}
 }
 
 func init() {
