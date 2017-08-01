@@ -31,11 +31,12 @@ func updateAdminUser(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) 
 		fmt.Println("Could not create the user ")
 	}
 	fmt.Println("Status Code: ", updateUserAPI.StatusCode())
-	fmt.Printf("Response : %s", *updateUserAPI.ResponseObject().(*adminuser.AdminUser))
+	fmt.Println(updateUserAPI.ResponseObject())
+	fmt.Printf("Response : %s", *updateUserAPI.ResponseObject().(*string))
 }
 
 func init() {
-	createFlags := flag.NewFlagSet("adminuser-create", flag.ExitOnError)
+	createFlags := flag.NewFlagSet("adminuser-update", flag.ExitOnError)
 	createFlags.String("username", "", "the name of user you are creating")
 	createFlags.String("email", "", "email address")
 	createFlags.String("disable", "", "disable the user")
