@@ -11,7 +11,7 @@ var endPoint string
 
 //NewCreateAdminUser - Create function
 func NewCreateAdminUser(newUser AdminUser) *api.BaseAPI {
-	endPoint = "/wapi/v2.2.2/adminuser"
+	endPoint = "/wapi/v2.3.1/adminuser"
 	createUserAPI := api.NewBaseAPI(http.MethodPost, endPoint, newUser, new(string))
 	return createUserAPI
 }
@@ -19,9 +19,9 @@ func NewCreateAdminUser(newUser AdminUser) *api.BaseAPI {
 //NewGetAdminUser - Get a User
 func NewGetAdminUser(ref string, returnFields []string) *api.BaseAPI {
 	if returnFields != nil && len(returnFields) > 0 {
-		endPoint = fmt.Sprintf("/wapi/v2.2.2/%s/?_return_fields=%s", ref, strings.Join(returnFields, ","))
+		endPoint = fmt.Sprintf("/wapi/v2.3.1/%s/?_return_fields=%s", ref, strings.Join(returnFields, ","))
 	} else {
-		endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", ref)
+		endPoint = fmt.Sprintf("/wapi/v2.3.1/%s", ref)
 	}
 	updateUserAPI := api.NewBaseAPI(http.MethodGet, endPoint, nil, new(AdminUser))
 	return updateUserAPI
@@ -29,14 +29,14 @@ func NewGetAdminUser(ref string, returnFields []string) *api.BaseAPI {
 
 //NewDeleteAdminUser - Deletes the user
 func NewDeleteAdminUser(ref string) *api.BaseAPI {
-	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", ref)
+	endPoint = fmt.Sprintf("/wapi/v2.3.1/%s", ref)
 	deleteUserAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(string))
 	return deleteUserAPI
 }
 
 // NewUpdateAdminUser - Updates the user
 func NewUpdateAdminUser(updateUser AdminUser) *api.BaseAPI {
-	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", updateUser.Ref)
+	endPoint = fmt.Sprintf("/wapi/v2.3.1/%s", updateUser.Ref)
 	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateUser, new(string))
 	return updateUserAPI
 }
