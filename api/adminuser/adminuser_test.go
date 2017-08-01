@@ -23,7 +23,7 @@ func userSetup(action string) *api.BaseAPI {
 	switch action {
 	case "create":
 		userAPI := NewCreateAdminUser(adminUser)
-		response := "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST"
+		response := "/wapi/v2.3.1/adminuser/blablalba:SVC-APP-UNIT-TEST"
 		userAPI.SetResponseObject(&response)
 		return userAPI
 	case "delete":
@@ -50,7 +50,7 @@ func TestUserCreateMethod(t *testing.T) {
 // TestUserCreateEndpoint - Test User Creation Endpoint
 func TestUserCreateEndpoint(t *testing.T) {
 	newUser := userSetup("create")
-	assert.Equal(t, "/wapi/v2.2.2/adminuser", newUser.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/adminuser", newUser.Endpoint())
 }
 
 // TestUserDeleteMethod - Test User Deletion method
@@ -62,7 +62,7 @@ func TestUserDeleteMethod(t *testing.T) {
 // TestUserDeleteEndpoint - Test user deletion endpoint
 func TestUserDeleteEndpoint(t *testing.T) {
 	newUser := userSetup("delete")
-	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST", newUser.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/adminuser/blablalba:SVC-APP-UNIT-TEST", newUser.Endpoint())
 
 }
 
@@ -70,7 +70,7 @@ func TestUserResponse(t *testing.T) {
 	newUser := userSetup("create")
 	fmt.Println(newUser)
 	response := *newUser.ResponseObject().(*string)
-	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST", response)
+	assert.Equal(t, "/wapi/v2.3.1/adminuser/blablalba:SVC-APP-UNIT-TEST", response)
 }
 
 func TestGetUserMethod(t *testing.T) {
@@ -80,7 +80,7 @@ func TestGetUserMethod(t *testing.T) {
 
 func TestGetUserEndpoint(t *testing.T) {
 	newUser := userSetup("get")
-	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST/?_return_fields=name,comment", newUser.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/adminuser/blablalba:SVC-APP-UNIT-TEST/?_return_fields=name,comment", newUser.Endpoint())
 }
 
 func TestUpdateUserMethod(t *testing.T) {
@@ -90,5 +90,5 @@ func TestUpdateUserMethod(t *testing.T) {
 
 func TestUpdateUserEndpoint(t *testing.T) {
 	newUser := userSetup("update")
-	assert.Equal(t, "/wapi/v2.2.2/adminuser/blablalba:SVC-APP-UNIT-TEST", newUser.Endpoint())
+	assert.Equal(t, "/wapi/v2.3.1/adminuser/blablalba:SVC-APP-UNIT-TEST", newUser.Endpoint())
 }
