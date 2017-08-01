@@ -37,6 +37,6 @@ func NewDeleteAdminUser(ref string) *api.BaseAPI {
 // NewUpdateAdminUser - Updates the user
 func NewUpdateAdminUser(updateUser AdminUser) *api.BaseAPI {
 	endPoint = fmt.Sprintf("/wapi/v2.2.2/%s", updateUser.Ref)
-	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateUser, new(AdminUser))
+	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateUser, new(string))
 	return updateUserAPI
 }
