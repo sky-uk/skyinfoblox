@@ -38,7 +38,7 @@ func createAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	httpStatus := createAdminGroupAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
 		fmt.Printf("\nError creating admin group %s. HTTP status: %d. Error: %+v\n", createAdminGroupObject.Name, httpStatus, err)
-		os.Exit(2)
+		os.Exit(1)
 	}
 	fmt.Printf("\nSuccessfully created admin group %s\n", createAdminGroupObject.Name)
 

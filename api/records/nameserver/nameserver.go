@@ -14,30 +14,21 @@ func NewCreate(nsRecord NSRecord) *api.BaseAPI {
 
 // NewGetAll : used to get all name server records
 func NewGetAll() *api.BaseAPI {
-	getAllNSRecordsAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+nsEndpoint, nil, new(NSRecord))
+	getAllNSRecordsAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+nsEndpoint, nil, new([]NSRecord))
 	return getAllNSRecordsAPI
 }
 
 // NewGet : used to get a name server record
 func NewGet(ref string, returnFieldList []string) *api.BaseAPI {
-
-	if returnFieldList != nil {
-		returnFields := "?_return_fields=" + strings.Join(returnFieldList, ",")
-		ref += returnFields
-	}
+	returnFields := "?_return_fields=" + strings.Join(returnFieldList, ",")
+	ref += returnFields
 	getNSRecordAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+"/"+ref, nil, new(NSRecord))
 	return getNSRecordAPI
 }
 
 // NewUpdate : used to update a name server record
 func NewUpdate(nsRecord NSRecord, returnFields []string) *api.BaseAPI {
-
-	var reference string
-	if returnFields != nil {
-		reference = nsRecord.Reference + "?_return_fields=" + strings.Join(returnFields, ",")
-	} else {
-		reference = nsRecord.Reference
-	}
+	reference := nsRecord.Reference + "?_return_fields=" + strings.Join(returnFields, ",")
 	updateNSRecordAPI := api.NewBaseAPI(http.MethodPut, wapiVersion+"/"+reference, nsRecord, new(NSRecord))
 	return updateNSRecordAPI
 }
