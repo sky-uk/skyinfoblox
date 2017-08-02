@@ -26,13 +26,13 @@ func NewCreate(adminRole AdminRole) *api.BaseAPI {
 	return createAdminRoleAPI
 }
 
-// NewUpdate : used to update an admin group
+// NewUpdate : used to update an admin role
 func NewUpdate(roleRef string, adminRole AdminRole) *api.BaseAPI {
 	updateAdminRoleAPI := api.NewBaseAPI(http.MethodPut, adminRoleEndpoint+roleRef+returnFields, adminRole, new(AdminRole))
 	return updateAdminRoleAPI
 }
 
-// NewDelete : used to delete an admin group
+// NewDelete : used to delete an admin role
 func NewDelete(roleRef string) *api.BaseAPI {
 	deleteAdminRoleAPI := api.NewBaseAPI(http.MethodDelete, adminRoleEndpoint+roleRef, nil, new(string))
 	return deleteAdminRoleAPI

@@ -62,7 +62,7 @@ func TestAdminRoleNewCreateEndpoint(t *testing.T){
 	assert.Equal(t,adminRoleEndpoint+"adminrole",createAdminRoleAPI.Endpoint())
 }
 
-func TestAdminGroupNewCreateResponse(t *testing.T)  {
+func TestAdminRoleNewCreateResponse(t *testing.T)  {
 	setUpAdminRoleTest()
 	assert.Equal(t,reference,*createAdminRoleAPI.ResponseObject().(*string))
 }

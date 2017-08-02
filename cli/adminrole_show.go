@@ -34,7 +34,7 @@ func showAdminRole(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
-	showAdminGroupFlags := flag.NewFlagSet("admin-role-show", flag.ExitOnError)
-	showAdminGroupFlags.String("ref", "", "usage: -ref ")
-	RegisterCliCommand("admin-role-show", showAdminGroupFlags, showAdminRole)
+	showAdminRoleFlags := flag.NewFlagSet("admin-role-show", flag.ExitOnError)
+	showAdminRoleFlags.String("ref", "", "usage: -ref ")
+	RegisterCliCommand("admin-role-show", showAdminRoleFlags, showAdminRole)
 }
