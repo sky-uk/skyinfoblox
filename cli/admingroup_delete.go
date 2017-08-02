@@ -22,7 +22,7 @@ func deleteAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	httpStatus := deleteAdminGroupAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
 		fmt.Printf("\nError whilst deleting admin group %s. HTTP status: %d. Error: %+v\n", adminGroupReference, httpStatus, err)
-		os.Exit(2)
+		os.Exit(1)
 	}
 	fmt.Printf("\nSuccessfully deleted admin group %s\n", adminGroupReference)
 }

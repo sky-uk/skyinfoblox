@@ -40,7 +40,7 @@ func updateAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	httpStatus := updateAdminGroupAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
 		fmt.Printf("\nError updating admin group %s. HTTP status: %d. Error: %+v\n", updateAdminGroupObject.Name, httpStatus, err)
-		os.Exit(2)
+		os.Exit(1)
 	}
 	fmt.Printf("\nSuccessfully updated admin group %s\n", updateAdminGroupObject.Name)
 

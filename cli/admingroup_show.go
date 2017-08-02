@@ -25,7 +25,7 @@ func showAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	httpStatus := adminGroupShowAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
 		fmt.Printf("\nError whilst retrieving admin group reference %s. HTTP status: %d. Error: %+v", adminGroupReference, httpStatus, err)
-		os.Exit(2)
+		os.Exit(1)
 	}
 	response := *adminGroupShowAPI.ResponseObject().(*admingroup.IBXAdminGroup)
 

@@ -31,13 +31,7 @@ func NewGet(ref string, returnFieldList []string) *api.BaseAPI {
 
 // NewUpdate : used to update an admin group
 func NewUpdate(adminGroup IBXAdminGroup, returnFields []string) *api.BaseAPI {
-
-	var reference string
-	if returnFields != nil {
-		reference = "/" + adminGroup.Reference + "?_return_fields=" + strings.Join(returnFields, ",")
-	} else {
-		reference = "/" + adminGroup.Reference
-	}
+	reference := "/" + adminGroup.Reference + "?_return_fields=" + strings.Join(returnFields, ",")
 	updateAdminGroupAPI := api.NewBaseAPI(http.MethodPut, adminGroupEndpoint+reference, adminGroup, new(IBXAdminGroup))
 	return updateAdminGroupAPI
 }
