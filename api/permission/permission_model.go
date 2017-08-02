@@ -1,6 +1,8 @@
 package permission
 
+// Permission : base Permission object model
 type Permission struct {
+	Ref          string `json:"_ref,omitempty"`
 	Group        string `json:"group,omitempty"`
 	Object       string `json:"object,omitempty"`
 	Permission   string `json:"permission,omitempty"`
