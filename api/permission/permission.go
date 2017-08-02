@@ -1,34 +1,39 @@
 package permission
 
 import (
-	"github.com/sky-uk/go-rest-api"
+	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 )
 
-const permissionEndpoint = "/wapi/v2.3.1/permission"
+const apiEndpoint = "/wapi/v2.3.1/"
 const returnFields = "?_return_fields=group,object,permission,resource_type,role"
 
-func NewGet(permissionRef string) *rest.BaseAPI {
-	permissionGetAPI := rest.NewBaseAPI(http.MethodGet, permissionEndpoint+permissionRef+returnFields, nil, new(Permission), nil)
-	return permissionGetAPI
+// NewGet returns a new object of permissionGetAPI.
+func NewGet(permissionRef string) *api.BaseAPI {
+	getPermissionAPI := api.NewBaseAPI(http.MethodGet, apiEndpoint+permissionRef+returnFields, nil, new(Permission))
+	return getPermissionAPI
 }
 
-func NewGetAll() *rest.BaseAPI {
-	permissionGetAllAPI := rest.NewBaseAPI(http.MethodGet, permissionEndpoint+returnFields, nil, new([]Permission), nil)
-	return permissionGetAllAPI
+// NewGetAll returns a new object of permissionGetAllAPI.
+func NewGetAll() *api.BaseAPI {
+	getAllPermissionsAPI := api.NewBaseAPI(http.MethodGet, apiEndpoint+"permission"+returnFields, nil, new([]Permission))
+	return getAllPermissionsAPI
 }
 
-func NewCreate(newPermission Permission) *rest.BaseAPI {
-	permissionCreateAPI := rest.NewBaseAPI(http.MethodPost, permissionEndpoint, newPermission, new(string), nil)
-	return permissionCreateAPI
+// NewCreate returns a new object of permissionCreateAPI.
+func NewCreate(newPermission Permission) *api.BaseAPI {
+	createPermissionAPI := api.NewBaseAPI(http.MethodPost, apiEndpoint+"permission", newPermission, new(string))
+	return createPermissionAPI
 }
 
-func NewUpdate(updatedPermission Permission) *rest.BaseAPI {
-	permissionCreateAPI := rest.NewBaseAPI(http.MethodPut, permissionEndpoint, updatedPermission, new(string), nil)
-	return permissionCreateAPI
+// NewUpdate returns a new object of permissionUpdateAPI.
+func NewUpdate(updatedPermission Permission) *api.BaseAPI {
+	updatePermissionAPI := api.NewBaseAPI(http.MethodPut, apiEndpoint, updatedPermission, new(string))
+	return updatePermissionAPI
 }
 
-func NewDelete(permissionRef string) *rest.BaseAPI {
-	permissionDeleteAPI := rest.NewBaseAPI(http.MethodDelete, permissionEndpoint+permissionRef, nil, new(string), nil)
-	return permissionDeleteAPI
+// NewDelete returns a new object of permissionDeleteAPI.
+func NewDelete(permissionRef string) *api.BaseAPI {
+	deletePermissionAPI := api.NewBaseAPI(http.MethodDelete, apiEndpoint+permissionRef, nil, new(string))
+	return deletePermissionAPI
 }
