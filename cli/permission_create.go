@@ -22,12 +22,12 @@ func createPermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	}
 
 	if (group != "" && role != "") || (group == "" && role == "") {
-		fmt.Println("\nEither group or role is required but not both\n")
+		fmt.Println("\nEither group or role is required but not both")
 		os.Exit(1)
 	}
 
 	if perm == "" {
-		fmt.Println("\npermission is a required argument\n")
+		fmt.Println("\npermission is a required argument")
 		os.Exit(1)
 	}
 

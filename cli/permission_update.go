@@ -20,14 +20,14 @@ func updatePermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	group := flagSet.Lookup("group").Value.String()
 
 	if ref == "" {
-		fmt.Println("\nref argument is required\n")
+		fmt.Println("\nref argument is required")
 		os.Exit(1)
 	}
 
 	updatedPermission.Reference = ref
 
 	if group != "" && role != "" {
-		fmt.Println("\nGroup and role cannot both be set\n")
+		fmt.Println("\nGroup and role cannot both be set")
 		os.Exit(1)
 	}
 
