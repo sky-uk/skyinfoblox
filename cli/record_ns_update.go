@@ -38,8 +38,8 @@ func updateNSRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if addresses != "" {
 		alwaysCreateAddressPTR := true
 		zoneNameServerObjects := make([]nameserver.ZoneNameServer, 0)
-		addresses := strings.Split(addresses, ",")
-		for _, address := range addresses {
+		addressList := strings.Split(addresses, ",")
+		for _, address := range addressList {
 			zoneNameServer := nameserver.ZoneNameServer{address, &alwaysCreateAddressPTR}
 			zoneNameServerObjects = append(zoneNameServerObjects, zoneNameServer)
 		}

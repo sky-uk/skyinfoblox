@@ -16,12 +16,12 @@ func setupNameServerRecordTest() {
 
 	reference = "record:ns/ZG5zLmJpbmRfbnMkLl9kZWZhdWx0LmNvbS5ic2t5Yi5zbHVwYWFzLi5ub25wcmRpYnhkbnMwNC5ic2t5Yi5jb20:ns1.example.com/example.com/default"
 	nsServerAutoCreatePointerRecord := true
-	zoneNameServer := ZoneNameServer{"ns1.example.com", &nsServerAutoCreatePointerRecord}
+	zoneNameServer := ZoneNameServer{"192.168.0.1", &nsServerAutoCreatePointerRecord}
 	zoneNameServers := make([]ZoneNameServer, 0)
 	zoneNameServers = append(zoneNameServers, zoneNameServer)
 	nameServerRecordObject := NSRecord{
 		Reference:  reference,
-		Name:       "ns1.example.com",
+		Name:       "example.com",
 		Addresses:  zoneNameServers,
 		NameServer: "ns1.example.com",
 		View:       "default",
@@ -78,10 +78,10 @@ func TestNameServerRecordNewGetAllResponse(t *testing.T) {
 	response := *getAllNSRecordAPI.ResponseObject().(*[]NSRecord)
 
 	assert.Equal(t, "record:ns/ZG5zLmJpbmRfbnMkLl9kZWZhdWx0LmNvbS5ic2t5Yi5zbHVwYWFzLi5ub25wcmRpYnhkbnMwNC5ic2t5Yi5jb20:ns1.example.com/example.com/default", response[0].Reference)
-	assert.Equal(t, "ns1.example.com", response[0].Name)
+	assert.Equal(t, "example.com", response[0].Name)
 	assert.Equal(t, "default", response[0].View)
 	assert.Equal(t, "ns1.example.com", response[0].NameServer)
-	assert.Equal(t, "ns1.example.com", response[0].Addresses[0].Address)
+	assert.Equal(t, "192.168.0.1", response[0].Addresses[0].Address)
 	assert.Equal(t, true, *response[0].Addresses[0].AutoCreatePointerRecord)
 }
 
@@ -99,10 +99,10 @@ func TestNameServerRecordNewGetResponse(t *testing.T) {
 	setupNameServerRecordTest()
 	response := *getNSRecordAPI.ResponseObject().(*NSRecord)
 
-	assert.Equal(t, "ns1.example.com", response.Name)
+	assert.Equal(t, "example.com", response.Name)
 	assert.Equal(t, "default", response.View)
 	assert.Equal(t, "ns1.example.com", response.NameServer)
-	assert.Equal(t, "ns1.example.com", response.Addresses[0].Address)
+	assert.Equal(t, "192.168.0.1", response.Addresses[0].Address)
 	assert.Equal(t, true, *response.Addresses[0].AutoCreatePointerRecord)
 }
 
@@ -120,10 +120,10 @@ func TestNameServerRecordNewUpdateResponse(t *testing.T) {
 	setupNameServerRecordTest()
 	response := updateNSRecordAPI.ResponseObject().(*NSRecord)
 
-	assert.Equal(t, "ns1.example.com", response.Name)
+	assert.Equal(t, "example.com", response.Name)
 	assert.Equal(t, "default", response.View)
 	assert.Equal(t, "ns1.example.com", response.NameServer)
-	assert.Equal(t, "ns1.example.com", response.Addresses[0].Address)
+	assert.Equal(t, "192.168.0.1", response.Addresses[0].Address)
 	assert.Equal(t, true, *response.Addresses[0].AutoCreatePointerRecord)
 }
 
