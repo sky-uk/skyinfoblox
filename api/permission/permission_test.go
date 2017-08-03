@@ -3,58 +3,137 @@ package permission
 import (
 	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/stretchr/testify/assert"
+	"net/http"
 	"testing"
-	"encoding/json"
 )
 
-func createPermissionSetup() *api.BaseAPI {
+var createPermissionAPI, getPermissionAPI, getAllPermissionsAPI, updatePermissionAPI, deletePermissionAPI *api.BaseAPI
+var reference string
+var permissionOne, permissionTwo Permission
+var permissionListResponse []Permission
+
+func setUpPermissionTest() {
+
 	newPermission := Permission{
+		Reference:    "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5hZG1pbl9ncm91cCQuY2R0ZXN0Z3JvdXAyLmRucy5iaW5kX2E:cdtestgroup2/READ",
 		ResourceType: "VIEW",
-		Permission: "WRITE",
-		Role:       "DNS Admin",
+		Permission:   "WRITE",
+		Role:         "DNS Admin",
 	}
-	createPermissionAPI := NewCreate(newPermission)
-	createPermissionAPI.SetResponseObject("test response object")
-	return createPermissionAPI
+
+	reference = "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5hZG1pbl9ncm91cCQuY2R0ZXN0Z3JvdXAyLmRucy5iaW5kX2E:cdtestgroup2/READ"
+
+	createPermissionAPI = NewCreate(newPermission)
+	createPermissionAPI.SetResponseObject(reference)
+
+	getPermissionAPI = NewGet(reference)
+	getPermissionAPI.SetResponseObject(newPermission)
+
+	permissionOne = Permission{
+		Reference:    "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5hZG1pbl9ncm91cCQuY2R0ZXN0Z3JvdXAyLmRucy5iaW5kX2E:cdtestgroup2/READ",
+		ResourceType: "VIEW",
+		Permission:   "WRITE",
+		Role:         "DNS Admin",
+	}
+
+	permissionTwo = Permission{
+		Reference:    "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5yb2xlJHRlc3Ryb2xlMi5kbnMuYmluZF9h:testrole2/READ",
+		ResourceType: "A",
+		Permission:   "READ",
+		Role:         "testrole2",
+	}
+
+	permissionListResponse = append(permissionListResponse, permissionOne)
+	permissionListResponse = append(permissionListResponse, permissionTwo)
+
+	getAllPermissionsAPI = NewGetAll()
+	getAllPermissionsAPI.SetResponseObject(&permissionListResponse)
+
+	updatePermissionAPI = NewUpdate(reference, newPermission)
+	updatePermissionAPI.SetResponseObject(newPermission)
+
+	deletePermissionAPI = NewDelete(reference)
 }
 
 func TestCreatePermissionMethod(t *testing.T) {
-	newPermission := createPermissionSetup()
-	assert.Equal(t, "POST", newPermission.Method())
+	setUpPermissionTest()
+	assert.Equal(t, http.MethodPost, createPermissionAPI.Method())
 }
 
 func TestCreatePermissionEndpoint(t *testing.T) {
-	newPermission := createPermissionSetup()
-	assert.Equal(t, "/wapi/v2.3.1/permission", newPermission.Endpoint())
+	setUpPermissionTest()
+	assert.Equal(t, permissionEndpoint+"permission", createPermissionAPI.Endpoint())
 }
 
-
-func TestCreatePermissionMarshalling(t *testing.T) {
-	newPermission := createPermissionSetup()
-	expectedJSON := `{"permission":"WRITE","resource_type":"VIEW","role":"DNS Admin"}`
-	jsonBytes, err := json.Marshal(newPermission.RequestObject())
-	assert.Nil(t, err)
-	assert.Equal(t, expectedJSON, string(jsonBytes))
+func TestCreateResponseObject(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, reference, createPermissionAPI.ResponseObject().(string))
 }
 
-func TestCreateResponseObject(t *testing.T)  {
-	response := createPermissionSetup().ResponseObject().(string)
-	assert.Equal(t,"test response object",response)
-
- }
-
-func getPermissionSetup() *api.BaseAPI {
-	objRef := "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5yb2xlJEROUyBBZG1pbi4:DNS%20Admin/WRITE"
-	return NewGet(objRef)
+func TestGetPermissionMethod(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, http.MethodGet, getPermissionAPI.Method())
 }
 
-func TestGetPermissionMethod(t *testing.T)  {
-	getPermission := getPermissionSetup()
-	assert.Equal(t,"GET",getPermission.Method())
+func TestGetPermissionEndpoint(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, permissionEndpoint+reference+returnFields, getPermissionAPI.Endpoint())
 }
 
-func TestGetPermissionEndpoint(t *testing.T)  {
-	getPermission := getPermissionSetup()
-	assert.Equal(t,"/wapi/v2.3.1/permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5yb2xlJEROUyBBZG1pbi4:DNS%20Admin/WRITE?_return_fields=group,object,permission,resource_type,role",getPermission.Endpoint())
+func TestGetPermissionResponse(t *testing.T) {
+	setUpPermissionTest()
+	response := getPermissionAPI.ResponseObject().(Permission)
+
+	assert.Equal(t, "WRITE", response.Permission)
+	assert.Equal(t, "DNS Admin", response.Role)
+	assert.Equal(t, "VIEW", response.ResourceType)
+	assert.Equal(t, "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5hZG1pbl9ncm91cCQuY2R0ZXN0Z3JvdXAyLmRucy5iaW5kX2E:cdtestgroup2/READ", response.Reference)
 }
 
+func TestGetAllPermissionsMethod(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, http.MethodGet, getAllPermissionsAPI.Method())
+}
+
+func TestGetAllPermissionEndpoint(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, permissionEndpoint+"permission"+returnFields, getAllPermissionsAPI.Endpoint())
+}
+
+func TestGetAllPermissionResponse(t *testing.T) {
+	setUpPermissionTest()
+	response := getAllPermissionsAPI.ResponseObject().(*[]Permission)
+	assert.Equal(t, permissionOne, (*response)[0])
+	assert.Equal(t, permissionTwo, (*response)[1])
+
+}
+
+func TestUpdatePermissionMethod(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, http.MethodPut, updatePermissionAPI.Method())
+}
+
+func TestUpdatePermissionEndpoint(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, permissionEndpoint+reference+returnFields, updatePermissionAPI.Endpoint())
+}
+
+func TestUpdatePermissionResponse(t *testing.T) {
+	setUpPermissionTest()
+	response := updatePermissionAPI.ResponseObject().(Permission)
+
+	assert.Equal(t, "WRITE", response.Permission)
+	assert.Equal(t, "DNS Admin", response.Role)
+	assert.Equal(t, "VIEW", response.ResourceType)
+	assert.Equal(t, "permission/b25lLmhpZXJfcnVsZSQuY29tLmluZm9ibG94LmRucy56b25lJC4uLi4uY29tLmluZm9ibG94Lm9uZS5hZG1pbl9ncm91cCQuY2R0ZXN0Z3JvdXAyLmRucy5iaW5kX2E:cdtestgroup2/READ", response.Reference)
+}
+
+func TestDeletePermissionMethod(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, http.MethodDelete, deletePermissionAPI.Method())
+}
+
+func TestDeletePermissionEndpoint(t *testing.T) {
+	setUpPermissionTest()
+	assert.Equal(t, permissionEndpoint+reference, deletePermissionAPI.Endpoint())
+}

@@ -30,7 +30,7 @@ func showPermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	row["Permission"] = response.Permission
 	row["Resource Type"] = response.ResourceType
 	row["Role"] = response.Role
-	row["Reference"] = response.Ref
+	row["Reference"] = response.Reference
 	PrettyPrintSingle(row)
 
 }

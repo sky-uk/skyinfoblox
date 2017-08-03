@@ -10,13 +10,6 @@ import (
 )
 
 func createPermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
-
-	fmt.Println(flagSet.Lookup("object").Value.String())
-	fmt.Println(flagSet.Lookup("resource_type").Value.String())
-	fmt.Println(flagSet.Lookup("group").Value.String())
-	fmt.Println(flagSet.Lookup("role").Value.String())
-	fmt.Println(flagSet.Lookup("permission").Value.String())
-
 	perm := flagSet.Lookup("permission").Value.String()
 	resourceType := flagSet.Lookup("resource_type").Value.String()
 	object := flagSet.Lookup("object").Value.String()
@@ -51,12 +44,11 @@ func createPermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	err := client.Do(createPermissionAPI)
 	httpStatus := createPermissionAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
-		fmt.Println("Error: ", err)
+		fmt.Printf("\nError whilst creating permission. HTTP status: %d. Error: %+v\n", httpStatus, err)
 	}
 
 	fmt.Println("Status Code: ", createPermissionAPI.StatusCode())
-	fmt.Printf("Response : %v", createPermissionAPI.RawResponse())
-
+	fmt.Println("Permission created")
 }
 
 func init() {

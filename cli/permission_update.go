@@ -12,14 +12,6 @@ import (
 var updatedPermission permission.Permission
 
 func updatePermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
-
-	fmt.Println(flagSet.Lookup("ref").Value.String())
-	fmt.Println(flagSet.Lookup("object").Value.String())
-	fmt.Println(flagSet.Lookup("resource_type").Value.String())
-	fmt.Println(flagSet.Lookup("group").Value.String())
-	fmt.Println(flagSet.Lookup("role").Value.String())
-	fmt.Println(flagSet.Lookup("permission").Value.String())
-
 	ref := flagSet.Lookup("ref").Value.String()
 	perm := flagSet.Lookup("permission").Value.String()
 	resourceType := flagSet.Lookup("resource_type").Value.String()
@@ -32,9 +24,9 @@ func updatePermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 		os.Exit(1)
 	}
 
-	updatedPermission.Ref = ref
+	updatedPermission.Reference = ref
 
-	if (group != "" && role != ""){
+	if group != "" && role != "" {
 		fmt.Println("\nGroup and role cannot both be set\n")
 		os.Exit(1)
 	}
@@ -48,7 +40,7 @@ func updatePermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	}
 
 	if role != "" {
-		updatedPermission.Role= role
+		updatedPermission.Role = role
 		updatedPermission.Group = ""
 	}
 
@@ -61,17 +53,26 @@ func updatePermission(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 		updatedPermission.Permission = perm
 	}
 
-
-	updatePermissionAPI := permission.NewUpdate(updatedPermission)
+	updatePermissionAPI := permission.NewUpdate(ref, updatedPermission)
 
 	err := client.Do(updatePermissionAPI)
 	httpStatus := updatePermissionAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
-		fmt.Println("Error: ", err)
+		fmt.Printf("\nError whilst updating permission. HTTP status: %d. Error: %+v\n", httpStatus, err)
+		os.Exit(1)
 	}
 
 	fmt.Println("Status Code: ", updatePermissionAPI.StatusCode())
-	fmt.Printf("Response : %v", updatePermissionAPI.RawResponse())
+
+	response := updatePermissionAPI.ResponseObject().(*permission.Permission)
+
+	row := map[string]interface{}{}
+	row["Permission"] = response.Permission
+	row["Resource Type"] = response.ResourceType
+	row["Role"] = response.Role
+	row["Group"] = response.Group
+	row["Reference"] = response.Reference
+	PrettyPrintSingle(row)
 
 }
 
