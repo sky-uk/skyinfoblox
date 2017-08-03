@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/records"
+	"github.com/sky-uk/skyinfoblox/api/records/nameserver"
+	"net/http"
+	"os"
 )
 
 var recordRef string
@@ -24,6 +27,8 @@ func listRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		listTXTRecord(client)
 	case "srv":
 		listSRVRecord(client)
+	case "ns":
+		listNSRecord(client)
 	default:
 		fmt.Println("Error: No or wrong record type specified.")
 	}
@@ -104,6 +109,41 @@ func listSRVRecord(client *skyinfoblox.InfobloxClient) {
 	row["Target"] = record.Target
 	row["Priority"] = record.Priority
 	row["Ref"] = record.Ref
+	PrettyPrintSingle(row)
+}
+
+func listNSRecord(client *skyinfoblox.InfobloxClient) {
+	if client.Debug {
+		fmt.Println("Listing single 'ns' type record of reference:", recordRef)
+	}
+	fields := []string{"name", "nameserver", "view", "addresses"}
+	getNSRecordAPI := nameserver.NewGet(recordRef, fields)
+
+	err := client.Do(getNSRecordAPI)
+	httpStatus := getNSRecordAPI.StatusCode()
+
+	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
+		fmt.Printf("\nError whilst retrieving NS record %s. HTTP status: %d. Error: %+v\n", recordRef, httpStatus, err)
+		os.Exit(1)
+	}
+
+	record := *getNSRecordAPI.ResponseObject().(*nameserver.NSRecord)
+	row := map[string]interface{}{}
+	row["Name"] = record.Name
+	row["Reference"] = record.Reference
+	row["Name Server"] = record.NameServer
+	row["View"] = record.View
+
+	var addressString string
+	addresses := record.Addresses
+	for idx, address := range addresses {
+		if idx == 0 {
+			addressString = fmt.Sprintf("[%s, %t]", address.Address, *address.AutoCreatePointerRecord)
+		} else {
+			addressString = fmt.Sprintf("%s, [%s, %t]", addressString, address.Address, *address.AutoCreatePointerRecord)
+		}
+	}
+	row["Addresses [Address, PTR]"] = addressString
 	PrettyPrintSingle(row)
 }
 

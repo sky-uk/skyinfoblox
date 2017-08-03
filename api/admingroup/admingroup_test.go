@@ -16,8 +16,9 @@ func setupAdminGroupTest() {
 
 	superUser := true
 	disable := false
+	reference = "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test"
 	adminGroup := IBXAdminGroup{
-		Reference:      "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
+		Reference:      reference,
 		AccessMethod:   []string{"API"},
 		Comment:        "API Access only",
 		Disable:        &disable,
@@ -27,7 +28,6 @@ func setupAdminGroupTest() {
 		SuperUser:      &superUser,
 	}
 	returnFields = []string{"name", "comment", "access_method", "disable", "email_addresses", "roles", "superuser"}
-	reference = "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test"
 
 	getAllAdminGroupReference := IBXAdminGroupReference{
 		Reference:      "admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test",
@@ -58,7 +58,7 @@ func TestAdminGroupNewCreateMethod(t *testing.T) {
 
 func TestAdminGroupNewCreateEndpoint(t *testing.T) {
 	setupAdminGroupTest()
-	assert.Equal(t, adminGroupEndpoint+"/admingroup", createAdminGroupAPI.Endpoint())
+	assert.Equal(t, wapiVersion+adminGroupEndpoint, createAdminGroupAPI.Endpoint())
 }
 
 func TestAdminGroupNewCreateResponse(t *testing.T) {
@@ -75,7 +75,7 @@ func TestAdminGroupNewGetAllMethod(t *testing.T) {
 
 func TestAdminGroupNewGetAllEndpoint(t *testing.T) {
 	setupAdminGroupTest()
-	assert.Equal(t, adminGroupEndpoint+"/admingroup", getAllAdminGroupAPI.Endpoint())
+	assert.Equal(t, wapiVersion+adminGroupEndpoint, getAllAdminGroupAPI.Endpoint())
 }
 
 func TestAdminGroupNewGetAllResponse(t *testing.T) {
@@ -93,7 +93,7 @@ func TestAdminGroupNewGetMethod(t *testing.T) {
 
 func TestAdminGroupNewGetEndpoint(t *testing.T) {
 	setupAdminGroupTest()
-	assert.Equal(t, adminGroupEndpoint+"/admingroup/b25lLmFkbWluX2dyb3VwJC5jbG91ZC1hcGktb25seQ:test?_return_fields=name,comment,access_method,disable,email_addresses,roles,superuser", getAdminGroupAPI.Endpoint())
+	assert.Equal(t, wapiVersion+"/"+reference+"?_return_fields="+strings.Join(returnFields, ","), getAdminGroupAPI.Endpoint())
 }
 
 func TestAdminGroupNewGetResponse(t *testing.T) {
@@ -116,7 +116,7 @@ func TestAdminGroupNewUpdateMethod(t *testing.T) {
 
 func TestAdminGroupNewUpdateEndpoint(t *testing.T) {
 	setupAdminGroupTest()
-	assert.Equal(t, adminGroupEndpoint+"/"+reference+"?_return_fields="+strings.Join(returnFields, ","), updateAdminGroupAPI.Endpoint())
+	assert.Equal(t, wapiVersion+"/"+reference+"?_return_fields="+strings.Join(returnFields, ","), updateAdminGroupAPI.Endpoint())
 }
 
 func TestAdminGroupNewUpdateResponse(t *testing.T) {
@@ -140,5 +140,5 @@ func TestAdminGroupNewDeleteMethod(t *testing.T) {
 
 func TestAdminGroupNewDeleteEndpoint(t *testing.T) {
 	setupAdminGroupTest()
-	assert.Equal(t, adminGroupEndpoint+"/"+reference, deleteAdminGroupAPI.Endpoint())
+	assert.Equal(t, wapiVersion+"/"+reference, deleteAdminGroupAPI.Endpoint())
 }
