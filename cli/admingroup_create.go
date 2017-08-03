@@ -7,31 +7,46 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/admingroup"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 )
 
-var createAdminGroupObject admingroup.IBXAdminGroup
-var createAdminGroupAccessMethods, createAdminGroupEmailAddresses, createAdminGroupRoles string
-var createAdminGroupSuperUser, createAdminGroupDisable bool
-
 func createAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	if createAdminGroupObject.Name == "" {
+	var createAdminGroupObject admingroup.IBXAdminGroup
+
+	name := flagSet.Lookup("name").Value.String()
+	comment := flagSet.Lookup("comment").Value.String()
+	superUser, superUserErr := strconv.ParseBool(flagSet.Lookup("super-user").Value.String())
+	disable, disableErr := strconv.ParseBool(flagSet.Lookup("disable").Value.String())
+	accessMethods := flagSet.Lookup("access-method").Value.String()
+	emailAddresses := flagSet.Lookup("email-addresses").Value.String()
+	roles := flagSet.Lookup("roles").Value.String()
+
+	if name == "" {
 		fmt.Printf("\nError name argument is required\n")
 		os.Exit(1)
 	}
+	createAdminGroupObject.Name = name
 
-	if createAdminGroupAccessMethods != "" {
-		createAdminGroupObject.AccessMethod = strings.Split(createAdminGroupAccessMethods, ",")
+	if comment != "" {
+		createAdminGroupObject.Comment = comment
 	}
-	if createAdminGroupEmailAddresses != "" {
-		createAdminGroupObject.EmailAddresses = strings.Split(createAdminGroupEmailAddresses, ",")
+	if superUserErr == nil {
+		createAdminGroupObject.SuperUser = &superUser
 	}
-	if createAdminGroupRoles != "" {
-		createAdminGroupObject.Roles = strings.Split(createAdminGroupRoles, ",")
+	if disableErr == nil {
+		createAdminGroupObject.Disable = &disable
 	}
-	createAdminGroupObject.Disable = &createAdminGroupDisable
-	createAdminGroupObject.SuperUser = &createAdminGroupSuperUser
+	if accessMethods != "" {
+		createAdminGroupObject.AccessMethod = strings.Split(accessMethods, ",")
+	}
+	if emailAddresses != "" {
+		createAdminGroupObject.EmailAddresses = strings.Split(emailAddresses, ",")
+	}
+	if roles != "" {
+		createAdminGroupObject.Roles = strings.Split(roles, ",")
+	}
 
 	createAdminGroupAPI := admingroup.NewCreate(createAdminGroupObject)
 	err := client.Do(createAdminGroupAPI)
@@ -41,17 +56,16 @@ func createAdminGroup(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 		os.Exit(1)
 	}
 	fmt.Printf("\nSuccessfully created admin group %s\n", createAdminGroupObject.Name)
-
 }
 
 func init() {
 	createAdminGroupFlags := flag.NewFlagSet("admin-group-create", flag.ExitOnError)
-	createAdminGroupFlags.StringVar(&createAdminGroupObject.Name, "name", "", "usage: -name admin-group-name")
-	createAdminGroupFlags.StringVar(&createAdminGroupObject.Comment, "comment", "", "usage: -comment 'A comment'")
-	createAdminGroupFlags.BoolVar(&createAdminGroupSuperUser, "super-user", false, "usage: -super-user")
-	createAdminGroupFlags.BoolVar(&createAdminGroupDisable, "disable", false, "usage: -disable")
-	createAdminGroupFlags.StringVar(&createAdminGroupAccessMethods, "access-method", "GUI,API,TAXII", "usage: -access-method method (One or more of API, CLOUD_API, GUI, TAXII")
-	createAdminGroupFlags.StringVar(&createAdminGroupEmailAddresses, "email-addresses", "", "usage: -email-addresses emailaddress@domain,emailaddress2@domain....")
-	createAdminGroupFlags.StringVar(&createAdminGroupRoles, "roles", "", "usage: -roles role1,role2...")
+	createAdminGroupFlags.String("name", "", "usage: -name admin-group-name")
+	createAdminGroupFlags.String("comment", "", "usage: -comment 'A comment'")
+	createAdminGroupFlags.String("super-user", "", "usage: -super-user (true|false)")
+	createAdminGroupFlags.String("disable", "", "usage: -disable (true|false)")
+	createAdminGroupFlags.String("access-method", "GUI,API,TAXII", "usage: -access-method method (One or more of API, CLOUD_API, GUI, TAXII")
+	createAdminGroupFlags.String("email-addresses", "", "usage: -email-addresses emailaddress@domain,emailaddress2@domain....")
+	createAdminGroupFlags.String("roles", "", "usage: -roles role1,role2...")
 	RegisterCliCommand("admin-group-create", createAdminGroupFlags, createAdminGroup)
 }

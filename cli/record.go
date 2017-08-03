@@ -133,7 +133,17 @@ func listNSRecord(client *skyinfoblox.InfobloxClient) {
 	row["Reference"] = record.Reference
 	row["Name Server"] = record.NameServer
 	row["View"] = record.View
-	row["Addresses"] = record.Addresses
+
+	var addressString string
+	addresses := record.Addresses
+	for idx, address := range addresses {
+		if idx == 0 {
+			addressString = fmt.Sprintf("[%s, %t]", address.Address, *address.AutoCreatePointerRecord)
+		} else {
+			addressString = fmt.Sprintf("%s, [%s, %t]", addressString, address.Address, *address.AutoCreatePointerRecord)
+		}
+	}
+	row["Addresses [Address, PTR]"] = addressString
 	PrettyPrintSingle(row)
 }
 

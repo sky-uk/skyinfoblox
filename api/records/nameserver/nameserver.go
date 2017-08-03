@@ -19,10 +19,9 @@ func NewGetAll() *api.BaseAPI {
 }
 
 // NewGet : used to get a name server record
-func NewGet(ref string, returnFieldList []string) *api.BaseAPI {
-	returnFields := "?_return_fields=" + strings.Join(returnFieldList, ",")
-	ref += returnFields
-	getNSRecordAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+"/"+ref, nil, new(NSRecord))
+func NewGet(reference string, returnFieldList []string) *api.BaseAPI {
+	reference += "?_return_fields=" + strings.Join(returnFieldList, ",")
+	getNSRecordAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+"/"+reference, nil, new(NSRecord))
 	return getNSRecordAPI
 }
 

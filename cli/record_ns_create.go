@@ -45,7 +45,7 @@ func createNSRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 func init() {
 	createNSFlags := flag.NewFlagSet("record-ns-create", flag.ExitOnError)
-	createNSFlags.String("name", "", "usage: -name ns-record-name")
+	createNSFlags.String("name", "", "usage: -name zone-name")
 	createNSFlags.String("nameserver", "", "usage: -nameserver name-server")
 	createNSFlags.String("view", "default", "usage: -view the-view")
 	createNSFlags.String("addresses", "", "usage: -addresses xxx.xxx.xxx.xxx,yyy.yyy.yyy.yyy (2x IP addresses")
