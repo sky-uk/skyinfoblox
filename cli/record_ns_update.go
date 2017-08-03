@@ -21,14 +21,10 @@ func updateNSRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	}
 	nsRecord.Reference = reference
 
-	name := flagSet.Lookup("name").Value.String()
 	nameServer := flagSet.Lookup("nameserver").Value.String()
 	view := flagSet.Lookup("view").Value.String()
 	addresses := flagSet.Lookup("addresses").Value.String()
 
-	if name != "" {
-		nsRecord.Name = name
-	}
 	if nameServer != "" {
 		nsRecord.NameServer = nameServer
 	}
@@ -59,7 +55,6 @@ func updateNSRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 func init() {
 	updateNSFlags := flag.NewFlagSet("record-ns-update", flag.ExitOnError)
 	updateNSFlags.String("ref", "", "usage: -ref object-reference")
-	updateNSFlags.String("name", "", "usage: -name zone-name")
 	updateNSFlags.String("nameserver", "", "usage: -nameserver name-server")
 	updateNSFlags.String("view", "", "usage: -view the-view")
 	updateNSFlags.String("addresses", "", "usage: -addresses xxx.xxx.xxx.xxx,yyy.yyy.yyy.yyy (2x IP addresses")
