@@ -27,7 +27,7 @@ func showAllPermissions(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSe
 		row["Permission"] = permission.Permission
 		row["Resource Type"] = permission.ResourceType
 		row["Role"] = permission.Role
-		row["Reference"] = permission.Ref
+		row["Reference"] = permission.Reference
 		rows = append(rows, row)
 	}
 	PrettyPrintMany(headers, rows)
