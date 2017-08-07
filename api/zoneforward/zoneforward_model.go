@@ -37,7 +37,7 @@ type ZoneForward struct {
 	ForwardersOnly *bool `json:"forwarders_only,omitempty"`
 	//The information for the Grid members to which you want the Infoblox appliance
 	//to forward queries for a specified domain name.
-	ForwardingServers []common.ForwardingMemberServer `json:forwarding_servers,omitempty"`
+	ForwardingServers []common.ForwardingMemberServer `json:"forwarding_servers,omitempty"`
 	//The name of this DNS zone. For a reverse zone, this is in “address/cidr” format.
 	//For other zones, this is in FQDN format. This value can be in unicode format.
 	//Note that for a reverse zone, the corresponding zone_format value should be set.
