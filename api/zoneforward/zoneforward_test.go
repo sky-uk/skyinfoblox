@@ -11,7 +11,7 @@ func testZoneForwardStruct(t *testing.T) {
 	rec := new(ZoneForward)
 	flag := false
 
-    // just to test each field is settable...
+	// just to test each field is settable...
 	rec.Ref = "ref"
 	rec.Address = "address"
 	rec.Comment = "comment"
