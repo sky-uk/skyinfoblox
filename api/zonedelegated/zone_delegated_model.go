@@ -4,6 +4,7 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/common"
 )
 
+// ZoneDelegated - Main struct for zone delegation
 type ZoneDelegated struct {
 	Ref                    string                  `json:"_ref,omitempty"`
 	Address                string                  `json:"address,omitempty"`
@@ -11,8 +12,7 @@ type ZoneDelegated struct {
 	DelegateTo             []common.ExternalServer `json:"delegate_to"`
 	DelegatedTTL           uint                    `json:"delegated_ttl,omitempty"`
 	Disable                *bool                   `json:"disable,omitempty"`
-	//DisplayDomain          string                  `json:"display_domain,omitempty"`
-	DnsFqdn                string                  `json:"dns_fqdn,omitempty"`
+	DNSFqdn                string                  `json:"dns_fqdn,omitempty"`
 	EnableRFC2317Exclusion *bool                   `json:"enable_rfc2317_exclusion,omitempty"`
 	Fqdn                   string                  `json:"fqdn"`
 	Locked                 *bool                   `json:"locked,omitempty"`
