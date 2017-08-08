@@ -23,23 +23,34 @@ func NewGet(ref string, returnFields []string) *api.BaseAPI {
 	} else {
 		endPoint = fmt.Sprintf("/wapi/v2.3.1/%s", ref)
 	}
-	getUserAPI := api.NewBaseAPI(http.MethodGet, endPoint, nil, new(ZoneDelegated))
-	return getUserAPI
+	getZoneAPI := api.NewBaseAPI(http.MethodGet, endPoint, nil, new(ZoneDelegated))
+	return getZoneAPI
 
+}
+
+// NewGetAll - Get all existing zones
+func NewGetAll(returnFields []string) *api.BaseAPI {
+	if returnFields != nil && len(returnFields) > 0 {
+		endPoint = fmt.Sprintf("/wapi/v2.3.1/zone_delegated?_return_fields=%s", strings.Join(returnFields, ","))
+	} else {
+		endPoint = fmt.Sprintf("/wapi/v2.3.1/zone_delegated")
+	}
+	getAllZoneAPI := api.NewBaseAPI(http.MethodGet, endPoint, nil, new([]ZoneDelegated))
+	return getAllZoneAPI
 }
 
 // NewUpdate - Update a zone
 func NewUpdate(ref string, updateZoneDelegated ZoneDelegated) *api.BaseAPI {
 	endPoint := fmt.Sprintf("/wapi/v2.3.1/%s", ref)
-	updateUserAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateZoneDelegated, new(string))
-	return updateUserAPI
+	updateZoneAPI := api.NewBaseAPI(http.MethodPut, endPoint, updateZoneDelegated, new(string))
+	return updateZoneAPI
 
 }
 
 // NewDelete - Delete a zone
 func NewDelete(ref string) *api.BaseAPI {
 	endPoint := fmt.Sprintf("/wapi/v2.3.1/%s", ref)
-	deleteUserAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(string))
-	return deleteUserAPI
+	deleteZoneAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(string))
+	return deleteZoneAPI
 
 }

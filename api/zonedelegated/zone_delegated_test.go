@@ -30,7 +30,7 @@ func setupZoneDelegated(action string) *api.BaseAPI {
 
 	case "create":
 		zoneAPI := NewCreate(newZone)
-		response := "/wapi/v2.6.1/zone_delegated/blablalba:example.com/default"
+		response := "zone_delegated/blablalba:example.com/default"
 		zoneAPI.SetResponseObject(&response)
 		return zoneAPI
 	case "get":
@@ -62,6 +62,11 @@ func TestCreateZoneDelegatedMethod(t *testing.T) {
 func TestCreateZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("create")
 	assert.Equal(t, "/wapi/v2.3.1/zone_delegated", newZone.Endpoint())
+}
+
+func TestCreateZoneDelegatedResponse(t *testing.T) {
+	newZone := setupZoneDelegated("create")
+	assert.Equal(t, "zone_delegated/blablalba:example.com/default", *newZone.ResponseObject().(*string))
 }
 
 func TestGetZoneDelegatedMethod(t *testing.T) {
