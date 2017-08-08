@@ -1,16 +1,26 @@
 package main
 
-
 import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
-	"github.com/sky-uk/skyinfoblox/api/common"
+	//"github.com/sky-uk/skyinfoblox/api/common"
 	"github.com/sky-uk/skyinfoblox/api/zonedelegated"
 )
 
-
 func updateZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+	var zoneDelegated zonedelegated.ZoneDelegated
+	ref := flagSet.Lookup("ref").Value.String()
+	returnFields := []string{"fqdn", "comment", "delegate_to"}
+	getZoneDelegatedAPI := zonedelegated.NewGetZoneDelegated(ref, returnFields)
+	getZoneErr := client.Do(getZoneDelegatedAPI)
+	if getZoneErr != nil {
+		fmt.Println(fmt.Sprintf("Error Getting the zone: %s", getZoneErr.Error()))
+	}
+	zoneDelegated = getZoneDelegatedAPI.ResponseObject().(zonedelegated.ZoneDelegated)
+	if len(flagSet.Lookup("comment").Value.String()) > 0 {
+		zoneDelegated.Comment = flagSet.Lookup("comment").Value.String()
+	}
 
 }
 
