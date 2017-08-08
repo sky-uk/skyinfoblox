@@ -16,19 +16,21 @@ func createZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagS
 	createZoneDelegated.Disable = &disable
 	createZoneDelegated.DelegateTo = []common.ExternalServer{{Name: flagSet.Lookup("delegated-name").Value.String(), Address: flagSet.Lookup("delegated-address").Value.String()}}
 	createZoneDelegated.Comment = flagSet.Lookup("comment").Value.String()
-	createZoneDelegated.Address = flagSet.Lookup("address").Value.String()
-	createDeletagion := zonedelegated.NewCreateZoneDelegated(createZoneDelegated)
-	err := client.Do(createDeletagion)
+	createZoneDelegated.Fqdn = flagSet.Lookup("fqdn").Value.String()
+	createDelegation := zonedelegated.NewCreateZoneDelegated(createZoneDelegated)
+	err := client.Do(createDelegation)
 	if err != nil {
 		fmt.Println(fmt.Printf("could not create delegation %s", err.Error()))
 	}
+	fmt.Println(createDelegation.StatusCode())
+	fmt.Println(*createDelegation.ResponseObject().(*string))
 }
 
 func init() {
 	createZoneDelegatedFlags := flag.NewFlagSet("zone-delegated-create", flag.ExitOnError)
-	createZoneDelegatedFlags.String("address", "", "usage: -address 'The IP address of the server that is serving this zone'")
 	createZoneDelegatedFlags.String("comment", "", "usage: -comment 'Comment for the zone; maximum 256 characters'")
 	createZoneDelegatedFlags.String("delegated-name", "", "usage: -delegated-name 'Delegated name server Name'")
 	createZoneDelegatedFlags.String("delegated-address", "", "usage: -delegated-address 'Delegated server ip address'")
+	createZoneDelegatedFlags.String("fqdn", "", "usage: -fqdn 'fqdn of the zone being delegated'")
 	RegisterCliCommand("zone-delegated-create", createZoneDelegatedFlags, createZoneDelegated)
 }
