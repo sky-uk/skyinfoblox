@@ -1,7 +1,6 @@
 package zonedelegated
 
 import (
-	//"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"github.com/sky-uk/skyinfoblox/api/common"
 	"github.com/stretchr/testify/assert"
@@ -30,24 +29,24 @@ func setupZoneDelegated(action string) *api.BaseAPI {
 	switch action {
 
 	case "create":
-		zoneAPI := NewCreateZoneDelegated(newZone)
+		zoneAPI := NewCreate(newZone)
 		response := "/wapi/v2.6.1/zone_delegated/blablalba:example.com/default"
 		zoneAPI.SetResponseObject(&response)
 		return zoneAPI
 	case "get":
 		returnFields := []string{}
-		zoneAPI := NewGetZoneDelegated("blablalba:example.com", returnFields)
+		zoneAPI := NewGet("blablalba:example.com", returnFields)
 		return zoneAPI
 	case "getWithFields":
 		returnFields := []string{"delegate_to", "fqdn"}
-		zoneAPI := NewGetZoneDelegated("blablalba:example.com", returnFields)
+		zoneAPI := NewGet("blablalba:example.com", returnFields)
 		return zoneAPI
 
 	case "delete":
-		zoneAPI := NewDeleteZoneDelegated("blablalba:example.com")
+		zoneAPI := NewDelete("blablalba:example.com")
 		return zoneAPI
 	case "update":
-		zoneAPI := NewUpdateZoneDelegated("blablalba:example.com", newZone)
+		zoneAPI := NewUpdate("blablalba:example.com", newZone)
 		return zoneAPI
 	default:
 		return nil
@@ -95,7 +94,7 @@ func TestUpdateZoneDelegatedMethod(t *testing.T) {
 	assert.Equal(t, http.MethodPut, newZone.Method())
 }
 
-func TestUpdateZoneDelegatedEndpoing(t *testing.T) {
+func TestUpdateZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("update")
 	assert.Equal(t, "/wapi/v2.3.1/blablalba:example.com", newZone.Endpoint())
 }

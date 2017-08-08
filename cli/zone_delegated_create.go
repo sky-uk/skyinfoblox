@@ -17,13 +17,17 @@ func createZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagS
 	createZoneDelegated.DelegateTo = []common.ExternalServer{{Name: flagSet.Lookup("delegated-name").Value.String(), Address: flagSet.Lookup("delegated-address").Value.String()}}
 	createZoneDelegated.Comment = flagSet.Lookup("comment").Value.String()
 	createZoneDelegated.Fqdn = flagSet.Lookup("fqdn").Value.String()
-	createDelegation := zonedelegated.NewCreateZoneDelegated(createZoneDelegated)
+	createDelegation := zonedelegated.NewCreate(createZoneDelegated)
 	err := client.Do(createDelegation)
 	if err != nil {
 		fmt.Println(fmt.Printf("could not create delegation %s", err.Error()))
 	}
+	if createDelegation.StatusCode() == 201 {
+		fmt.Println("Zone Delegated object created")
+	}
 	fmt.Println(createDelegation.StatusCode())
 	fmt.Println(*createDelegation.ResponseObject().(*string))
+
 }
 
 func init() {

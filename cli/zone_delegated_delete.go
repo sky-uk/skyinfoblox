@@ -9,7 +9,7 @@ import (
 
 func deleteZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	reference := flagSet.Lookup("ref").Value.String()
-	deleteZoneAPI := zonedelegated.NewDeleteZoneDelegated(reference)
+	deleteZoneAPI := zonedelegated.NewDelete(reference)
 	errDelete := client.Do(deleteZoneAPI)
 	if errDelete != nil {
 		fmt.Println("could not delete")

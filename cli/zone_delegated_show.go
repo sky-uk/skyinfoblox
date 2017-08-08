@@ -10,7 +10,7 @@ import (
 func showZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	reference := flagSet.Lookup("ref").Value.String()
 	returnFields := []string{"comment", "delegate_to", "view", "fqdn"}
-	showAPI := zonedelegated.NewGetZoneDelegated(reference, returnFields)
+	showAPI := zonedelegated.NewGet(reference, returnFields)
 	showErr := client.Do(showAPI)
 	if showErr != nil {
 		fmt.Println("could not get zone")

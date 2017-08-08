@@ -12,7 +12,7 @@ func updateZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagS
 	var zoneDelegated zonedelegated.ZoneDelegated
 	ref := flagSet.Lookup("ref").Value.String()
 	returnFields := []string{"comment", "delegate_to"}
-	getZoneDelegatedAPI := zonedelegated.NewGetZoneDelegated(ref, returnFields)
+	getZoneDelegatedAPI := zonedelegated.NewGet(ref, returnFields)
 	getZoneErr := client.Do(getZoneDelegatedAPI)
 	if getZoneErr != nil {
 		fmt.Println(fmt.Sprintf("Error Getting the zone: %s", getZoneErr.Error()))
@@ -29,7 +29,7 @@ func updateZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagS
 		zoneDelegated.DelegateTo = []common.ExternalServer{delegation}
 	}
 
-	updateZoneAPI := zonedelegated.NewUpdateZoneDelegated(ref, zoneDelegated)
+	updateZoneAPI := zonedelegated.NewUpdate(ref, zoneDelegated)
 	updateErr := client.Do(updateZoneAPI)
 	if updateErr != nil {
 		fmt.Println("could not update")
