@@ -9,7 +9,7 @@ type ZoneDelegated struct {
 	Ref                    string                  `json:"_ref,omitempty"`
 	Address                string                  `json:"address,omitempty"`
 	Comment                string                  `json:"comment,omitempty"`
-	DelegateTo             []common.ExternalServer `json:"delegate_to"`
+	DelegateTo             []common.ExternalServer `json:"delegate_to,omitempty"`
 	DelegatedTTL           uint                    `json:"delegated_ttl,omitempty"`
 	Disable                *bool                   `json:"disable,omitempty"`
 	DNSFqdn                string                  `json:"dns_fqdn,omitempty"`
