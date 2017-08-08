@@ -14,11 +14,11 @@ type ZoneDelegated struct {
 	Disable                *bool                   `json:"disable,omitempty"`
 	DNSFqdn                string                  `json:"dns_fqdn,omitempty"`
 	EnableRFC2317Exclusion *bool                   `json:"enable_rfc2317_exclusion,omitempty"`
-	Fqdn                   string                  `json:"fqdn"`
+	Fqdn                   string                  `json:"fqdn,omitempty"`
 	Locked                 *bool                   `json:"locked,omitempty"`
 	NameServerGroup        string                  `json:"ns_group,omitempty"`
 	Prefix                 string                  `json:"prefix,omitempty"`
 	UseDelegatedTTL        *bool                   `json:"use_delegated_ttl,omitempty"`
-	View                   string                  `json:"view"`
+	View                   string                  `json:"view,omitempty"`
 	ZoneFormat             string                  `json:"zone_format,omitempty"`
 }
