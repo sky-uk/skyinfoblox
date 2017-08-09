@@ -16,7 +16,6 @@ type ZoneDelegated struct {
 	EnableRFC2317Exclusion *bool                   `json:"enable_rfc2317_exclusion,omitempty"`
 	Fqdn                   string                  `json:"fqdn,omitempty"`
 	Locked                 *bool                   `json:"locked,omitempty"`
-	NameServerGroup        string                  `json:"ns_group,omitempty"`
 	Prefix                 string                  `json:"prefix,omitempty"`
 	UseDelegatedTTL        *bool                   `json:"use_delegated_ttl,omitempty"`
 	View                   string                  `json:"view,omitempty"`
