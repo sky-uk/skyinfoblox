@@ -18,7 +18,9 @@ func NewGetAll() *api.BaseAPI {
 
 // NewGet : used to get an admin group
 func NewGet(reference string, returnFieldList []string) *api.BaseAPI {
-	reference += "?_return_fields=" + strings.Join(returnFieldList, ",")
+	if returnFieldList != nil && len(returnFieldList) > 0 {
+		reference += "?_return_fields=" + strings.Join(returnFieldList, ",")
+	}
 	return api.NewBaseAPI(http.MethodGet, WapiVersion+"/"+reference, nil, new(ZoneForward))
 }
 
