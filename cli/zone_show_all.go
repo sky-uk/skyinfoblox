@@ -4,36 +4,34 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
-	"github.com/sky-uk/skyinfoblox/api/zoneforward"
+	"github.com/sky-uk/skyinfoblox/api/zoneauth"
 )
 
-func showAllForwardZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func showAllZones(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
-	api := zoneforward.NewGetAll()
-	err := client.Do(api)
+	showAllZoneAuthAPI := zoneauth.NewGetAllZones()
+	err := client.Do(showAllZoneAuthAPI)
 	if err != nil {
-		fmt.Println("Error retrieving a list of all forward zones")
+		fmt.Println("Error retrieving a list of all zones")
 	}
-	if api.StatusCode() == 200 {
-		allZoneReferences := *api.ResponseObject().(*[]zoneforward.ZoneForward)
+	if showAllZoneAuthAPI.StatusCode() == 200 {
+		allZoneReferences := showAllZoneAuthAPI.GetResponse()
 		rows := []map[string]interface{}{}
 		headers := []string{"FQDN", "Reference"}
 
-		for _, zone := range allZoneReferences {
+		for _, zoneReference := range *allZoneReferences {
 			row := map[string]interface{}{}
-			row["FQDN"] = zone.Fqdn
-			row["Reference"] = zone.Ref
+			row["FQDN"] = zoneReference.FQDN
+			row["Reference"] = zoneReference.Reference
 			rows = append(rows, row)
 		}
 		PrettyPrintMany(headers, rows)
 	} else {
-		fmt.Println("Error zoneforward-show-all return code != 200.")
-		fmt.Println("Error")
-		fmt.Printf("%+v\n", string(api.RawResponse()))
+		fmt.Println("Error zone-show-all return code != 200.")
 	}
 }
 
 func init() {
-	readAllZoneFlags := flag.NewFlagSet("zoneforward-show-all", flag.ExitOnError)
-	RegisterCliCommand("zoneforward-show-all", readAllZoneFlags, showAllForwardZones)
+	readAllZoneFlags := flag.NewFlagSet("zone-show-all", flag.ExitOnError)
+	RegisterCliCommand("zone-show-all", readAllZoneFlags, showAllZones)
 }
