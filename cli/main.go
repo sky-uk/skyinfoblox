@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"os"
+	"sort"
 )
 
 // ExecFunc executes the function for cli.
@@ -54,8 +55,13 @@ func InitFlags() {
 func usage() {
 	flag.PrintDefaults()
 	fmt.Fprintf(os.Stderr, "  Commands:\n")
+	var keys []string
 	for name := range commandMap {
-		fmt.Fprintf(os.Stderr, "    %s\n", name)
+		keys = append(keys, name)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		fmt.Fprintf(os.Stderr, "    %s\n", key)
 	}
 }
 
