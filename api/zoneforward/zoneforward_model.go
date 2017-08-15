@@ -43,7 +43,7 @@ type ZoneForward struct {
 	//The name of this DNS zone. For a reverse zone, this is in “address/cidr” format.
 	//For other zones, this is in FQDN format. This value can be in unicode format.
 	//Note that for a reverse zone, the corresponding zone_format value should be set.
-	//Required
+	//Required on creation but not updatable
 	Fqdn string `json:"fqdn,omitempty"`
 	//If you enable this flag, other administrators cannot make conflicting changes.
 	//This is for administration purposes only.
