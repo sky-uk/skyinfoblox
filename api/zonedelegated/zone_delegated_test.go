@@ -61,7 +61,7 @@ func TestCreateZoneDelegatedMethod(t *testing.T) {
 
 func TestCreateZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("create")
-	assert.Equal(t, "/wapi/v2.3.1/zone_delegated", newZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/zone_delegated", newZone.Endpoint())
 }
 
 func TestCreateZoneDelegatedResponse(t *testing.T) {
@@ -76,12 +76,12 @@ func TestGetZoneDelegatedMethod(t *testing.T) {
 
 func TestGetZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("get")
-	assert.Equal(t, "/wapi/v2.3.1/blablalba:example.com", newZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/blablalba:example.com", newZone.Endpoint())
 }
 
 func TestGetZoneDelegatedEndpointWithFields(t *testing.T) {
 	newZone := setupZoneDelegated("getWithFields")
-	assert.Equal(t, "/wapi/v2.3.1/blablalba:example.com/?_return_fields=delegate_to,fqdn", newZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/blablalba:example.com/?_return_fields=delegate_to,fqdn", newZone.Endpoint())
 }
 
 func TestDeleteZoneDelegatedMethod(t *testing.T) {
@@ -91,7 +91,7 @@ func TestDeleteZoneDelegatedMethod(t *testing.T) {
 
 func TestDeleteZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("delete")
-	assert.Equal(t, "/wapi/v2.3.1/blablalba:example.com", newZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/blablalba:example.com", newZone.Endpoint())
 }
 
 func TestUpdateZoneDelegatedMethod(t *testing.T) {
@@ -101,5 +101,5 @@ func TestUpdateZoneDelegatedMethod(t *testing.T) {
 
 func TestUpdateZoneDelegatedEndpoint(t *testing.T) {
 	newZone := setupZoneDelegated("update")
-	assert.Equal(t, "/wapi/v2.3.1/blablalba:example.com", newZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/blablalba:example.com", newZone.Endpoint())
 }
