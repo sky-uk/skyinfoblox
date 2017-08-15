@@ -81,7 +81,7 @@ type ZoneForward struct {
 	MSSyncMasterName string `json:"ms_sync_master_name,omitempty"`
 	//A forwarding member name server group. Values with leading or trailing white space are not valid for this field.
 	//The default value is undefined.
-	NSGroup string `json:"ns_group"`
+	NSGroup string `json:"ns_group,omitempty"`
 	//The parent zone of this zone.
 	//Note that when searching for reverse zones, the “in-addr.arpa” notation should be used.
 	// Not writable
