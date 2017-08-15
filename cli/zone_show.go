@@ -61,7 +61,7 @@ func zoneShow(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		row["SOA Default TTL"] = readZoneResponse.SOADefaultTTL
 		PrettyPrintSingle(row)
 	} else {
-		fmt.Println("Error status code != 200 when reading zone reference " + zoneReference + " Error: " + err.Error())
+        fmt.Println("Error status code != 200 when reading zone reference " + zoneReference + " Error: " + err.Error())
 	}
 }
 

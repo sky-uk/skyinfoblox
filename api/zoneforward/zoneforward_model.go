@@ -5,7 +5,7 @@ import (
 )
 
 //WapiVersion : WAPI version related with this data model
-const WapiVersion = "/wapi/v2.3.1"
+const WapiVersion = "/wapi/v2.6.1"
 
 // Endpoint - resource WAPI endpoint
 const Endpoint = "/zone_forward"
@@ -79,6 +79,9 @@ type ZoneForward struct {
 	MSReadOnly bool `json:"ms_read_only,omitempty"`
 	//The name of MS synchronization master for this zone.
 	MSSyncMasterName string `json:"ms_sync_master_name,omitempty"`
+	//A forwarding member name server group. Values with leading or trailing white space are not valid for this field.
+	//The default value is undefined.
+	NSGroup string `json:"ns_group"`
 	//The parent zone of this zone.
 	//Note that when searching for reverse zones, the “in-addr.arpa” notation should be used.
 	// Not writable
