@@ -33,7 +33,7 @@ type ZoneForward struct {
 	//The information for the remote name servers to which you want the Infoblox appliance
 	//to forward queries for a specified domain name.
 	//Required
-	ForwardTo []common.ExternalServer `json:"forward_to"`
+	ForwardTo []common.ExternalServer `json:"forward_to,omitempty"`
 	//Determines if the appliance sends queries to forwarders only,
 	//and not to other internal or Internet root servers.
 	ForwardersOnly bool `json:"forwarders_only,omitempty"`
