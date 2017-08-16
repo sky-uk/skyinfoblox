@@ -17,6 +17,7 @@ func createZoneDelegated(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagS
 	createZoneDelegated.DelegateTo = []common.ExternalServer{{Name: flagSet.Lookup("delegated-name").Value.String(), Address: flagSet.Lookup("delegated-address").Value.String()}}
 	createZoneDelegated.Comment = flagSet.Lookup("comment").Value.String()
 	createZoneDelegated.Fqdn = flagSet.Lookup("fqdn").Value.String()
+	createZoneDelegated.NsGroup = flagSet.Lookup("nsgroup").Value.String()
 	createDelegation := zonedelegated.NewCreate(createZoneDelegated)
 	err := client.Do(createDelegation)
 	if err != nil {
@@ -36,5 +37,6 @@ func init() {
 	createZoneDelegatedFlags.String("delegated-name", "", "usage: -delegated-name 'Delegated name server Name'")
 	createZoneDelegatedFlags.String("delegated-address", "", "usage: -delegated-address 'Delegated server ip address'")
 	createZoneDelegatedFlags.String("fqdn", "", "usage: -fqdn 'fqdn of the zone being delegated'")
+	createZoneDelegatedFlags.String("nsgroup", "", "usage: -nsgroup 'name server group for the zone being delegated'")
 	RegisterCliCommand("zone-delegated-create", createZoneDelegatedFlags, createZoneDelegated)
 }

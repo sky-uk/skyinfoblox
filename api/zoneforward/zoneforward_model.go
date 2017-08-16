@@ -33,7 +33,7 @@ type ZoneForward struct {
 	//The information for the remote name servers to which you want the Infoblox appliance
 	//to forward queries for a specified domain name.
 	//Required
-	ForwardTo []common.ExternalServer `json:"forward_to"`
+	ForwardTo []common.ExternalServer `json:"forward_to,omitempty"`
 	//Determines if the appliance sends queries to forwarders only,
 	//and not to other internal or Internet root servers.
 	ForwardersOnly bool `json:"forwarders_only,omitempty"`
@@ -81,7 +81,7 @@ type ZoneForward struct {
 	MSSyncMasterName string `json:"ms_sync_master_name,omitempty"`
 	//A forwarding member name server group. Values with leading or trailing white space are not valid for this field.
 	//The default value is undefined.
-	NSGroup string `json:"ns_group"`
+	NSGroup string `json:"ns_group,omitempty"`
 	//The parent zone of this zone.
 	//Note that when searching for reverse zones, the “in-addr.arpa” notation should be used.
 	// Not writable
