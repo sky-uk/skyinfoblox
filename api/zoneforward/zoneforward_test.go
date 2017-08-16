@@ -15,19 +15,19 @@ func testZoneForwardStruct(t *testing.T) {
 	rec.Ref = "ref"
 	rec.Address = "address"
 	rec.Comment = "comment"
-	rec.Disable = flag
+	rec.Disable = &flag
 	rec.DisplayDomain = "DisplayDomain"
 	rec.DNSFqdn = "DNSFqdn"
 	rec.ForwardTo = []common.ExternalServer{{Name: "Name"}}
-	rec.ForwardersOnly = flag
+	rec.ForwardersOnly = &flag
 	rec.ForwardingServers = []common.ForwardingMemberServer{{Name: "Name"}}
 	rec.Fqdn = "Fqdn"
-	rec.Locked = flag
+	rec.Locked = &flag
 	rec.LockedBy = "LockedBy"
 	rec.MaskPrefix = "MaskPrefix"
 	rec.Parent = "Parent"
 	rec.Prefix = "Prefix"
-	rec.UsingSrgAssociations = flag
+	rec.UsingSrgAssociations = &flag
 	rec.View = "View"
 	rec.ZoneFormat = "FORWARD"
 

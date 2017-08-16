@@ -20,7 +20,7 @@ type ZoneForward struct {
 	//Comment for the zone; maximum 256 characters.
 	Comment string `json:"comment,omitempty"`
 	//Determines whether a zone is disabled or not. When this is set to False, the zone is enabled.
-	Disable bool `json:"disable"`
+	Disable *bool `json:"disable"`
 	//The displayed name of the DNS zone.
 	//Not writable
 	DisplayDomain string `json:"display_domain,omitempty"`
@@ -36,7 +36,7 @@ type ZoneForward struct {
 	ForwardTo []common.ExternalServer `json:"forward_to,omitempty"`
 	//Determines if the appliance sends queries to forwarders only,
 	//and not to other internal or Internet root servers.
-	ForwardersOnly bool `json:"forwarders_only"`
+	ForwardersOnly *bool `json:"forwarders_only"`
 	//The information for the Grid members to which you want the Infoblox appliance
 	//to forward queries for a specified domain name.
 	ForwardingServers []common.ForwardingMemberServer `json:"forwarding_servers,omitempty"`
@@ -48,7 +48,7 @@ type ZoneForward struct {
 	//If you enable this flag, other administrators cannot make conflicting changes.
 	//This is for administration purposes only.
 	//The zone will continue to serve DNS data even when it is locked.
-	Locked bool `json:"locked"`
+	Locked *bool `json:"locked"`
 	//The name of a superuser or the administrator who locked this zone.
 	LockedBy string `json:"locked_by,omitempty"`
 	//IPv4 Netmask or IPv6 prefix for this zone.
@@ -68,7 +68,7 @@ type ZoneForward struct {
 	Prefix string `json:"prefix,omitempty"`
 	//This is true if the zone is associated with a shared record group.
 	//Cannot be updated nor written (computed)
-	UsingSrgAssociations bool `json:"using_srg_associations,omitempty"`
+	UsingSrgAssociations *bool `json:"using_srg_associations,omitempty"`
 	//The name of the DNS view in which the zone resides. Example “external”.
 	View string `json:"view,omitempty"`
 	//Determines the format of this zone.
