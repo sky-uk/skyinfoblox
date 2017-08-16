@@ -19,9 +19,9 @@ func NewCreate(newzoneStub ZoneStub) *api.BaseAPI {
 //NewGet - Get a single stub zone
 func NewGet(ref string, returnFields []string) *api.BaseAPI {
 	if returnFields != nil && len(returnFields) > 0 {
-		endPoint = fmt.Sprintf("%s/%s/%s?_return_fields=%s", WapiVersion, Endpoint, ref, strings.Join(returnFields, ","))
+		endPoint = fmt.Sprintf("%s/%s?_return_fields=%s", WapiVersion, ref, strings.Join(returnFields, ","))
 	} else {
-		endPoint = fmt.Sprintf("%s/%s/%s", WapiVersion, Endpoint, ref)
+		endPoint = fmt.Sprintf("%s/%s", WapiVersion, ref)
 	}
 	getAPI := api.NewBaseAPI(http.MethodGet, endPoint, nil, new(ZoneStub))
 	return getAPI
@@ -30,7 +30,7 @@ func NewGet(ref string, returnFields []string) *api.BaseAPI {
 // NewGetAll - Get all stub zones
 func NewGetAll(returnFields []string) *api.BaseAPI {
 	if returnFields != nil && len(returnFields) > 0 {
-		endPoint = fmt.Sprintf("%s/%s/?_return_fields=%s", WapiVersion, Endpoint, strings.Join(returnFields, ","))
+		endPoint = fmt.Sprintf("%s/%s?_return_fields=%s", WapiVersion, Endpoint, strings.Join(returnFields, ","))
 	} else {
 		endPoint = fmt.Sprintf("%s/%s", WapiVersion, Endpoint)
 	}

@@ -41,7 +41,7 @@ func setupZoneStub(action string) *api.BaseAPI {
 		return zoneAPI
 	case "get":
 		returnFields := []string{}
-		zoneAPI := NewGet("blablalba:example.com", returnFields)
+		zoneAPI := NewGet("zone_stub/blablalba:example.com", returnFields)
 		return zoneAPI
 	case "getall":
 		returnFields := []string{}
@@ -54,7 +54,7 @@ func setupZoneStub(action string) *api.BaseAPI {
 
 	case "getWithFields":
 		returnFields := []string{"stub_from", "fqdn"}
-		zoneAPI := NewGet("blablalba:example.com", returnFields)
+		zoneAPI := NewGet("zone_stub/blablalba:example.com", returnFields)
 		return zoneAPI
 	case "delete":
 		zoneAPI := NewDelete("blablalba:example.com")
@@ -108,7 +108,7 @@ func TestZoneStubGetAllWithFieldsMethod(t *testing.T) {
 
 func TestZoneStubGetAllWithFieldsEndpoint(t *testing.T) {
 	newStubZone := setupZoneStub("getallWithFields")
-	assert.Equal(t, "/wapi/v2.6.1/zone_stub/?_return_fields=stub_from,fqdn", newStubZone.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/zone_stub?_return_fields=stub_from,fqdn", newStubZone.Endpoint())
 }
 
 func TestZoneStubGetEndpointWithFields(t *testing.T) {
