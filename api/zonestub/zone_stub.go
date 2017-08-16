@@ -48,7 +48,7 @@ func NewUpdate(updateZoneStub ZoneStub) *api.BaseAPI {
 
 // NewDelete - Deletes an existing zone
 func NewDelete(ref string) *api.BaseAPI {
-	endPoint = fmt.Sprintf("%s/%s/%s", WapiVersion, Endpoint, ref)
+	endPoint = fmt.Sprintf("%s/%s", WapiVersion, ref)
 	deleteAPI := api.NewBaseAPI(http.MethodDelete, endPoint, nil, new(string))
 	return deleteAPI
 }

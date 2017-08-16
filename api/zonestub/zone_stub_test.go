@@ -57,7 +57,7 @@ func setupZoneStub(action string) *api.BaseAPI {
 		zoneAPI := NewGet("zone_stub/blablalba:example.com", returnFields)
 		return zoneAPI
 	case "delete":
-		zoneAPI := NewDelete("blablalba:example.com")
+		zoneAPI := NewDelete("zone_stub/blablalba:example.com")
 		return zoneAPI
 	case "update":
 		zoneAPI := NewUpdate(zoneStub)
