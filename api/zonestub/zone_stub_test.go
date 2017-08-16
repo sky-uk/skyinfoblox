@@ -38,7 +38,7 @@ func setupZoneStub(action string) *api.BaseAPI {
 		zoneAPI := NewCreate(zoneStub)
 		response := "zone_stub/blablalba:example.com/default"
 		zoneAPI.SetResponseObject(&response)
-		return  zoneAPI
+		return zoneAPI
 	case "get":
 		returnFields := []string{}
 		zoneAPI := NewGet("blablalba:example.com", returnFields)
@@ -67,23 +67,22 @@ func setupZoneStub(action string) *api.BaseAPI {
 	}
 }
 
-
-func TestZoneStubCreateMethod(t *testing.T){
+func TestZoneStubCreateMethod(t *testing.T) {
 	newStubZone := setupZoneStub("create")
 	assert.Equal(t, http.MethodPost, newStubZone.Method())
 }
 
-func TestZoneStubCreateEndpoint(t *testing.T){
+func TestZoneStubCreateEndpoint(t *testing.T) {
 	newStubZone := setupZoneStub("create")
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub", newStubZone.Endpoint())
 }
 
-func TestZoneStubCreateResponse(t *testing.T){
+func TestZoneStubCreateResponse(t *testing.T) {
 	newStubZone := setupZoneStub("create")
 	assert.Equal(t, "zone_stub/blablalba:example.com/default", *newStubZone.ResponseObject().(*string))
 }
 
-func TestZoneStubGetMethod(t *testing.T){
+func TestZoneStubGetMethod(t *testing.T) {
 	newStubZone := setupZoneStub("get")
 	assert.Equal(t, http.MethodGet, newStubZone.Method())
 }
@@ -92,7 +91,7 @@ func TestZoneStubGetEndpoint(t *testing.T) {
 	newStubZone := setupZoneStub("get")
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub/blablalba:example.com", newStubZone.Endpoint())
 }
-func TestZoneStubGetAllMethod(t *testing.T){
+func TestZoneStubGetAllMethod(t *testing.T) {
 	newStubZone := setupZoneStub("getall")
 	assert.Equal(t, http.MethodGet, newStubZone.Method())
 }
@@ -102,7 +101,7 @@ func TestZoneStubGetAllEndpoint(t *testing.T) {
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub", newStubZone.Endpoint())
 }
 
-func TestZoneStubGetAllWithFieldsMethod(t *testing.T){
+func TestZoneStubGetAllWithFieldsMethod(t *testing.T) {
 	newStubZone := setupZoneStub("getallWithFields")
 	assert.Equal(t, http.MethodGet, newStubZone.Method())
 }
@@ -117,22 +116,22 @@ func TestZoneStubGetEndpointWithFields(t *testing.T) {
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub/blablalba:example.com?_return_fields=stub_from,fqdn", newStubZone.Endpoint())
 }
 
-func TestZoneStubUpdateMethod(t *testing.T){
+func TestZoneStubUpdateMethod(t *testing.T) {
 	newStubZone := setupZoneStub("update")
 	assert.Equal(t, http.MethodPut, newStubZone.Method())
 }
 
-func TestZoneStubUpdateEndpoint(t *testing.T){
+func TestZoneStubUpdateEndpoint(t *testing.T) {
 	newStubZone := setupZoneStub("update")
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub/blablalba:example.com/default", newStubZone.Endpoint())
 }
 
-func TestZoneStubDeleteMethod(t *testing.T){
+func TestZoneStubDeleteMethod(t *testing.T) {
 	newStubZone := setupZoneStub("delete")
 	assert.Equal(t, http.MethodDelete, newStubZone.Method())
 }
 
-func TestZoneStubDeleteEndpoint(t *testing.T){
+func TestZoneStubDeleteEndpoint(t *testing.T) {
 	newStubZone := setupZoneStub("delete")
 	assert.Equal(t, "/wapi/v2.6.1/zone_stub/blablalba:example.com", newStubZone.Endpoint())
 }

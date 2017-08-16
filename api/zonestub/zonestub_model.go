@@ -4,6 +4,7 @@ import "github.com/sky-uk/skyinfoblox/api/common"
 
 // WapiVersion - Version of the api
 const WapiVersion = "/wapi/v2.6.1"
+
 // Endpoint - Endpoint path
 const Endpoint = "zone_stub"
 

@@ -30,7 +30,7 @@ func NewGet(ref string, returnFields []string) *api.BaseAPI {
 // NewGetAll - Get all stub zones
 func NewGetAll(returnFields []string) *api.BaseAPI {
 	if returnFields != nil && len(returnFields) > 0 {
-		endPoint = fmt.Sprintf("%s/%s/?_return_fields=%s", WapiVersion, Endpoint,  strings.Join(returnFields, ","))
+		endPoint = fmt.Sprintf("%s/%s/?_return_fields=%s", WapiVersion, Endpoint, strings.Join(returnFields, ","))
 	} else {
 		endPoint = fmt.Sprintf("%s/%s", WapiVersion, Endpoint)
 	}
