@@ -3,7 +3,7 @@ package zonestub
 import "github.com/sky-uk/skyinfoblox/api/common"
 
 const WapiVersion = "/wapi/v2.6.1"
-const Endpoint = "/zone_forward"
+const Endpoint = "zone_stub"
 
 type ZoneStub struct {
 	Ref                string                  `json:"_ref,omitempty"`
