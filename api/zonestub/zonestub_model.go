@@ -2,9 +2,12 @@ package zonestub
 
 import "github.com/sky-uk/skyinfoblox/api/common"
 
+// WapiVersion - Version of the api
 const WapiVersion = "/wapi/v2.6.1"
+// Endpoint - Endpoint path
 const Endpoint = "zone_stub"
 
+// ZoneStub - default struct for the stub zone
 type ZoneStub struct {
 	Ref                string                  `json:"_ref,omitempty"`
 	Comment            string                  `json:"comment,omitempty"`
