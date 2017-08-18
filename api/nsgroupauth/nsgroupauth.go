@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// NewCreate : used to create a new NS Group Auth
+// NewCreate : used to create a new NSGroupAuth object
 func NewCreate(nameServerGroupAuth NSGroupAuth) *api.BaseAPI {
 	createNSGroupAuthAPI := api.NewBaseAPI(http.MethodPost, wapiVersion+nsGroupEndpoint, nameServerGroupAuth, new(string))
 	return createNSGroupAuthAPI
