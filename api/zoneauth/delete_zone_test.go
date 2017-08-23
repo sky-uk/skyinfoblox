@@ -1,10 +1,10 @@
 package zoneauth
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"fmt"
 )
 
 var deleteZoneAuthAPI *DeleteZoneAuthAPI

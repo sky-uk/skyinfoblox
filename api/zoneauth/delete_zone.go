@@ -1,9 +1,9 @@
 package zoneauth
 
 import (
+	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
-	"fmt"
 )
 
 // DeleteZoneAuthAPI : Zone API for deleting a zone

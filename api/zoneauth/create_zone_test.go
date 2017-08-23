@@ -2,10 +2,10 @@ package zoneauth
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"fmt"
 )
 
 var createZoneAuthAPI *CreateZoneAuthAPI

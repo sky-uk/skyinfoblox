@@ -1,10 +1,10 @@
 package zoneauth
 
 import (
+	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
-	"fmt"
 )
 
 // UpdateZoneAuthAPI : Update zone API
