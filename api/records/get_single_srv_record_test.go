@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -19,7 +20,7 @@ func TestGetSRVRecordMethod(t *testing.T) {
 
 func TestGetSRVRecordEndpoint(t *testing.T) {
 	GetSingleSRVRecordAPI := getSRVRecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:srv/ZG5zLmJpbmRfc3J2JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAvY3JhaWc3dGVzdC8xMC81LzgwL2NyYWlnNHRlc3QudGVzdC1vdnAuYnNreWIuY29t:craig7test.test-ovp.bskyb.com/default?_return_fields=name,port,priority,target,weight", GetSingleSRVRecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:srv/ZG5zLmJpbmRfc3J2JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAvY3JhaWc3dGVzdC8xMC81LzgwL2NyYWlnNHRlc3QudGVzdC1vdnAuYnNreWIuY29t:craig7test.test-ovp.bskyb.com/default?_return_fields=name,port,priority,target,weight", wapiVersion), GetSingleSRVRecordAPI.Endpoint())
 }
 
 func TestGetSRVRecordUnmarshalling(t *testing.T) {

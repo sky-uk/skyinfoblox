@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -18,7 +19,7 @@ func TestGetAllTXTRecordsMethod(t *testing.T) {
 
 func TestGetAllTXTRecordsEndpoint(t *testing.T) {
 	GetAllTXTRecordsAPI := getAllTXTRecordsSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:txt?_return_fields=name,text", GetAllTXTRecordsAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:txt?_return_fields=name,text", wapiVersion), GetAllTXTRecordsAPI.Endpoint())
 }
 
 func TestGetAllTXTRecordsUnmarshalling(t *testing.T) {

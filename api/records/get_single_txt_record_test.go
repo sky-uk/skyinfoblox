@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -19,7 +20,7 @@ func TestGetTXTRecordMethod(t *testing.T) {
 
 func TestGetTXTRecordEndpoint(t *testing.T) {
 	GetSingleTXTRecordAPI := getTXTRecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:txt/ZG5zLmJpbmRfdHh0JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAuY3JhaWd0ZXN0MS4iY3JhaWciICJ0ZXN0IiAiMSI:craigtest1.test-ovp.bskyb.com/default?_return_fields=name,text", GetSingleTXTRecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:txt/ZG5zLmJpbmRfdHh0JC5fZGVmYXVsdC5jb20uYnNreWIudGVzdC1vdnAuY3JhaWd0ZXN0MS4iY3JhaWciICJ0ZXN0IiAiMSI:craigtest1.test-ovp.bskyb.com/default?_return_fields=name,text", wapiVersion), GetSingleTXTRecordAPI.Endpoint())
 }
 
 func TestGetTXTRecordUnmarshalling(t *testing.T) {

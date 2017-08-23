@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -18,7 +19,7 @@ func TestGetAllSRVRecordsMethod(t *testing.T) {
 
 func TestGetAllSRVRecordsEndpoint(t *testing.T) {
 	GetAllSRVRecordsAPI := getAllSRVRecordsSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:srv?_return_fields=name,port,priority,target,weight", GetAllSRVRecordsAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:srv?_return_fields=name,port,priority,target,weight", wapiVersion), GetAllSRVRecordsAPI.Endpoint())
 }
 
 func TestGetAllSRVRecordsUnmarshalling(t *testing.T) {

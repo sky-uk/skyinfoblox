@@ -1,10 +1,10 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"fmt"
 )
 
 func getAllARecordsSetup() *GetAllARecordsAPI {

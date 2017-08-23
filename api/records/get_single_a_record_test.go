@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -19,7 +20,7 @@ func TestGetARecordMethod(t *testing.T) {
 
 func TestGetARecordEndpoint(t *testing.T) {
 	GetSingleARecordAPI := getARecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnM3Rlc3QsMTAuMTAuMS44MA:craig3test.test-ovp.bskyb.com/default?_return_fields=name,ipv4addr", GetSingleARecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:a/ZG5zLmJpbmRfYSQuX2RlZmF1bHQuY29tLmJza3liLnRlc3Qtb3ZwLGNyYWlnM3Rlc3QsMTAuMTAuMS44MA:craig3test.test-ovp.bskyb.com/default?_return_fields=name,ipv4addr", wapiVersion), GetSingleARecordAPI.Endpoint())
 }
 
 func TestGetARecordUnmarshalling(t *testing.T) {
