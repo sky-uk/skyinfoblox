@@ -1,6 +1,7 @@
 package zoneauth
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -21,7 +22,7 @@ func TestDeleteMethod(t *testing.T) {
 
 func TestDeleteEndpoing(t *testing.T) {
 	setupDelete()
-	assert.Equal(t, "/wapi/v2.3.1/"+zoneReference, deleteZoneAuthAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/%s", wapiVersion, zoneReference), deleteZoneAuthAPI.Endpoint())
 }
 
 func TestDeleteResponseObject(t *testing.T) {

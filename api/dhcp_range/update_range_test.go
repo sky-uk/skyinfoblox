@@ -34,7 +34,7 @@ func TestMethodDHCPRange(t *testing.T) {
 
 func TestEndpointDHCPRange(t *testing.T) {
 	testRelay := UpdateDHCPRangeSetup()
-	assert.Equal(t, "/wapi/v2.3.1/range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default", testRelay.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w:192.168.0.0/24/default", testRelay.Endpoint())
 
 }
 

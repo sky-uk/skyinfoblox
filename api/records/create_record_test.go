@@ -2,6 +2,7 @@ package records
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -38,12 +39,12 @@ func TestNewCreateARecord(t *testing.T) {
 
 func TestCreateARecordEndpoint(t *testing.T) {
 	createARecordAPI := createARecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:a", createARecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:a", wapiVersion), createARecordAPI.Endpoint())
 
 }
 func TestCreateEndpoint(t *testing.T) {
 	createRecordAPI := createGenericRecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:a", createRecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:a", wapiVersion), createRecordAPI.Endpoint())
 }
 
 func TestCreateMarshalling(t *testing.T) {

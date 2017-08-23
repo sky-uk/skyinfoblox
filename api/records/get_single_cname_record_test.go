@@ -1,6 +1,7 @@
 package records
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -19,7 +20,7 @@ func TestGetCNAMERecordMethod(t *testing.T) {
 
 func TestGetCNAMERecordEndpoint(t *testing.T) {
 	GetSingleCNAMERecordAPI := getCNAMERecordSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:cname/ZG5zLmJpbmRfY25hbWUkLl9kZWZhdWx0LmNvbS5ic2t5Yi50ZXN0LW92cC5jcmFpZzV0ZXN0:craig5test.test-ovp.bskyb.com/default?_return_fields=name,canonical", GetSingleCNAMERecordAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:cname/ZG5zLmJpbmRfY25hbWUkLl9kZWZhdWx0LmNvbS5ic2t5Yi50ZXN0LW92cC5jcmFpZzV0ZXN0:craig5test.test-ovp.bskyb.com/default?_return_fields=name,canonical", wapiVersion), GetSingleCNAMERecordAPI.Endpoint())
 }
 
 func TestGetCNAMERecordUnmarshalling(t *testing.T) {

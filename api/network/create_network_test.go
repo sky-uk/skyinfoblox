@@ -31,7 +31,7 @@ func TestCreateNetworkMethod(t *testing.T) {
 
 func TestCreateNetworkEndpoint(t *testing.T) {
 	NewNetwork := createNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network", NewNetwork.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/network", NewNetwork.Endpoint())
 }
 
 func TestCreateNetworkUnmarshalling(t *testing.T) {

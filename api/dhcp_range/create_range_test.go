@@ -1,6 +1,7 @@
 package dhcprange
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -31,7 +32,7 @@ func TestCreateNetworkMethod(t *testing.T) {
 
 func TestCreateNetworkEndpoint(t *testing.T) {
 	NewDHCPRangeReq := createRangeSetup()
-	assert.Equal(t, "/wapi/v2.3.1/range", NewDHCPRangeReq.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/range", wapiVersion), NewDHCPRangeReq.Endpoint())
 }
 
 func TestCreateNetworkUnmarshalling(t *testing.T) {

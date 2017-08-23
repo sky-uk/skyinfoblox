@@ -20,7 +20,7 @@ func TestGetDHCPRangeMethod(t *testing.T) {
 
 func TestGetDHCPRangeEndpoint(t *testing.T) {
 	GetDHCPRangeReq := getDHCPRangeSetup()
-	assert.Equal(t, "/wapi/v2.3.1/range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w?_return_fields=end_addr,start_addr,network,network_view,member", GetDHCPRangeReq.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w?_return_fields=end_addr,start_addr,network,network_view,member", GetDHCPRangeReq.Endpoint())
 }
 
 func TestGetDHCPRangeMarshalling(t *testing.T) {

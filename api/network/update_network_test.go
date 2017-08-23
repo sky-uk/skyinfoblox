@@ -2,6 +2,7 @@ package network
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/stretchr/testify/assert"
 	"net/http"
@@ -23,7 +24,7 @@ func TestUpdateNetworkMethod(t *testing.T) {
 
 func TestUpdateNetworkEndpoint(t *testing.T) {
 	NetToUpdate := updateNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA", NetToUpdate.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQvMA", wapiVersion), NetToUpdate.Endpoint())
 }
 
 func TestUpdateNetworkUnmarshalling(t *testing.T) {

@@ -2,6 +2,7 @@ package zoneauth
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -23,7 +24,7 @@ func TestCreateMethod(t *testing.T) {
 
 func TestCreateEndpoint(t *testing.T) {
 	createSetup()
-	assert.Equal(t, "/wapi/v2.3.1/zone_auth", createZoneAuthAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/zone_auth", wapiVersion), createZoneAuthAPI.Endpoint())
 }
 
 func TestCreateMarshalling(t *testing.T) {

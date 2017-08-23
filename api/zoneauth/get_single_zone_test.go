@@ -2,6 +2,7 @@ package zoneauth
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -22,7 +23,7 @@ func TestGetZoneAuthResponseMethod(t *testing.T) {
 
 func TestGetZoneAuthEndpoint(t *testing.T) {
 	setupGetSingleZoneAuth()
-	assert.Equal(t, "/wapi/v2.3.1/"+testZoneAuthReference+"?_return_fields=comment,fqdn,view", getSingleZoneAuthAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/%s?_return_fields=comment,fqdn,view", wapiVersion, testZoneAuthReference), getSingleZoneAuthAPI.Endpoint())
 }
 
 func TestGetZoneAuthResponse(t *testing.T) {
