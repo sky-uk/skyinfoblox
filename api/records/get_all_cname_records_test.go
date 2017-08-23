@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"fmt"
 )
 
 func getAllCNAMERecordsSetup() *GetAllCNAMERecordsAPI {
@@ -18,7 +19,7 @@ func TestGetAllCNAMERecordsMethod(t *testing.T) {
 
 func TestGetAllCNAMERecordsEndpoint(t *testing.T) {
 	GetAllCNAMERecordsAPI := getAllCNAMERecordsSetup()
-	assert.Equal(t, "/wapi/v2.3.1/record:cname?_return_fields=canonical,name", GetAllCNAMERecordsAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/record:cname?_return_fields=canonical,name",wapiVersion), GetAllCNAMERecordsAPI.Endpoint())
 }
 
 func TestGetAllCNAMERecordsUnmarshalling(t *testing.T) {

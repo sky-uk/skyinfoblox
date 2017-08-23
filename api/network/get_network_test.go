@@ -1,6 +1,7 @@
 package network
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -19,7 +20,7 @@ func TestGetNetworkMethod(t *testing.T) {
 
 func TestGetNetworkEndpoint(t *testing.T) {
 	GetNetworkAPI := getNetworkSetup()
-	assert.Equal(t, "/wapi/v2.3.1/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w?_return_fields=comment", GetNetworkAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNC8w?_return_fields=comment", wapiVersion), GetNetworkAPI.Endpoint())
 }
 
 func TestGetNetworkUnmarshalling(t *testing.T) {

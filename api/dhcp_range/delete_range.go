@@ -1,9 +1,9 @@
 package dhcprange
 
 import (
+	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
-	"fmt"
 )
 
 // DeleteDHCPRangeAPI base object.

@@ -1,10 +1,10 @@
 package dhcprange
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
-	"fmt"
 )
 
 func createRangeSetup() *CreateDHCPRangeAPI {
