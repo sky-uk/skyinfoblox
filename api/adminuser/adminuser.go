@@ -13,7 +13,7 @@ const adminUserEndpoint = "/wapi/v2.6.1"
 
 //NewCreateAdminUser - Create function
 func NewCreateAdminUser(newUser AdminUser) *api.BaseAPI {
-	endPoint = fmt.Sprintf("%s/adminuser",adminUserEndpoint)
+	endPoint = fmt.Sprintf("%s/adminuser", adminUserEndpoint)
 	createUserAPI := api.NewBaseAPI(http.MethodPost, endPoint, newUser, new(string))
 	return createUserAPI
 }

@@ -3,6 +3,7 @@ package dhcprange
 import (
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
+	"fmt"
 )
 
 // DeleteDHCPRangeAPI base object.
@@ -13,7 +14,7 @@ type DeleteDHCPRangeAPI struct {
 // NewDeleteDHCPRange returns a new object of type DeleteNetworkAPI.
 func NewDeleteDHCPRange(objRef string) *DeleteDHCPRangeAPI {
 	this := new(DeleteDHCPRangeAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodDelete, "/wapi/v2.3.1/"+objRef, nil, new(string))
+	this.BaseAPI = api.NewBaseAPI(http.MethodDelete, fmt.Sprintf("%s/%s", wapiVersion, objRef), nil, new(string))
 	return this
 }
 

@@ -4,6 +4,7 @@ import (
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
+	"fmt"
 )
 
 // GetDHCPRangeAPI base object.
@@ -18,7 +19,7 @@ func NewGetDHCPRangeAPI(objRef string, returnFields []string) *GetDHCPRangeAPI {
 		objRef += returnFields
 	}
 	this := new(GetDHCPRangeAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+objRef, nil, new(DHCPRange))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, fmt.Sprintf("%s/%s", wapiVersion, objRef), nil, new(DHCPRange))
 	return this
 }
 

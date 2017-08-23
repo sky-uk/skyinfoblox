@@ -13,7 +13,7 @@ func TestDeleteDHCPRangeMethod(t *testing.T) {
 
 func TestDeleteDHCPRangeEndpoint(t *testing.T) {
 	client := NewDeleteDHCPRange("range/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default")
-	assert.Equal(t, "/wapi/v2.3.1/range/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default", client.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/range/ZG5zLm5ldHdvcmskMTkyLjE2OC4wLjAvMjQvMA:192.168.0.0/24/default", client.Endpoint())
 }
 
 func TestDeleteDHCPRangeUnmarshalling(t *testing.T) {
