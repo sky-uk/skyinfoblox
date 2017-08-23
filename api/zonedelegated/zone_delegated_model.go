@@ -3,7 +3,7 @@ package zonedelegated
 import (
 	"github.com/sky-uk/skyinfoblox/api/common"
 )
-
+const wapiVersion = "/wapi/v2.6.1"
 // ZoneDelegated - Main struct for zone delegation
 type ZoneDelegated struct {
 	Ref                    string                  `json:"_ref,omitempty"`

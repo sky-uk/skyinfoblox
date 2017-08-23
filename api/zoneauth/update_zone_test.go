@@ -5,6 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"fmt"
 )
 
 var updateZoneAuthAPI *UpdateZoneAuthAPI
@@ -26,7 +27,7 @@ func TestUpdateZoneAuthMethod(t *testing.T) {
 
 func TestUpdateZoneAuthEndpoint(t *testing.T) {
 	setupTestUpdateZoneAuth()
-	assert.Equal(t, "/wapi/v2.3.1/"+updateDNSRef+"?_return_fields=comment,fqdn", updateZoneAuthAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/%s?_return_fields=comment,fqdn", wapiVersion, updateDNSRef), updateZoneAuthAPI.Endpoint())
 }
 
 func TestUpdateZoneAuthMarshalling(t *testing.T) {

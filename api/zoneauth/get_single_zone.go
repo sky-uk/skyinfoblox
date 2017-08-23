@@ -4,6 +4,7 @@ import (
 	"github.com/sky-uk/skyinfoblox/api"
 	"net/http"
 	"strings"
+	"fmt"
 )
 
 // GetSingleZoneAuthAPI type
@@ -18,7 +19,7 @@ func NewGetSingleZone(ref string, returnFieldList []string) *GetSingleZoneAuthAP
 		ref += returnFields
 	}
 	this := new(GetSingleZoneAuthAPI)
-	this.BaseAPI = api.NewBaseAPI(http.MethodGet, "/wapi/v2.3.1/"+ref, nil, new(DNSZone))
+	this.BaseAPI = api.NewBaseAPI(http.MethodGet, fmt.Sprintf("%s/%s", wapiVersion,ref), nil, new(DNSZone))
 	return this
 }
 

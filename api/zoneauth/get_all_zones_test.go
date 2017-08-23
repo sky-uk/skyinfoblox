@@ -5,6 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+	"fmt"
 )
 
 var getAllZoneAuthAPI *GetAllZoneAuthAPI
@@ -20,7 +21,7 @@ func TestGetAllMethod(t *testing.T) {
 
 func TestGetAllEndpoint(t *testing.T) {
 	setupReadAllZones()
-	assert.Equal(t, "/wapi/v2.3.1/zone_auth?_return_fields=fqdn", getAllZoneAuthAPI.Endpoint())
+	assert.Equal(t, fmt.Sprintf("%s/zone_auth?_return_fields=fqdn", wapiVersion), getAllZoneAuthAPI.Endpoint())
 }
 
 func TestGetAllZonesUnmarshalling(t *testing.T) {
