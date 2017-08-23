@@ -3,6 +3,7 @@ package nsgroupdelegation
 import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox/api"
+	"github.com/sky-uk/skyinfoblox/api/common"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"strings"
@@ -12,30 +13,37 @@ import (
 var createNSGroupDelegationAPI, getNSGroupDelegationAPI, getAllNSGroupDelegationAPI, updateNSGroupDelegationAPI, deleteNSGroupDelegationAPI *api.BaseAPI
 var nsGroupDelegationObject NSGroupDelegation
 var nsGroupDelegationObjectList []NSGroupDelegation
-var returnFields []string
+var externalServerObject common.ExternalServer
+var externalServerList []common.ExternalServer
 
 func setupNSGroupDelegationTest(testType string) {
 
+	externalServerObject = common.ExternalServer{
+		Name:    "ns1.example.com",
+		Address: "192.168.1.100",
+	}
+	externalServerList = append(externalServerList, externalServerObject)
+
 	nsGroupDelegationObject = NSGroupDelegation{
-		Reference: "nsgroup:delegation/ZG5zOm5zX2dyb2VwJAByaW1hcnlfWm9uZV9YRlI:TEST_NS_GROUP_DELEGATION",
-		Comment:   "Test NS Group Delegation",
-		Name:      "test-ns-group-delegation",
+		Reference:  "nsgroup:delegation/ZG5zOm5zX2dyb2VwJAByaW1hcnlfWm9uZV9YRlI:TEST_NS_GROUP_DELEGATION",
+		Comment:    "Test NS Group Delegation",
+		Name:       "test-ns-group-delegation",
+		DelegateTo: externalServerList,
 	}
 	nsGroupDelegationObjectList = append(nsGroupDelegationObjectList, nsGroupDelegationObject)
-	returnFields = []string{"comment", "name", "delegate_to"}
 
 	switch testType {
 	case "create":
 		createNSGroupDelegationAPI = NewCreate(nsGroupDelegationObject)
 		createNSGroupDelegationAPI.SetResponseObject(&nsGroupDelegationObject.Reference)
 	case "get":
-		getNSGroupDelegationAPI = NewGet(nsGroupDelegationObject.Reference, returnFields)
+		getNSGroupDelegationAPI = NewGet(nsGroupDelegationObject.Reference, RequestReturnFields)
 		getNSGroupDelegationAPI.SetResponseObject(&nsGroupDelegationObject)
 	case "getall":
 		getAllNSGroupDelegationAPI = NewGetAll()
 		getAllNSGroupDelegationAPI.SetResponseObject(&nsGroupDelegationObjectList)
 	case "update":
-		updateNSGroupDelegationAPI = NewUpdate(nsGroupDelegationObject, returnFields)
+		updateNSGroupDelegationAPI = NewUpdate(nsGroupDelegationObject, RequestReturnFields)
 		updateNSGroupDelegationAPI.SetResponseObject(&nsGroupDelegationObject)
 	case "delete":
 		deleteNSGroupDelegationAPI = NewDelete(nsGroupDelegationObject.Reference)
@@ -67,7 +75,7 @@ func TestNameServerGroupDelegationNewGetMethod(t *testing.T) {
 
 func TestNameServerGroupDelegationNewGetEndpoint(t *testing.T) {
 	setupNSGroupDelegationTest("get")
-	assert.Equal(t, wapiVersion+"/"+nsGroupDelegationObject.Reference+"?_return_fields="+strings.Join(returnFields, ","), getNSGroupDelegationAPI.Endpoint())
+	assert.Equal(t, wapiVersion+"/"+nsGroupDelegationObject.Reference+"?_return_fields="+strings.Join(RequestReturnFields, ","), getNSGroupDelegationAPI.Endpoint())
 }
 
 func TestNameServerGroupDelegationNewGetResponse(t *testing.T) {
@@ -76,6 +84,8 @@ func TestNameServerGroupDelegationNewGetResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-delegation", response.Name)
 	assert.Equal(t, "Test NS Group Delegation", response.Comment)
+	assert.Equal(t, "ns1.example.com", response.DelegateTo[0].Name)
+	assert.Equal(t, "192.168.1.100", response.DelegateTo[0].Address)
 }
 
 func TestNameServerGroupDelegationNewGetAllMethod(t *testing.T) {
@@ -103,7 +113,7 @@ func TestNameServerGroupDelegationNewUpdateMethod(t *testing.T) {
 
 func TestNameServerGroupDelegationNewUpdateEndpoint(t *testing.T) {
 	setupNSGroupDelegationTest("update")
-	assert.Equal(t, wapiVersion+"/"+nsGroupDelegationObject.Reference+"?_return_fields="+strings.Join(returnFields, ","), updateNSGroupDelegationAPI.Endpoint())
+	assert.Equal(t, wapiVersion+"/"+nsGroupDelegationObject.Reference+"?_return_fields="+strings.Join(RequestReturnFields, ","), updateNSGroupDelegationAPI.Endpoint())
 }
 
 func TestNameServerGroupDelegationNewUpdateResponse(t *testing.T) {
@@ -112,6 +122,8 @@ func TestNameServerGroupDelegationNewUpdateResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-delegation", response.Name)
 	assert.Equal(t, "Test NS Group Delegation", response.Comment)
+	assert.Equal(t, "ns1.example.com", response.DelegateTo[0].Name)
+	assert.Equal(t, "192.168.1.100", response.DelegateTo[0].Address)
 }
 
 func TestNameServerGroupDelegationNewDeleteMethod(t *testing.T) {
