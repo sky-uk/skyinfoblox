@@ -44,6 +44,7 @@ type ZoneForward struct {
 	//For other zones, this is in FQDN format. This value can be in unicode format.
 	//Note that for a reverse zone, the corresponding zone_format value should be set.
 	//Required
+	// This field cannot be changed at update , should be omitempty to avoid sending empty string
 	Fqdn string `json:"fqdn,omitempty"`
 	//If you enable this flag, other administrators cannot make conflicting changes.
 	//This is for administration purposes only.
