@@ -77,7 +77,7 @@ type ZoneForward struct {
 	//Determines if a Grid member manages the zone served by a Microsoft DNS server in read-only mode.
 	//This flag is true when a Grid member manages the zone in read-only mode, false otherwise.
 	//When the zone has the ms_read_only flag set to True, no changes can be made to this zone.
-	//MSReadOnly bool `json:"ms_read_only,omitempty,omitempty"`
+	//MSReadOnly bool `json:"ms_read_only,omitempty"`
 	//The name of MS synchronization master for this zone.
 	MSSyncMasterName string `json:"ms_sync_master_name,omitempty"`
 	//A forwarding member name server group. Values with leading or trailing white space are not valid for this field.
