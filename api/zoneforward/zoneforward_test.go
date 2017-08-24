@@ -27,7 +27,6 @@ func testZoneForwardStruct(t *testing.T) {
 	rec.MaskPrefix = "MaskPrefix"
 	rec.Parent = "Parent"
 	rec.Prefix = "Prefix"
-	rec.UsingSrgAssociations = flag
 	rec.View = "View"
 	rec.ZoneFormat = "FORWARD"
 
