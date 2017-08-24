@@ -77,7 +77,7 @@ type ZoneForward struct {
 	//Determines if a Grid member manages the zone served by a Microsoft DNS server in read-only mode.
 	//This flag is true when a Grid member manages the zone in read-only mode, false otherwise.
 	//When the zone has the ms_read_only flag set to True, no changes can be made to this zone.
-	MSReadOnly bool `json:"ms_read_only,omitempty,omitempty"`
+	//MSReadOnly bool `json:"ms_read_only,omitempty,omitempty"`
 	//The name of MS synchronization master for this zone.
 	MSSyncMasterName string `json:"ms_sync_master_name,omitempty"`
 	//A forwarding member name server group. Values with leading or trailing white space are not valid for this field.
@@ -93,7 +93,7 @@ type ZoneForward struct {
 	//The prefix can be alphanumeric characters, such as 128/26 , 128-189 , or sub-B.
 	Prefix string `json:"prefix,omitempty"`
 	//This is true if the zone is associated with a shared record group.
-	UsingSrgAssociations bool `json:"using_srg_associations,omitempty"`
+	//UsingSrgAssociations bool `json:"using_srg_associations,omitempty"`
 	//The name of the DNS view in which the zone resides. Example “external”.
 	View string `json:"view,omitempty"`
 	//Determines the format of this zone.
