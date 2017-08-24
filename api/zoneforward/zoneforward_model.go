@@ -93,7 +93,6 @@ type ZoneForward struct {
 	//The prefix can be alphanumeric characters, such as 128/26 , 128-189 , or sub-B.
 	Prefix string `json:"prefix,omitempty"`
 	//This is true if the zone is associated with a shared record group.
-
 	//UsingSrgAssociations bool `json:"using_srg_associations,omitempty"`
 	//The name of the DNS view in which the zone resides. Example “external”.
 	View string `json:"view,omitempty"`
