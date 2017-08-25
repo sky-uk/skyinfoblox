@@ -26,7 +26,7 @@ func createNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	externalFwdToIP := flagSet.Lookup("ext-fwd-to-ip").Value.String()
 
 	if name == "" {
-		fmt.Printf("\nError name argument required\n")
+		fmt.Printf("\nError -name argument required\n")
 		os.Exit(1)
 	}
 	nsGroupFwdObject.Name = name
@@ -36,7 +36,7 @@ func createNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	}
 	// Note we only support one fwdServerName in the cli
 	if fwdServerName == "" {
-		fmt.Printf("\nError fwd-server-name argument required\n")
+		fmt.Printf("\nError -fwd-server-name argument required\n")
 		os.Exit(1)
 	}
 	nsGroupFwdServersObject.Name = fwdServerName

@@ -13,7 +13,7 @@ func deleteNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 
 	reference := flagSet.Lookup("ref").Value.String()
 	if reference == "" {
-		fmt.Printf("\nError ref argument required\n")
+		fmt.Printf("\nError -ref argument required\n")
 		os.Exit(1)
 	}
 
@@ -21,7 +21,7 @@ func deleteNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	err := client.Do(deleteNSGroupFwdAPI)
 	httpStatus := deleteNSGroupFwdAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
-		fmt.Printf("\nError whilst deleting NS Group Forwarding reference %s. HTTP status: %d. Error: %+v\n", reference, httpStatus, err)
+		fmt.Printf("\nError whilst deleting NS Group Forwarding reference %s. HTTP status: %d. Error: %+v\n", reference, httpStatus, string(deleteNSGroupFwdAPI.RawResponse()))
 		os.Exit(1)
 	}
 	fmt.Printf("\nSuccessfully deleted NS Group Forwarding reference %s\n", reference)

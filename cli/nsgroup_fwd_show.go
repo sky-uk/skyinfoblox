@@ -13,7 +13,7 @@ func showNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	reference := flagSet.Lookup("ref").Value.String()
 	if reference == "" {
-		fmt.Printf("\nError ref argument required\n")
+		fmt.Printf("\nError -ref argument required\n")
 		os.Exit(1)
 	}
 
@@ -21,7 +21,7 @@ func showNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	err := client.Do(nsGroupFwdShowAPI)
 	httpStatus := nsGroupFwdShowAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
-		fmt.Printf("\nError whilst retrieving NS Group Forwarding reference %s. HTTP status: %d. Error: %+v", reference, httpStatus, err)
+		fmt.Printf("\nError whilst retrieving NS Group Forwarding reference %s. HTTP status: %d. Error: %+v", reference, httpStatus, string(nsGroupFwdShowAPI.RawResponse()))
 		os.Exit(1)
 	}
 	// Note CLI only supports one item in each array

@@ -15,7 +15,7 @@ func showAllNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet
 	err := client.Do(showAllNSGroupFwdAPI)
 	httpStatus := showAllNSGroupFwdAPI.StatusCode()
 	if err != nil || httpStatus < http.StatusOK || httpStatus >= http.StatusBadRequest {
-		fmt.Printf("\nError whilst retrieving a list of Name Server Group Forwarding. HTTP status: %d. Error: %+v\n", httpStatus, err)
+		fmt.Printf("\nError whilst retrieving a list of Name Server Group Forwarding. HTTP status: %d. Error: %+v\n", httpStatus, string(showAllNSGroupFwdAPI.RawResponse()))
 		os.Exit(1)
 	}
 
