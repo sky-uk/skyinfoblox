@@ -78,7 +78,7 @@ func init() {
 	createNSGroupFwdFlags := flag.NewFlagSet("nsgroup-fwd-create", flag.ExitOnError)
 	createNSGroupFwdFlags.String("name", "", "usage: -name nsgroup-fwd-name")
 	createNSGroupFwdFlags.String("comment", "", "usage: -comment 'A Comment'")
-	createNSGroupFwdFlags.String("fwd-server-name", "", "usage: -fwd-server-name name-server (only supports one)")
+	createNSGroupFwdFlags.String("fwd-server-name", "", "usage: -fwd-server-name grid-member-name (only supports one)")
 	createNSGroupFwdFlags.String("use-override-fwders", "", "usage: -use-override-fwders (true|false)")
 	createNSGroupFwdFlags.String("forwarders-only", "", "usage: -forwarders-only (true|false)")
 	createNSGroupFwdFlags.String("ext-fwd-to-name", "", "usage: -ext-fwd-to-name name-server (only supports one)")

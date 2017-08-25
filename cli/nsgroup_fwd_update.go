@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
+	"github.com/sky-uk/skyinfoblox/api/common"
 	"github.com/sky-uk/skyinfoblox/api/nsgroupfwd"
 	"net/http"
 	"os"
@@ -35,13 +36,18 @@ func updateNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 		os.Exit(1)
 	}
 
-	// Not cli only supports one element in the ForwardingServers array and ForwardTo array
+	// Note cli only supports one element in the ForwardingServers array and ForwardTo array
 	nsGroupFwdObject := *nsGroupFwdGetAPI.ResponseObject().(*nsgroupfwd.NSGroupFwd)
 	if name != "" {
 		nsGroupFwdObject.Name = name
 	}
 	if comment != "" {
 		nsGroupFwdObject.Comment = comment
+	}
+
+	if len(nsGroupFwdObject.ForwardingServers) == 0 {
+		nsGroupFwdList := make([]common.ForwardingMemberServer, 1)
+		nsGroupFwdObject.ForwardingServers = nsGroupFwdList
 	}
 	if fwdServerName != "" {
 		nsGroupFwdObject.ForwardingServers[0].Name = fwdServerName
@@ -51,6 +57,11 @@ func updateNSGroupFwd(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
 	}
 	if forwardersOnlyErr == nil {
 		nsGroupFwdObject.ForwardingServers[0].ForwardersOnly = &forwardersOnly
+	}
+
+	if len(nsGroupFwdObject.ForwardingServers[0].ForwardTo) == 0 {
+		nsGroupForwardToList := make([]common.ExternalServer, 1)
+		nsGroupFwdObject.ForwardingServers[0].ForwardTo = nsGroupForwardToList
 	}
 	if externalFwdToName != "" {
 		nsGroupFwdObject.ForwardingServers[0].ForwardTo[0].Name = externalFwdToName
@@ -73,7 +84,7 @@ func init() {
 	updateNSGroupFwdFlags := flag.NewFlagSet("nsgroup-fwd-update", flag.ExitOnError)
 	updateNSGroupFwdFlags.String("name", "", "usage: -name nsgroup-name")
 	updateNSGroupFwdFlags.String("comment", "", "usage: -comment 'A Comment'")
-	updateNSGroupFwdFlags.String("fwd-server-name", "", "usage: -fwd-server-name name-server (only supports one)")
+	updateNSGroupFwdFlags.String("fwd-server-name", "", "usage: -fwd-server-name grid-member-name (only supports one)")
 	updateNSGroupFwdFlags.String("use-override-fwders", "", "usage: -use-override-fwders (true|false)")
 	updateNSGroupFwdFlags.String("forwarders-only", "", "usage: -forwarders-only (true|false)")
 	updateNSGroupFwdFlags.String("ext-fwd-to-name", "", "usage: -ext-fwd-to-name name-server (only supports one)")
