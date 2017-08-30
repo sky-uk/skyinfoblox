@@ -14,7 +14,7 @@ func NewCreate(mxRecord MxRecord) *api.BaseAPI {
 
 // NewGet - Returns a single record
 func NewGet(reference string, returnFields []string) *api.BaseAPI {
-	return api.NewBaseAPI(http.MethodGet, fmt.Sprintf("%s/%s", WapiVersion, reference), nil, new(MxRecord))
+	return api.NewBaseAPI(http.MethodGet, fmt.Sprintf("%s/%s?_return_fields=%s", WapiVersion, reference, strings.Join(returnFields, ",")), nil, new(MxRecord))
 }
 
 // NewGetAll - Returns all records
@@ -24,8 +24,8 @@ func NewGetAll() *api.BaseAPI {
 }
 
 // NewUpdate - Updates a Record
-func NewUpdate(mxRecord MxRecord, returnFields []string) *api.BaseAPI {
-	return api.NewBaseAPI(http.MethodPut, fmt.Sprintf("%s/%s?return_fields=%s", WapiVersion, mxRecord.Ref, strings.Join(returnFields, ",")), mxRecord, new(string))
+func NewUpdate(reference string, mxRecord MxRecord) *api.BaseAPI {
+	return api.NewBaseAPI(http.MethodPut, fmt.Sprintf("%s/%s", WapiVersion, reference), mxRecord, new(string))
 }
 
 // NewDelete - Deletes a Record

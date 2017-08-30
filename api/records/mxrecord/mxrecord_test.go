@@ -43,7 +43,7 @@ func setupMXRecord(action string) *api.BaseAPI {
 	case "update":
 		reference = "SVC-APP-UNIT-TEST"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
-		MXRecordAPI := NewUpdate(newMXRecord, returnFields)
+		MXRecordAPI := NewUpdate(reference, newMXRecord)
 		return MXRecordAPI
 	case "delete":
 		reference = "record:mx/SVC-APP-UNIT-TEST"
@@ -72,7 +72,7 @@ func TestCreateMXRecordResponse(t *testing.T) {
 
 func TestReadMXRecordEndpoint(t *testing.T) {
 	GetMXRecordAPI := setupMXRecord("read")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST", GetMXRecordAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST?_return_fields=name,comment,mail_exchanger", GetMXRecordAPI.Endpoint())
 }
 
 func TestReadMXRecordMethod(t *testing.T) {

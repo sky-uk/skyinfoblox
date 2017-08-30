@@ -19,8 +19,20 @@ func showMXRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	if getMXRecordAPI.StatusCode() != http.StatusOK {
 		fmt.Println(fmt.Errorf("Error creating MXRecord: %s", *getMXRecordAPI.ResponseObject().(*string)))
 	} else {
-		fmt.Println("Avaliable MXRecords")
-		fmt.Println(*getMXRecordAPI.ResponseObject().(*mxrecord.MxRecord))
+		if getMXRecordAPI.StatusCode() == http.StatusOK {
+			object := *getMXRecordAPI.ResponseObject().(*mxrecord.MxRecord)
+			row := map[string]interface{}{}
+			row["name"] = object.Name
+			row["mail_exchanger"] = object.MailExchanger
+			row["comment"] = object.Comment
+			row["ttl"] = object.TTL
+			row["use_ttl"] = object.UseTTL
+			row["preference"] = object.Preference
+			PrettyPrintSingle(row)
+		} else {
+			fmt.Println("Status code: ", getMXRecordAPI.StatusCode())
+			fmt.Printf("Response:\n%s\n ", *getMXRecordAPI.ResponseObject().(*string))
+		}
 
 	}
 
