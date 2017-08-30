@@ -20,5 +20,4 @@ type MxRecord struct {
 	TTL               uint   `json:"ttl,omitempty"`
 	UseTTL            bool   `json:"use_ttl"`
 	View              string `json:"view,omitempty"`
-	Zone              string `json:"zone,omitempty"`
 }
