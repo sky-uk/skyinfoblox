@@ -7,7 +7,6 @@ const WapiVersion = "/wapi/v2.6.1"
 const MXRecordEndpoint = "record:mx"
 
 // MxRecord struct
-
 type MxRecord struct {
 	Ref               string `json:"_ref,omitempty"`
 	Comment           string `json:"comment,omitempty"`
