@@ -38,7 +38,7 @@ func updateMXRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 }
 
 func init() {
-	updateMXRecordFlags := flag.NewFlagSet("mxrecord-create", flag.ExitOnError)
+	updateMXRecordFlags := flag.NewFlagSet("mxrecord-update", flag.ExitOnError)
 	updateMXRecordFlags.String("ref", "", "usage: -ref reference for the record to delete")
 	updateMXRecordFlags.String("name", "", "usage: -name name of the zone")
 	updateMXRecordFlags.String("mail_exchanger", "", "usage: -name name of the zone")
