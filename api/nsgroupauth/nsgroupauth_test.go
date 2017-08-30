@@ -25,6 +25,7 @@ func setupNSGroupAuthTest(testType string) {
 		Name:               "test-ns-group-auth",
 		UseExternalPrimary: &useExternalPrimary,
 	}
+	nsGroupAuthObjectList = make([]NSGroupAuth, 0)
 	nsGroupAuthObjectList = append(nsGroupAuthObjectList, nsGroupAuthObject)
 	returnFields = []string{"comment", "external_primaries", "external_secondaries", "grid_primary", "grid_secondaries", "is_grid_default", "name", "use_external_primary"}
 
@@ -98,6 +99,7 @@ func TestNameServerGroupAuthNewGetAllResponse(t *testing.T) {
 	setupNSGroupAuthTest("getall")
 	response := *getAllNSGroupAuthAPI.ResponseObject().(*[]NSGroupAuth)
 
+	assert.Equal(t, 1, len(response))
 	assert.Equal(t, "nsgroup/ZG5zOm5zX2dyb2VwJAByaW1hcnlfWm9uZV9YRlI:TEST_NS_GROUP_AUTH", response[0].Reference)
 	assert.Equal(t, "test-ns-group-auth", response[0].Name)
 }

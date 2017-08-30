@@ -24,6 +24,7 @@ func setupNSGroupFwdTest(testType string) {
 		Address: "192.168.0.12",
 		Name:    "ns1.example.com",
 	}
+	nsForwardingExternalServerList = make([]common.ExternalServer, 0)
 	nsForwardingExternalServerList = append(nsForwardingExternalServerList, nsForwardingExternalServerObject)
 
 	forwardersOnly := true
@@ -34,6 +35,7 @@ func setupNSGroupFwdTest(testType string) {
 		ForwardersOnly:        &forwardersOnly,
 		UseOverrideForwarders: &useOverrideForwarders,
 	}
+	nsForwardingServerList = make([]common.ForwardingMemberServer, 0)
 	nsForwardingServerList = append(nsForwardingServerList, nsForwardingServerObject)
 
 	nsGroupFwdObject = NSGroupFwd{
@@ -42,6 +44,7 @@ func setupNSGroupFwdTest(testType string) {
 		ForwardingServers: nsForwardingServerList,
 		Reference:         "nsgroup:forwardingmember/ZG5zLoL2zX2dyb3VwJHRlc3Q:test-ns-group-fwd",
 	}
+	nsGroupFwdObjectList = make([]NSGroupFwd, 0)
 	nsGroupFwdObjectList = append(nsGroupFwdObjectList, nsGroupFwdObject)
 
 	switch testType {
@@ -96,9 +99,11 @@ func TestNameServerGroupFwdNewGetResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-fwd", response.Name)
 	assert.Equal(t, "Testing NS Group Forwarding", response.Comment)
+	assert.Equal(t, 1, len(response.ForwardingServers))
 	assert.Equal(t, "test-ns-group-fwd-servers", response.ForwardingServers[0].Name)
 	assert.Equal(t, true, *response.ForwardingServers[0].ForwardersOnly)
 	assert.Equal(t, false, *response.ForwardingServers[0].UseOverrideForwarders)
+	assert.Equal(t, 1, len(response.ForwardingServers[0].ForwardTo))
 	assert.Equal(t, "ns1.example.com", response.ForwardingServers[0].ForwardTo[0].Name)
 	assert.Equal(t, "192.168.0.12", response.ForwardingServers[0].ForwardTo[0].Address)
 }
@@ -117,6 +122,7 @@ func TestNameServerGroupFwdNewGetAllResponse(t *testing.T) {
 	setupNSGroupFwdTest("getall")
 	response := *getAllNSGroupFwdAPI.ResponseObject().(*[]NSGroupFwd)
 
+	assert.Equal(t, 1, len(response))
 	assert.Equal(t, "nsgroup:forwardingmember/ZG5zLoL2zX2dyb3VwJHRlc3Q:test-ns-group-fwd", response[0].Reference)
 	assert.Equal(t, "test-ns-group-fwd", response[0].Name)
 }
@@ -137,9 +143,11 @@ func TestNameServerGroupFwdNewUpdateResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-fwd", response.Name)
 	assert.Equal(t, "Testing NS Group Forwarding", response.Comment)
+	assert.Equal(t, 1, len(response.ForwardingServers))
 	assert.Equal(t, "test-ns-group-fwd-servers", response.ForwardingServers[0].Name)
 	assert.Equal(t, true, *response.ForwardingServers[0].ForwardersOnly)
 	assert.Equal(t, false, *response.ForwardingServers[0].UseOverrideForwarders)
+	assert.Equal(t, 1, len(response.ForwardingServers[0].ForwardTo))
 	assert.Equal(t, "ns1.example.com", response.ForwardingServers[0].ForwardTo[0].Name)
 	assert.Equal(t, "192.168.0.12", response.ForwardingServers[0].ForwardTo[0].Address)
 }

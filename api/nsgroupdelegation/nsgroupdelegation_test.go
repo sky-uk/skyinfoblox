@@ -22,6 +22,7 @@ func setupNSGroupDelegationTest(testType string) {
 		Name:    "ns1.example.com",
 		Address: "192.168.1.100",
 	}
+	externalServerList = make([]common.ExternalServer, 0)
 	externalServerList = append(externalServerList, externalServerObject)
 
 	nsGroupDelegationObject = NSGroupDelegation{
@@ -30,6 +31,7 @@ func setupNSGroupDelegationTest(testType string) {
 		Name:       "test-ns-group-delegation",
 		DelegateTo: externalServerList,
 	}
+	nsGroupDelegationObjectList = make([]NSGroupDelegation, 0)
 	nsGroupDelegationObjectList = append(nsGroupDelegationObjectList, nsGroupDelegationObject)
 
 	switch testType {
@@ -84,6 +86,7 @@ func TestNameServerGroupDelegationNewGetResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-delegation", response.Name)
 	assert.Equal(t, "Test NS Group Delegation", response.Comment)
+	assert.Equal(t, 1, len(response.DelegateTo))
 	assert.Equal(t, "ns1.example.com", response.DelegateTo[0].Name)
 	assert.Equal(t, "192.168.1.100", response.DelegateTo[0].Address)
 }
@@ -102,6 +105,7 @@ func TestNameServerGroupDelegationNewGetAllResponse(t *testing.T) {
 	setupNSGroupDelegationTest("getall")
 	response := *getAllNSGroupDelegationAPI.ResponseObject().(*[]NSGroupDelegation)
 
+	assert.Equal(t, 1, len(response))
 	assert.Equal(t, "nsgroup:delegation/ZG5zOm5zX2dyb2VwJAByaW1hcnlfWm9uZV9YRlI:TEST_NS_GROUP_DELEGATION", response[0].Reference)
 	assert.Equal(t, "test-ns-group-delegation", response[0].Name)
 }
@@ -122,6 +126,7 @@ func TestNameServerGroupDelegationNewUpdateResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-delegation", response.Name)
 	assert.Equal(t, "Test NS Group Delegation", response.Comment)
+	assert.Equal(t, 1, len(response.DelegateTo))
 	assert.Equal(t, "ns1.example.com", response.DelegateTo[0].Name)
 	assert.Equal(t, "192.168.1.100", response.DelegateTo[0].Address)
 }
