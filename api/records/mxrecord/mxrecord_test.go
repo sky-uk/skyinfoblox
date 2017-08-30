@@ -31,9 +31,9 @@ func setupMXRecord(action string) *api.BaseAPI {
 		MXRecordAPI.SetResponseObject(response)
 		return MXRecordAPI
 	case "read":
-		reference = "SVC-APP-UNIT-TEST"
+		reference = "record:mx/SVC-APP-UNIT-TEST"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
-		MXRecordAPI := NewGet(newMXRecord.Ref, returnFields)
+		MXRecordAPI := NewGet(reference, returnFields)
 		MXRecordAPI.SetResponseObject(newMXRecord)
 		return MXRecordAPI
 	case "readall":
@@ -46,7 +46,7 @@ func setupMXRecord(action string) *api.BaseAPI {
 		MXRecordAPI := NewUpdate(newMXRecord, returnFields)
 		return MXRecordAPI
 	case "delete":
-		reference = "SVC-APP-UNIT-TEST"
+		reference = "record:mx/SVC-APP-UNIT-TEST"
 		MXRecordAPI := NewDelete(reference)
 		return MXRecordAPI
 
