@@ -25,30 +25,30 @@ func setupMXRecord(action string) *api.BaseAPI {
 
 	switch action {
 	case "create":
-		MXRecordAPI := NewCreate(newMXRecord)
-		response := fmt.Sprintf("%s/%s/randonstring:SVC-APP-UNIT-TEST", WapiVersion, MXRecordEndpoint)
+		mxRecordAPI := NewCreate(newMXRecord)
+		response := fmt.Sprintf("%s/%s/randonstring:SVC-APP-UNIT-TEST", wapiVersion, mxRecordEndpoint)
 		fmt.Println(response)
-		MXRecordAPI.SetResponseObject(response)
-		return MXRecordAPI
+		mxRecordAPI.SetResponseObject(response)
+		return mxRecordAPI
 	case "read":
 		reference = "record:mx/SVC-APP-UNIT-TEST"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
-		MXRecordAPI := NewGet(reference, returnFields)
-		MXRecordAPI.SetResponseObject(newMXRecord)
-		return MXRecordAPI
+		mxRecordAPI := NewGet(reference, returnFields)
+		mxRecordAPI.SetResponseObject(newMXRecord)
+		return mxRecordAPI
 	case "readall":
-		MXRecordAPI := NewGetAll()
-		MXRecordAPI.SetResponseObject(newMXRecord)
-		return MXRecordAPI
+		mxRecordAPI := NewGetAll()
+		mxRecordAPI.SetResponseObject(newMXRecord)
+		return mxRecordAPI
 	case "update":
 		reference = "SVC-APP-UNIT-TEST"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
-		MXRecordAPI := NewUpdate(reference, newMXRecord)
-		return MXRecordAPI
+		mxRecordAPI := NewUpdate(reference, newMXRecord)
+		return mxRecordAPI
 	case "delete":
 		reference = "record:mx/SVC-APP-UNIT-TEST"
-		MXRecordAPI := NewDelete(reference)
-		return MXRecordAPI
+		mxRecordAPI := NewDelete(reference)
+		return mxRecordAPI
 
 	default:
 		return nil
@@ -56,32 +56,32 @@ func setupMXRecord(action string) *api.BaseAPI {
 }
 
 func TestCreateMXRecordEndpoint(t *testing.T) {
-	CreateMXRecordAPI := setupMXRecord("create")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx", CreateMXRecordAPI.Endpoint())
+	createMxRecordAPI := setupMXRecord("create")
+	assert.Equal(t, "/wapi/v2.6.1/record:mx", createMxRecordAPI.Endpoint())
 }
 
 func TestCreateMXRecordMethod(t *testing.T) {
-	CreateMXRecordAPI := setupMXRecord("create")
-	assert.Equal(t, http.MethodPost, CreateMXRecordAPI.Method())
+	createMxRecordAPI := setupMXRecord("create")
+	assert.Equal(t, http.MethodPost, createMxRecordAPI.Method())
 }
 
 func TestCreateMXRecordResponse(t *testing.T) {
-	CreateMXRecordAPI := setupMXRecord("create")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/randonstring:SVC-APP-UNIT-TEST", CreateMXRecordAPI.ResponseObject())
+	createMxRecordAPI := setupMXRecord("create")
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/randonstring:SVC-APP-UNIT-TEST", createMxRecordAPI.ResponseObject())
 }
 
 func TestReadMXRecordEndpoint(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("read")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST?_return_fields=name,comment,mail_exchanger", GetMXRecordAPI.Endpoint())
+	getMxRecordAPI := setupMXRecord("read")
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST?_return_fields=name,comment,mail_exchanger", getMxRecordAPI.Endpoint())
 }
 
 func TestReadMXRecordMethod(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("read")
-	assert.Equal(t, http.MethodGet, GetMXRecordAPI.Method())
+	getMxRecordAPI := setupMXRecord("read")
+	assert.Equal(t, http.MethodGet, getMxRecordAPI.Method())
 }
 
 func TestReadMXRecordResponse(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("read")
+	getMxRecordAPI := setupMXRecord("read")
 	expectedResponse := MxRecord{
 		Ref:               "SVC-APP-UNIT-TEST",
 		Comment:           "This is a comment on an MXRecord",
@@ -95,30 +95,30 @@ func TestReadMXRecordResponse(t *testing.T) {
 		TTL:               1600,
 		UseTTL:            true,
 		View:              "default"}
-	assert.Equal(t, expectedResponse, GetMXRecordAPI.ResponseObject())
+	assert.Equal(t, expectedResponse, getMxRecordAPI.ResponseObject())
 }
 
 func TestUpdateMXRecordEndpoint(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("update")
-	assert.Equal(t, http.MethodPut, GetMXRecordAPI.Method())
+	getMxRecordAPI := setupMXRecord("update")
+	assert.Equal(t, http.MethodPut, getMxRecordAPI.Method())
 }
 
 func TestDeleteMXRecordEndpoint(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("delete")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST", GetMXRecordAPI.Endpoint())
+	getMxRecordAPI := setupMXRecord("delete")
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST", getMxRecordAPI.Endpoint())
 }
 
 func TestDeleteMXRecordMethod(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("delete")
-	assert.Equal(t, http.MethodDelete, GetMXRecordAPI.Method())
+	getMxRecordAPI := setupMXRecord("delete")
+	assert.Equal(t, http.MethodDelete, getMxRecordAPI.Method())
 }
 
 func TestGetAllMXRecordEndpoint(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("readall")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx", GetMXRecordAPI.Endpoint())
+	getMxRecordAPI := setupMXRecord("readall")
+	assert.Equal(t, "/wapi/v2.6.1/record:mx", getMxRecordAPI.Endpoint())
 }
 
 func TestGetAllMXRecordMethod(t *testing.T) {
-	GetMXRecordAPI := setupMXRecord("readall")
-	assert.Equal(t, http.MethodGet, GetMXRecordAPI.Method())
+	getMxRecordAPI := setupMXRecord("readall")
+	assert.Equal(t, http.MethodGet, getMxRecordAPI.Method())
 }

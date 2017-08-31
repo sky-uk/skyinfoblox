@@ -1,10 +1,10 @@
 package mxrecord
 
 //WapiVersion : WAPI version related with this data model
-const WapiVersion = "/wapi/v2.6.1"
+const wapiVersion = "/wapi/v2.6.1"
 
 // MXRecordEndpoint - resource WAPI endpoint
-const MXRecordEndpoint = "record:mx"
+const mxRecordEndpoint = "record:mx"
 
 // MxRecord struct
 type MxRecord struct {
