@@ -15,17 +15,11 @@ var nsGroupStubObject NSGroupStub
 var nsGroupStubObjectList []NSGroupStub
 var nsGroupStubMemberServerObject common.MemberServer
 var nsGroupStubMemberServerList []common.MemberServer
-var nsGroupStubExternalServerObject common.ExternalServer
-var nsGroupStubExternalServerList []common.ExternalServer
 
 func setupNSGroupStubTest(testType string) {
 
-	nsGroupStubExternalServerObject.Name = "ns1.example.com"
-	nsGroupStubExternalServerObject.Address = "192.168.0.1"
-	nsGroupStubExternalServerList = append(nsGroupStubExternalServerList, nsGroupStubExternalServerObject)
-
 	nsGroupStubMemberServerObject.Name = "grid-member01.example.com"
-	nsGroupStubMemberServerObject.PreferredPrimaries = nsGroupStubExternalServerList
+	nsGroupStubMemberServerList = make([]common.MemberServer, 0)
 	nsGroupStubMemberServerList = append(nsGroupStubMemberServerList, nsGroupStubMemberServerObject)
 
 	nsGroupStubObject.Name = "test-ns-group-stub"
@@ -33,6 +27,7 @@ func setupNSGroupStubTest(testType string) {
 	nsGroupStubObject.Reference = "nsgroup:stubmember/ZG5zLoL2zX2dyb3VwJHRlc3Q:test-ns-group-stub"
 	nsGroupStubObject.StubMembers = nsGroupStubMemberServerList
 
+	nsGroupStubObjectList = make([]NSGroupStub, 0)
 	nsGroupStubObjectList = append(nsGroupStubObjectList, nsGroupStubObject)
 
 	switch testType {
@@ -87,9 +82,8 @@ func TestNameServerGroupStubNewGetResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-stub", response.Name)
 	assert.Equal(t, "Testing NS Group Stub", response.Comment)
+	assert.Equal(t, 1, len(response.StubMembers))
 	assert.Equal(t, "grid-member01.example.com", response.StubMembers[0].Name)
-	assert.Equal(t, "ns1.example.com", response.StubMembers[0].PreferredPrimaries[0].Name)
-	assert.Equal(t, "192.168.0.1", response.StubMembers[0].PreferredPrimaries[0].Address)
 }
 
 func TestNameServerGroupStubNewGetAllMethod(t *testing.T) {
@@ -106,6 +100,7 @@ func TestNameServerGroupStubNewGetAllResponse(t *testing.T) {
 	setupNSGroupStubTest("getall")
 	response := *getAllNSGroupStubAPI.ResponseObject().(*[]NSGroupStub)
 
+	assert.Equal(t, 1, len(response))
 	assert.Equal(t, "nsgroup:stubmember/ZG5zLoL2zX2dyb3VwJHRlc3Q:test-ns-group-stub", response[0].Reference)
 	assert.Equal(t, "test-ns-group-stub", response[0].Name)
 }
@@ -126,9 +121,8 @@ func TestNameServerGroupStubNewUpdateResponse(t *testing.T) {
 
 	assert.Equal(t, "test-ns-group-stub", response.Name)
 	assert.Equal(t, "Testing NS Group Stub", response.Comment)
+	assert.Equal(t, 1, len(response.StubMembers))
 	assert.Equal(t, "grid-member01.example.com", response.StubMembers[0].Name)
-	assert.Equal(t, "ns1.example.com", response.StubMembers[0].PreferredPrimaries[0].Name)
-	assert.Equal(t, "192.168.0.1", response.StubMembers[0].PreferredPrimaries[0].Address)
 }
 
 func TestNameServerGroupStubNewDeleteMethod(t *testing.T) {
