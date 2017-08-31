@@ -18,8 +18,8 @@ func createMXRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	mxRecord.MailExchanger = mailExchanger
 	mxRecord.Name = name
-	Preference, _ := strconv.Atoi(preference)
-	mxRecord.Preference = uint(Preference)
+	preferenceInt, _ := strconv.Atoi(preference)
+	mxRecord.Preference = uint(preferenceInt)
 	if view != "" {
 		mxRecord.View = view
 	}
@@ -41,7 +41,7 @@ func init() {
 	createMXRecordFlags := flag.NewFlagSet("mxrecord-create", flag.ExitOnError)
 	createMXRecordFlags.String("mail_exchanger", "", "usage: -mail_exchanger mail exchanger")
 	createMXRecordFlags.String("name", "", "usage: -name fqdn of the domain for this MXRecord")
-	createMXRecordFlags.String("preference", "", "usage: -preference prefenrece for the MX record")
+	createMXRecordFlags.String("preference", "", "usage: -preference preference for the MX record")
 	createMXRecordFlags.String("view", "", "usage: -view view for the MX record")
 	RegisterCliCommand("mxrecord-create", createMXRecordFlags, createMXRecord)
 }

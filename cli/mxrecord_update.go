@@ -14,7 +14,6 @@ func updateMXRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	name := flagSet.Lookup("name").Value.String()
 	mailExchanger := flagSet.Lookup("mail_exchanger").Value.String()
 	preference := flagSet.Lookup("preference").Value.String()
-	Preference, _ := strconv.Atoi(preference)
 	view := flagSet.Lookup("view").Value.String()
 	comment := flagSet.Lookup("comment").Value.String()
 	var updateMxRecord mxrecord.MxRecord
@@ -29,7 +28,8 @@ func updateMXRecord(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		updateMxRecord.View = view
 	}
 	if preference != "" {
-		updateMxRecord.Preference = uint(Preference)
+		preferenceInt, _ := strconv.Atoi(preference)
+		updateMxRecord.Preference = uint(preferenceInt)
 	}
 	if comment != "" {
 		updateMxRecord.Comment = comment
