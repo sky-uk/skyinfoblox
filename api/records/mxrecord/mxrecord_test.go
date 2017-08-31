@@ -13,7 +13,7 @@ var reference string
 
 func setupMXRecord(action string) *api.BaseAPI {
 	newMXRecord := MxRecord{
-		Ref:           "SVC-APP-UNIT-TEST",
+		Ref:           "7aa35cba48a0ebf27c549465a60f3b24",
 		Comment:       "This is a comment on an MXRecord",
 		MailExchanger: "mail.example.com",
 		Name:          "mydomain.com",
@@ -26,12 +26,12 @@ func setupMXRecord(action string) *api.BaseAPI {
 	switch action {
 	case "create":
 		mxRecordAPI := NewCreate(newMXRecord)
-		response := fmt.Sprintf("%s/%s/randonstring:SVC-APP-UNIT-TEST", wapiVersion, mxRecordEndpoint)
+		response := fmt.Sprintf("%s/%s/randonstring:7aa35cba48a0ebf27c549465a60f3b24", wapiVersion, mxRecordEndpoint)
 		fmt.Println(response)
 		mxRecordAPI.SetResponseObject(response)
 		return mxRecordAPI
 	case "read":
-		reference = "record:mx/SVC-APP-UNIT-TEST"
+		reference = "record:mx/7aa35cba48a0ebf27c549465a60f3b24"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
 		mxRecordAPI := NewGet(reference, returnFields)
 		mxRecordAPI.SetResponseObject(newMXRecord)
@@ -41,12 +41,12 @@ func setupMXRecord(action string) *api.BaseAPI {
 		mxRecordAPI.SetResponseObject(newMXRecord)
 		return mxRecordAPI
 	case "update":
-		reference = "SVC-APP-UNIT-TEST"
+		reference = "7aa35cba48a0ebf27c549465a60f3b24"
 		returnFields = []string{"name", "comment", "mail_exchanger"}
 		mxRecordAPI := NewUpdate(reference, newMXRecord)
 		return mxRecordAPI
 	case "delete":
-		reference = "record:mx/SVC-APP-UNIT-TEST"
+		reference = "record:mx/7aa35cba48a0ebf27c549465a60f3b24"
 		mxRecordAPI := NewDelete(reference)
 		return mxRecordAPI
 
@@ -67,12 +67,12 @@ func TestCreateMXRecordMethod(t *testing.T) {
 
 func TestCreateMXRecordResponse(t *testing.T) {
 	createMxRecordAPI := setupMXRecord("create")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/randonstring:SVC-APP-UNIT-TEST", createMxRecordAPI.ResponseObject())
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/randonstring:7aa35cba48a0ebf27c549465a60f3b24", createMxRecordAPI.ResponseObject())
 }
 
 func TestReadMXRecordEndpoint(t *testing.T) {
 	getMxRecordAPI := setupMXRecord("read")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST?_return_fields=name,comment,mail_exchanger", getMxRecordAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/7aa35cba48a0ebf27c549465a60f3b24?_return_fields=name,comment,mail_exchanger", getMxRecordAPI.Endpoint())
 }
 
 func TestReadMXRecordMethod(t *testing.T) {
@@ -83,7 +83,7 @@ func TestReadMXRecordMethod(t *testing.T) {
 func TestReadMXRecordResponse(t *testing.T) {
 	getMxRecordAPI := setupMXRecord("read")
 	expectedResponse := MxRecord{
-		Ref:               "SVC-APP-UNIT-TEST",
+		Ref:               "7aa35cba48a0ebf27c549465a60f3b24",
 		Comment:           "This is a comment on an MXRecord",
 		DDNSPrincipal:     "",
 		DDNSProtected:     false,
@@ -105,7 +105,7 @@ func TestUpdateMXRecordEndpoint(t *testing.T) {
 
 func TestDeleteMXRecordEndpoint(t *testing.T) {
 	getMxRecordAPI := setupMXRecord("delete")
-	assert.Equal(t, "/wapi/v2.6.1/record:mx/SVC-APP-UNIT-TEST", getMxRecordAPI.Endpoint())
+	assert.Equal(t, "/wapi/v2.6.1/record:mx/7aa35cba48a0ebf27c549465a60f3b24", getMxRecordAPI.Endpoint())
 }
 
 func TestDeleteMXRecordMethod(t *testing.T) {
