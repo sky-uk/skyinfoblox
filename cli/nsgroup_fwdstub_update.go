@@ -36,6 +36,7 @@ func updateNSGroupFwdStub(client *skyinfoblox.InfobloxClient, flagSet *flag.Flag
 	if externalServerName != "" || externalServerIP != "" {
 		if externalServerName == "" || externalServerIP == "" {
 			fmt.Printf("\nError -ext-server-name and -ext-server-ip must be changed at the same time\n")
+			os.Exit(1)
 		}
 		externalServerObject.Name = externalServerName
 		externalServerObject.Address = externalServerIP
