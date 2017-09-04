@@ -14,9 +14,9 @@ type MxRecord struct {
 	DDNSProtected     bool   `json:"ddns_protected"`
 	Disable           bool   `json:"disable"`
 	ForbidReclamation bool   `json:"forbid_reclamation"`
-	MailExchanger     string `json:"mail_exchanger"`
-	Name              string `json:"name"`
-	Preference        uint   `json:"preference"`
+	MailExchanger     string `json:"mail_exchanger,omitempty"`
+	Name              string `json:"name,omitempty"`
+	Preference        uint   `json:"preference,omitempty"`
 	TTL               uint   `json:"ttl,omitempty"`
 	UseTTL            bool   `json:"use_ttl"`
 	View              string `json:"view,omitempty"`
