@@ -32,7 +32,7 @@ type ForwardingMemberServer struct {
 
 // DHCPMember : Grid member serving DHCP
 type DHCPMember struct {
-	Ipv4addr string `json"ipv4addr,omitempty"`
+    Ipv4addr string `json:"ipv4addr,omitempty"`
 	Ipv6addr string `json:"ipv6addr,omitempty"`
 	Name     string `json:"name,omitempty"`
 }
