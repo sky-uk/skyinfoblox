@@ -108,4 +108,26 @@ type ScheduleSetting struct {
 type DNSSortlist struct {
 	Address   string   `json:"address,omitempty"`
 	MatchList []string `json:"match_list,omitempty"`
+
+// DHCPMember : Grid member serving DHCP
+type DHCPMember struct {
+	Ipv4addr string `json"ipv4addr,omitempty"`
+	Ipv6addr string `json:"ipv6addr,omitempty"`
+	Name     string `json:"name,omitempty"`
+}
+
+// DHCPOption : set of options
+type DHCPOption struct {
+	Name        string `json:"name,omitempty"`
+	Num         uint   `json:"num,omitempty"`
+	UseOption   *bool  `json:"use_option,omitempty"`
+	Value       string `json:"value,omitempty"`
+	VendorClass string `json:"vendor_class,omitempty"`
+}
+
+// ZoneAssociation : network association to a DNS zone
+type ZoneAssociation struct {
+	Fqdn      string `json:"fqdn"`
+	IsDefault bool   `json:"is_default"`
+	View      string `json:"view"`
 }
