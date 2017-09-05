@@ -1,1 +1,1 @@
-package dns_view
+package dnsview
