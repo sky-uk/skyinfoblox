@@ -1,6 +1,9 @@
-package dns_view
+package dnsview
 
 import "github.com/sky-uk/skyinfoblox/api/common"
+
+const wapiVersion = "/wapi/v2.6.1/"
+const dnsViewEndpoint = "view"
 
 // DnsView : DNS views provide the ability to serve one version of DNS data to one set of clients and another version to another set of clients. With DNS views, the appliance can provide a different answer to the same query, depending on the source of the query.
 type DNSView struct {
@@ -50,6 +53,7 @@ type DNSView struct {
 	NxDomainRedirectTTL                     uint                      `json:"nxdomain_redirect_ttl,omitempty"`
 	NxDomainRuleSets                    []string                      `json:"nxdomain_rulesets,omitempty"`
 	Recursion                     *bool                      `json:"recursion,omitempty"`
+	Reference           string                  `json:"_ref,omitempty"`
 	ResponseRateLimiting common.DnsResponseRateLimiting `json:"response_rate_limiting,omitempty"`
 	RootNameServerType string `json:"root_name_server_type,omitempty"`
 	RpzDropIpRuleEnabled *bool `json:"rpz_drop_ip_rule_enabled,omitempty"`
