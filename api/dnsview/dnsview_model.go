@@ -13,7 +13,7 @@ type DNSView struct {
 	BlackListRedirectTTL             uint                           `json:"blacklist_redirect_ttl,omitempty"`
 	BlackListRuleSets                []string                       `json:"blacklist_rulesets,omitempty"`
 	Comment                          string                         `json:"comment,omitempty"`
-	CustomRootNameServers            common.ExternalServer          `json:"custom_root_name_servers,omitempty"`
+	CustomRootNameServers            []common.ExternalServer        `json:"custom_root_name_servers,omitempty"`
 	DDNSPrincipalGroup               string                         `json:"ddns_principal_group,omitempty"`
 	DDNSPrincipalTracking            *bool                          `json:"ddns_principal_tracking,omitempty"`
 	DDNSRestrictPatterns             *bool                          `json:"ddns_restrict_patterns,omitempty"`
@@ -61,7 +61,7 @@ type DNSView struct {
 	RpzDropIPRuleMinPrefixLengthIpv6 uint                           `json:"rpz_drop_ip_rule_min_prefix_length_ipv6,omitempty"`
 	RpzQNameWaitRecurse              *bool                          `json:"rpz_qname_wait_recurse,omitempty"`
 	ScavengingSettings               common.DNSScavengingSettings   `json:"scavenging_settings,omitempty"`
-	Sortlist                         []common.DNSSortlist             `json:"sortlist,omitempty"`
+	Sortlist                         []common.DNSSortlist           `json:"sortlist,omitempty"`
 	UseBlacklist                     *bool                          `json:"use_blacklist,omitempty"`
 	UseDDNSPatternsRestriction       *bool                          `json:"use_ddns_patterns_restriction,omitempty"`
 	UseDDNSPrincipalSecurity         *bool                          `json:"use_ddns_principal_security,omitempty"`
