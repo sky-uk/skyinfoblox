@@ -15,21 +15,21 @@ func createDNSView(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	dnsView.Name = name
 	dnsView.Comment = comment
 
-	createDnsViewAPI := dnsview.NewCreate(dnsView)
-	err := client.Do(createDnsViewAPI)
+	createDNSViewAPI := dnsview.NewCreate(dnsView)
+	err := client.Do(createDNSViewAPI)
 	if err != nil {
 		fmt.Println(fmt.Printf("could not create dns view %s", err.Error()))
 	}
-	if createDnsViewAPI.StatusCode() == 201 {
+	if createDNSViewAPI.StatusCode() == 201 {
 		fmt.Println("DNS view object created")
 	}
-	fmt.Println(createDnsViewAPI.StatusCode())
-	fmt.Println(*createDnsViewAPI.ResponseObject().(*string))
+	fmt.Println(createDNSViewAPI.StatusCode())
+	fmt.Println(*createDNSViewAPI.ResponseObject().(*string))
 }
 
 func init() {
-	createDnsViewFlags := flag.NewFlagSet("dns-view-create", flag.ExitOnError)
-	createDnsViewFlags.String("name", "", "usage: -name 'Name of the DNS view.'")
-	createDnsViewFlags.String("comment", "", "usage: -comment 'Comment for the DNS view; maximum 64 characters.'")
-	RegisterCliCommand("dns-view-create", createDnsViewFlags, createDNSView)
+	createDNSViewFlags := flag.NewFlagSet("dns-view-create", flag.ExitOnError)
+	createDNSViewFlags.String("name", "", "usage: -name 'Name of the DNS view.'")
+	createDNSViewFlags.String("comment", "", "usage: -comment 'Comment for the DNS view; maximum 64 characters.'")
+	RegisterCliCommand("dns-view-create", createDNSViewFlags, createDNSView)
 }

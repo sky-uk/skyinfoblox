@@ -30,8 +30,8 @@ type ForwardingMemberServer struct {
 	UseOverrideForwarders *bool            `json:"use_override_forwarders,omitempty"`
 }
 
-// DnsSecTrustedKey : This is the the DNSKEY record that holds the KSK as a trust anchor for each zone for which the Grid member returns validated data.
-type DnsSecTrustedKey struct {
+// DNSSecTrustedKey : This is the the DNSKEY record that holds the KSK as a trust anchor for each zone for which the Grid member returns validated data.
+type DNSSecTrustedKey struct {
 	Algorithim       string `json:"algorithm,omitempty"`
 	FQDN             string `json:"fqdn,omitempty"`
 	Key              string `json:"key,omitempty"`
@@ -58,8 +58,8 @@ type FixedRRSetOrderFQDN struct {
 	RecordType string `json:"record_type,omitempty"`
 }
 
-// DnsResponseRateLimiting : The DNS Response Rate Limiting structure provides information about DNS response rate limiting configuration.
-type DnsResponseRateLimiting struct {
+// DNSResponseRateLimiting : The DNS Response Rate Limiting structure provides information about DNS response rate limiting configuration.
+type DNSResponseRateLimiting struct {
 	EnableRRL          *bool `json:"enable_rrl,omitempty"`
 	LogOnly            *bool `json:"log_only,omitempty"`
 	ResponsesPerSecond uint  `json:"responses_per_second,omitempty"`
@@ -67,8 +67,8 @@ type DnsResponseRateLimiting struct {
 	Window             uint  `json:"window,omitempty"`
 }
 
-// DnsScavengingSettings : The DNS scavenging settings object provides information about scavenging configuration e.g. conditions under which records can be scavenged, periodicity of scavenging operations.
-type DnsScavengingSettings struct {
+// DNSScavengingSettings : The DNS scavenging settings object provides information about scavenging configuration e.g. conditions under which records can be scavenged, periodicity of scavenging operations.
+type DNSScavengingSettings struct {
 	EaExpressionList          []ExpressionOperand `json:"ea_expression_list,omitempty"`
 	EnableAutoReclamation     *bool               `json:"enable_auto_reclamation,omitempty"`
 	EnableRecurrentScavenging *bool               `json:"enable_recurrent_scavenging,omitempty"`
@@ -80,7 +80,7 @@ type DnsScavengingSettings struct {
 	ScavengingSchedule        ScheduleSetting     `json:"scavenging_schedule,omitempty"`
 }
 
-// ExtensibleAttributeExpressionOperand : The extensible attribute expression operand structure is used to build an extensible attribute expression lists. The allowed values for the expression operand structure depend on the object they appear to be a part of.
+// ExpressionOperand : The expression operand structure is used to build expression lists. The allowed values for the expression operand structure depend on the object they appear to be a part of.
 type ExpressionOperand struct {
 	Op      string `json:"op,omitempty"`
 	Op1     string `json:"op1,omitempty"`
@@ -104,8 +104,8 @@ type ScheduleSetting struct {
 	Year            uint     `json:"year,omitempty"`
 }
 
-// DnsSortlist : A sortlist defines the order of IP addresses listed in responses sent to DNS queries.
-type DnsSortlist struct {
+// DNSSortlist : A sortlist defines the order of IP addresses listed in responses sent to DNS queries.
+type DNSSortlist struct {
 	Address   string   `json:"address,omitempty"`
 	MatchList []string `json:"match_list,omitempty"`
 }
