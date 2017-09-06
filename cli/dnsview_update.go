@@ -33,7 +33,7 @@ func updateDNSView(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Println(updateDNSViewAPI.StatusCode())
 		fmt.Println("DNS view object updated")
 	} else {
-		fmt.Println("DNS view object update failed with status code %s", updateDNSViewAPI.StatusCode())
+		fmt.Printf("DNS view object update failed with status code %s \n", updateDNSViewAPI.StatusCode())
 	}
 }
 
