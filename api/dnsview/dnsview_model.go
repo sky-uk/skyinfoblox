@@ -34,7 +34,7 @@ type DNSView struct {
 	EnableMatchRecursiveOnly         *bool                          `json:"enable_match_recursive_only,omitempty"`
 	FilterAAAA                       string                         `json:"filter_aaaa,omitempty"`
 	FilterAAAAList                   []common.AddressAC             `json:"filter_aaaa_list,omitempty"`
-	FilterRRsetOrderFQDNs            common.FixedRRSetOrderFQDN     `json:"fixed_rrset_order_fqdns,omitempty"`
+	FilterRRsetOrderFQDNs            []common.FixedRRSetOrderFQDN   `json:"fixed_rrset_order_fqdns,omitempty"`
 	ForwardOnly                      *bool                          `json:"forward_only,omitempty"`
 	Forwarders                       []string                       `json:"forwarders,omitempty"`
 	IsDefault                        *bool                          `json:"is_default,omitempty"`
