@@ -20,13 +20,13 @@ type Client struct {
 
 //Params : client connection parameters
 type Params struct {
-	url         string
-	user        string
-	password    string
-	ignoreSSL   bool
-	debug       bool
-	timeout     time.Duration
-	wapiVersion string
+	URL         string
+	User        string
+	Password    string
+	IgnoreSSL   bool
+	Debug       bool
+	Timeout     time.Duration
+	WapiVersion string
 }
 
 // Connect - connects to the Infoblox server...
@@ -35,21 +35,21 @@ func Connect(params Params) *Client {
 	client := new(Client)
 
 	client.version = defaultWapiVersion
-	if len(params.wapiVersion) != 0 {
-		client.version = params.wapiVersion
+	if len(params.WapiVersion) != 0 {
+		client.version = params.WapiVersion
 	}
 
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/json"
 
 	client.restClient = rest.Client{
-		URL:       params.url,
-		User:      params.user,
-		Password:  params.password,
-		IgnoreSSL: params.ignoreSSL,
-		Debug:     params.debug,
+		URL:       params.URL,
+		User:      params.User,
+		Password:  params.Password,
+		IgnoreSSL: params.IgnoreSSL,
+		Debug:     params.Debug,
 		Headers:   headers,
-		Timeout:   params.timeout,
+		Timeout:   params.Timeout,
 	}
 
 	return client

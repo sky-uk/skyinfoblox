@@ -30,12 +30,12 @@ func TestAllAPI(t *testing.T) {
 	}
 
 	params := Params{
-		wapiVersion: "v2.6.1", // this is anyhow the default...
-		url:         server,
-		user:        username,
-		password:    password,
-		ignoreSSL:   true,
-		debug:       true,
+		WapiVersion: "v2.6.1", // this is anyhow the default...
+		URL:         server,
+		User:        username,
+		Password:    password,
+		IgnoreSSL:   true,
+		Debug:       true,
 	}
 
 	client := Connect(params)

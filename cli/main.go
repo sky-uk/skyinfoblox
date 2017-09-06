@@ -21,9 +21,10 @@ var (
 	/*
 	 * InfoBlox API server
 	 */
-	ibxServer string
-	ibxPort   int
-	debug     bool
+	ibxServer   string
+	ibxPort     int
+	debug       bool
+	wapiVersion string
 
 	/*
 	 * Authentication
@@ -43,6 +44,8 @@ func RegisterCliCommand(name string, flagSet *flag.FlagSet, exec ExecFunc) {
 func InitFlags() {
 	flag.StringVar(&ibxServer, "server", os.Getenv("IBX_SERVER"),
 		"Infoblox API server hostname or address. (Env: IBX_SERVER)")
+	flag.StringVar(&wapiVersion, "wapiVersion", "v2.6.1",
+		"WAPI version (defaults to v2.6.1)")
 	flag.IntVar(&ibxPort, "port", 443,
 		"Infoblox API server port. Default:443")
 	flag.StringVar(&ibxUsername, "username", os.Getenv("IBX_USERNAME"),
