@@ -5,10 +5,16 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/dnsview"
+	"os"
 )
 
 func deleteDNSView(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	ref := flagSet.Lookup("ref").Value.String()
+
+	if ref == "" {
+		fmt.Printf("\nError ref argument required\n")
+		os.Exit(1)
+	}
 
 	deleteDNSViewAPI := dnsview.NewDelete(ref)
 	err := client.Do(deleteDNSViewAPI)
