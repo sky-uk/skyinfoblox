@@ -5,12 +5,18 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"github.com/sky-uk/skyinfoblox/api/dnsview"
+	"os"
 )
 
 func createDNSView(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	var dnsView dnsview.DNSView
 	name := flagSet.Lookup("name").Value.String()
 	comment := flagSet.Lookup("comment").Value.String()
+
+	if name == "" {
+		fmt.Printf("\nError name argument is required\n")
+		os.Exit(1)
+	}
 
 	dnsView.Name = name
 	dnsView.Comment = comment
