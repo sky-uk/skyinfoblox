@@ -66,45 +66,46 @@ type DnsResponseRateLimiting struct {
 	Slip               uint  `json:"slip,omitempty"`
 	Window             uint  `json:"window,omitempty"`
 }
+
 // DnsScavengingSettings : The DNS scavenging settings object provides information about scavenging configuration e.g. conditions under which records can be scavenged, periodicity of scavenging operations.
 type DnsScavengingSettings struct {
-	EaExpressionList []ExpressionOperand `json:"ea_expression_list,omitempty"`
-	EnableAutoReclamation            *bool `json:"enable_auto_reclamation,omitempty"`
-	EnableRecurrentScavenging            *bool `json:"enable_recurrent_scavenging,omitempty"`
-	EnableRRLastQueried            *bool `json:"enable_rr_last_queried,omitempty"`
-	EnableScavenging            *bool `json:"enable_scavenging,omitempty"`
-	EnableZoneLastQueried            *bool `json:"enable_zone_last_queried,omitempty"`
-	ExpressionList           []ExpressionOperand `json:"expression_list,omitempty"`
-	ReclaimAssociatedRecords *bool `json:"reclaim_associated_records,omitempty"`
-	ScavengingSchedule ScheduleSetting `json:"scavenging_schedule,omitempty"`
+	EaExpressionList          []ExpressionOperand `json:"ea_expression_list,omitempty"`
+	EnableAutoReclamation     *bool               `json:"enable_auto_reclamation,omitempty"`
+	EnableRecurrentScavenging *bool               `json:"enable_recurrent_scavenging,omitempty"`
+	EnableRRLastQueried       *bool               `json:"enable_rr_last_queried,omitempty"`
+	EnableScavenging          *bool               `json:"enable_scavenging,omitempty"`
+	EnableZoneLastQueried     *bool               `json:"enable_zone_last_queried,omitempty"`
+	ExpressionList            []ExpressionOperand `json:"expression_list,omitempty"`
+	ReclaimAssociatedRecords  *bool               `json:"reclaim_associated_records,omitempty"`
+	ScavengingSchedule        ScheduleSetting     `json:"scavenging_schedule,omitempty"`
 }
 
 // ExtensibleAttributeExpressionOperand : The extensible attribute expression operand structure is used to build an extensible attribute expression lists. The allowed values for the expression operand structure depend on the object they appear to be a part of.
 type ExpressionOperand struct {
-	Op string `json:"op,omitempty"`
-	Op1 string `json:"op1,omitempty"`
+	Op      string `json:"op,omitempty"`
+	Op1     string `json:"op1,omitempty"`
 	Op1Type string `json:"op1_type,omitempty"`
-	Op2 string `json:"op2,omitempty"`
+	Op2     string `json:"op2,omitempty"`
 	Op2Type string `json:"op2_type,omitempty"`
 }
 
 // ScheduleSetting : This struct contains information about scheduling settings.
 type ScheduleSetting struct {
-	DayOfMonth uint `json:"day_of_month,omitempty"`
-	Disable *bool `json:"disable,omitempty"`
-	Every uint `json:"every,omitempty"`
-	Frequency string `json:"frequency,omitempty"`
-	HourOfDay uint `json:"hour_of_day,omitempty"`
-	MinutesPastHour uint `json:"minutes_past_hour,omitempty"`
-	Month uint `json:"month,omitempty"`
-	Repeat string `json:"repeat,omitempty"`
-	TimeZone string `json:"time_zone,omitempty"`
-	Weekdays []string `json:"weekdays,omitempty"`
-	Year uint `json:"year,omitempty"`
+	DayOfMonth      uint     `json:"day_of_month,omitempty"`
+	Disable         *bool    `json:"disable,omitempty"`
+	Every           uint     `json:"every,omitempty"`
+	Frequency       string   `json:"frequency,omitempty"`
+	HourOfDay       uint     `json:"hour_of_day,omitempty"`
+	MinutesPastHour uint     `json:"minutes_past_hour,omitempty"`
+	Month           uint     `json:"month,omitempty"`
+	Repeat          string   `json:"repeat,omitempty"`
+	TimeZone        string   `json:"time_zone,omitempty"`
+	Weekdays        []string `json:"weekdays,omitempty"`
+	Year            uint     `json:"year,omitempty"`
 }
 
 // DnsSortlist : A sortlist defines the order of IP addresses listed in responses sent to DNS queries.
 type DnsSortlist struct {
-	Address string `json:"address,omitempty"`
+	Address   string   `json:"address,omitempty"`
 	MatchList []string `json:"match_list,omitempty"`
 }
