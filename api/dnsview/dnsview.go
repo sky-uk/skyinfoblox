@@ -15,7 +15,7 @@ func NewCreate(dnsView DNSView) *api.BaseAPI {
 //NewUpdate : used to update an existing DNSView object
 func NewUpdate(dnsView DNSView, returnFieldList []string) *api.BaseAPI {
 	reference := dnsView.Reference + "?_return_fields=" + strings.Join(returnFieldList, ",")
-	createDNSViewAPI := api.NewBaseAPI(http.MethodPut, wapiVersion+dnsViewEndpoint+reference, dnsView, new(DNSView))
+	createDNSViewAPI := api.NewBaseAPI(http.MethodPut, wapiVersion+reference, dnsView, new(DNSView))
 	return createDNSViewAPI
 }
 
@@ -28,12 +28,12 @@ func NewGetAll() *api.BaseAPI {
 //NewGet : used to retrieve a DNSView object
 func NewGet(reference string, returnFieldList []string) *api.BaseAPI {
 	reference += "?_return_fields=" + strings.Join(returnFieldList, ",")
-	getDNSViewAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+dnsViewEndpoint+reference, nil, new(DNSView))
+	getDNSViewAPI := api.NewBaseAPI(http.MethodGet, wapiVersion+reference, nil, new(DNSView))
 	return getDNSViewAPI
 }
 
 //NewDelete : used to delete a DNSView object
 func NewDelete(reference string) *api.BaseAPI {
-	deleteDNSViewAPI := api.NewBaseAPI(http.MethodDelete, wapiVersion+dnsViewEndpoint+reference, nil, new(string))
+	deleteDNSViewAPI := api.NewBaseAPI(http.MethodDelete, wapiVersion+reference, nil, new(string))
 	return deleteDNSViewAPI
 }
