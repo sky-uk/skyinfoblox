@@ -6,6 +6,7 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/common"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -119,12 +120,18 @@ func (client Client) Delete(objRef string) (string, error) {
 // Read - reads an object given its reference id
 // The pointer to the object is passed as input param
 // returns an error (nil in case of success)
-func (client Client) Read(objRef string, obj interface{}) error {
+func (client Client) Read(objRef string, returnFields []string, obj interface{}) error {
 	var errStruct common.ErrorStruct
+
+	queryStr := wapiEndpoint + client.version + "/" + objRef
+
+	if len(returnFields) > 0 {
+		queryStr += "?_return_fields=" + strings.Join(returnFields, ",")
+	}
 
 	restAPI := rest.NewBaseAPI(
 		http.MethodGet,
-		wapiEndpoint+client.version+"/"+objRef,
+		queryStr,
 		nil,
 		&obj,
 		&errStruct,

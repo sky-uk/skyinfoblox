@@ -62,6 +62,7 @@ func TestAllAPI(t *testing.T) {
 	//adminGroup["name"] = "test"
 	adminRole := make(map[string]interface{})
 	adminRole["name"] = "test" + strconv.Itoa(rand.Intn(1000))
+	adminRole["comment"] = "An initial comment"
 
 	// creating an object...
 	refObj, err := client.Create("adminrole", adminRole)
@@ -73,7 +74,7 @@ func TestAllAPI(t *testing.T) {
 
 	//reading the object...
 	role := make(map[string]interface{})
-	err = client.Read(refObj, &role)
+	err = client.Read(refObj, []string{"comment"}, &role)
 	if err != nil {
 		t.Fatal("Error reading object with ref: ", refObj)
 	}
@@ -81,7 +82,7 @@ func TestAllAPI(t *testing.T) {
 
 	//reading the object as struct...
 	var roleObj model.AdminRole
-	err = client.Read(refObj, &roleObj)
+	err = client.Read(refObj, []string{"comment"}, &roleObj)
 	if err != nil {
 		t.Fatal("Error reading object with ref: ", refObj)
 	}
@@ -103,7 +104,7 @@ func TestAllAPI(t *testing.T) {
 	t.Logf("Object %s updated\n", updatedRefObj)
 
 	// getting the updated object and chedking for the comment...
-	err = client.Read(updatedRefObj, &role)
+	err = client.Read(updatedRefObj, []string{"comment"}, &role)
 	if err != nil {
 		t.Fatal("Error reading object with ref: ", updatedRefObj)
 	}
