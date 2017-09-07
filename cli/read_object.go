@@ -5,11 +5,18 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"os"
+	"strings"
 )
 
 func readObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 
 	ref := flagSet.Lookup("ref").Value.String()
+	returnFields := flagSet.Lookup("return-fields").Value.String()
+
+	var fieldsList []string
+	if len(returnFields) > 0 {
+		fieldsList = strings.Split(returnFields, ",")
+	}
 
 	if ref == "" {
 		fmt.Printf("\nError: object reference is required [Usage: -ref <object reference>]\n")
@@ -32,7 +39,7 @@ func readObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 	ibxClient := skyinfoblox.Connect(params)
 
 	obj := make(map[string]interface{})
-	err := ibxClient.Read(ref, &obj)
+	err := ibxClient.Read(ref, fieldsList, &obj)
 	if err != nil {
 		fmt.Printf("Error reading reference %s, error: %s\n", ref, err)
 		os.Exit(1)
@@ -43,5 +50,6 @@ func readObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 func init() {
 	readObjectFlags := flag.NewFlagSet("read-object", flag.ExitOnError)
 	readObjectFlags.String("ref", "", "usage: -ref <object reference>")
+	readObjectFlags.String("return-fields", "", "usage: -return-fields <a comma-separated list of fields>")
 	RegisterCliCommand("read-object", readObjectFlags, readObject)
 }
