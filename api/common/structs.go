@@ -108,6 +108,7 @@ type ScheduleSetting struct {
 type DNSSortlist struct {
 	Address   string   `json:"address,omitempty"`
 	MatchList []string `json:"match_list,omitempty"`
+}
 
 // DHCPMember : Grid member serving DHCP
 type DHCPMember struct {
