@@ -1,7 +1,7 @@
 # skyinfoblox - Go library for the Infoblox appliance
 
-This is the GoLang API wrapper for Infoblox. This is currently used for building terraform provider for the same.
-This package is based on the Infoblox WAPI library version 2.3.1.
+This is the GoLang API wrapper for Infoblox. This is currently used for building terraform provider for the same appliance.
+This package is based on the Infoblox WAPI library version v2.6.1.
 Wapi library documentation can be accessed here:
 
 https://h1infoblox.devops.int.ovp.bskyb.com/wapidoc/index.html
