@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"os"
+	"sort"
 )
 
 func readAllObjects(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
@@ -38,6 +39,7 @@ func readAllObjects(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 			keys[i] = k
 			i++
 		}
+		sort.Strings(keys)
 		PrettyPrintMany(keys, objs)
 	} else {
 		fmt.Println("No objects found!")
