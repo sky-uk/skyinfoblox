@@ -194,4 +194,25 @@ func TestAllAPI(t *testing.T) {
 	}
 	assert.NotEmpty(t, refObj)
 	t.Log("Object deleted, REFOBJ: ", refObj)
+
+	// now creating and reading a user to check
+	// control on attributes
+	newUser := make(map[string]interface{})
+	newUser["name"] = "user_" + strconv.Itoa(rand.Intn(1000))
+	newUser["password"] = "foooooo" // at least 4 chars...
+	newUser["comment"] = "test user for attributes check"
+	newUser["admin_groups"] = []string{"APP-OVP-INFOBLOX-READONLY"}
+	newUserRef, err := client.Create("adminuser", newUser)
+	if err != nil {
+		t.Fatal("Error creating an adminuser object")
+	}
+	// now we try to read the password (which is forbidden)
+	user := make(map[string]interface{})
+	err = client.Read(newUserRef, []string{"name", "password"}, &user)
+	if err != nil {
+		t.Fatal("Error reading an adminuser object")
+	}
+	assert.Equal(t, 2, len(user))
+	assert.Equal(t, newUserRef, user["_ref"])
+	assert.Equal(t, newUser["name"], user["name"])
 }
