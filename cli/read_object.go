@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func readObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func readObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 
 	ref := flagSet.Lookup("ref").Value.String()
 	returnFields := flagSet.Lookup("return-fields").Value.String()
@@ -27,19 +27,8 @@ func readObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Println("Reference to be read ", ref)
 	}
 
-	params := skyinfoblox.Params{
-		WapiVersion: wapiVersion,
-		URL:         ibxServer,
-		User:        ibxUsername,
-		Password:    ibxPassword,
-		IgnoreSSL:   true,
-		Debug:       debug,
-	}
-
-	ibxClient := skyinfoblox.Connect(params)
-
 	obj := make(map[string]interface{})
-	err := ibxClient.Read(ref, fieldsList, &obj)
+	err := client.Read(ref, fieldsList, &obj)
 	if err != nil {
 		fmt.Printf("Error reading reference %s, error: %s\n", ref, err)
 		os.Exit(1)
