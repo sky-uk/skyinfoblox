@@ -88,7 +88,6 @@ func TestGetObjectSchema(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	log.Println("Schema:\n", schema)
 }
 
 func TestGetObjectTypeFromRef(t *testing.T) {
