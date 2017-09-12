@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/sky-uk/skyinfoblox/api/common/v261/model"
 	"github.com/stretchr/testify/assert"
-	"log"
 	"math/rand"
 	"os"
 	"strconv"
