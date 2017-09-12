@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func updateObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func updateObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 
 	ref := flagSet.Lookup("ref").Value.String()
 	objFile := flagSet.Lookup("profile").Value.String()
@@ -40,18 +40,7 @@ func updateObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Printf("Object as Map:\n%+v\n", objAsMap)
 	}
 
-	params := skyinfoblox.Params{
-		WapiVersion: wapiVersion,
-		URL:         ibxServer,
-		User:        ibxUsername,
-		Password:    ibxPassword,
-		IgnoreSSL:   true,
-		Debug:       debug,
-	}
-
-	ibxClient := skyinfoblox.Connect(params)
-
-	ref, err = ibxClient.Update(ref, objAsMap)
+	ref, err = client.Update(ref, objAsMap)
 	if err != nil {
 		fmt.Printf("Error updating object with reference %s, error: %s", ref, err)
 		os.Exit(1)

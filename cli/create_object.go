@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func createObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func createObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 
 	objType := flagSet.Lookup("type").Value.String()
 	objFile := flagSet.Lookup("profile").Value.String()
@@ -40,20 +40,10 @@ func createObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Printf("Object as Map:\n%+v\n", objAsMap)
 	}
 
-	params := skyinfoblox.Params{
-		WapiVersion: wapiVersion,
-		URL:         ibxServer,
-		User:        ibxUsername,
-		Password:    ibxPassword,
-		IgnoreSSL:   true,
-		Debug:       debug,
-	}
-
-	ibxClient := skyinfoblox.Connect(params)
-
-	ref, err := ibxClient.Create(objType, objAsMap)
+	ref, err := client.Create(objType, objAsMap)
 	if err != nil {
-		fmt.Printf("Error creating a %s object, error: %s", objType, err)
+		fmt.Printf("Error creating a %s object, error: %s\n", objType, err)
+
 		os.Exit(1)
 	}
 

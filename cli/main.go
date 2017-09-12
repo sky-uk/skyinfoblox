@@ -9,7 +9,7 @@ import (
 )
 
 // ExecFunc executes the function for cli.
-type ExecFunc func(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet)
+type ExecFunc func(client *skyinfoblox.Client, flagSet *flag.FlagSet)
 
 // Command struct - defines a cli command with flags and exec
 type Command struct {
@@ -88,7 +88,15 @@ func main() {
 	flagSet := cmd.flagSet
 	flagSet.Parse(flag.Args()[1:])
 
-	client := skyinfoblox.NewInfobloxClient(ibxServer, ibxUsername, ibxPassword, true, debug)
+	params := skyinfoblox.Params{
+		WapiVersion: wapiVersion,
+		URL:         ibxServer,
+		User:        ibxUsername,
+		Password:    ibxPassword,
+		IgnoreSSL:   true,
+		Debug:       debug,
+	}
 
-	cmd.exec(client, flagSet)
+	ibxClient := skyinfoblox.Connect(params)
+	cmd.exec(ibxClient, flagSet)
 }

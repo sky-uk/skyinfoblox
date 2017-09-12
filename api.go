@@ -79,7 +79,7 @@ func (client Client) Create(objType string, profile interface{}) (string, error)
 	}
 
 	if errStruct.Error != "" {
-		log.Printf("Error creating object %s, Error: %s, code: %s, text: %s",
+		log.Printf("Error creating object %s, Error: %s, code: %s, text: %s\n",
 			objType, errStruct.Error, errStruct.Code, errStruct.Text)
 		return "", errors.New(errStruct.Error)
 	}

@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func deleteObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func deleteObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 
 	ref := flagSet.Lookup("ref").Value.String()
 
@@ -20,18 +20,7 @@ func deleteObject(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		fmt.Println("Reference to be deleted: ", ref)
 	}
 
-	params := skyinfoblox.Params{
-		WapiVersion: wapiVersion,
-		URL:         ibxServer,
-		User:        ibxUsername,
-		Password:    ibxPassword,
-		IgnoreSSL:   true,
-		Debug:       debug,
-	}
-
-	ibxClient := skyinfoblox.Connect(params)
-
-	ref, err := ibxClient.Delete(ref)
+	ref, err := client.Delete(ref)
 	if err != nil {
 		fmt.Printf("Error deleting reference %s, error: %s\n", ref, err)
 		os.Exit(1)

@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"github.com/sky-uk/skyinfoblox"
 	"os"
+	"sort"
 )
 
-func readAllObjects(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
+func readAllObjects(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 
 	objType := flagSet.Lookup("type").Value.String()
 
@@ -16,17 +17,7 @@ func readAllObjects(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
-	params := skyinfoblox.Params{
-		WapiVersion: wapiVersion,
-		URL:         ibxServer,
-		User:        ibxUsername,
-		Password:    ibxPassword,
-		IgnoreSSL:   true,
-		Debug:       debug,
-	}
-
-	ibxClient := skyinfoblox.Connect(params)
-	objs, err := ibxClient.ReadAll(objType)
+	objs, err := client.ReadAll(objType)
 	if err != nil {
 		fmt.Printf("Error reading objects of type %s, error: %s\n", objType, err)
 		os.Exit(1)
@@ -38,6 +29,7 @@ func readAllObjects(client *skyinfoblox.InfobloxClient, flagSet *flag.FlagSet) {
 			keys[i] = k
 			i++
 		}
+		sort.Strings(keys)
 		PrettyPrintMany(keys, objs)
 	} else {
 		fmt.Println("No objects found!")
