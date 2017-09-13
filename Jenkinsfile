@@ -65,9 +65,10 @@ slackHelper.notificationWrapper(slackChannel, currentBuild, env, true) {
                 stage 'test'
                 inContainer {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'INFOBLOX_CREDENTIALS', usernameVariable: 'INFOBLOX_USERNAME', passwordVariable: 'INFOBLOX_PASSWORD']]) {
-                    env.INFOBLOX_ALLOW_UNVERIFIED_SSL=true
-                    env.INFOBLOX_CLIENT_DEBUG=true
-                    goHelper.goTest(project_src_path)
+                        env.INFOBLOX_ALLOW_UNVERIFIED_SSL=true
+                        env.INFOBLOX_CLIENT_DEBUG=true
+                        goHelper.goTest(project_src_path)
+                    }
                 }
 
                 stage 'coverage'
