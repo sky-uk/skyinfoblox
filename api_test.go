@@ -77,18 +77,6 @@ func TestGetValidKeys(t *testing.T) {
 	assert.Equal(t, 10, len(validKeysWhileUpdating))
 }
 
-func TestGetObjectSchema(t *testing.T) {
-	client, err := getClient()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	schema, err := client.GetObjectSchema("adminuser")
-	if err != nil {
-		t.Fatal(err)
-	}
-}
-
 func TestGetObjectTypeFromRef(t *testing.T) {
 	ref := "adminrole/b25lLnJvbGUkdGVzdDQ2Mw:test463"
 	objType := GetObjectTypeFromRef(ref)
