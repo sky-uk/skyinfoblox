@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/sky-uk/go-rest-api"
 	"github.com/sky-uk/skyinfoblox/api/common"
+	"github.com/sky-uk/skyinfoblox/api/common/v261/model"
 	"log"
 	"net/http"
 	"strings"
@@ -74,8 +75,7 @@ func (client Client) Create(objType string, profile interface{}) (string, error)
 	var errStruct common.ErrorStruct
 
 	if profile, ok := profile.(map[string]interface{}); ok {
-		validKeys := client.GetValidKeys(objType, []string{"w"})
-		profile = FilterProfileKeys(profile, validKeys)
+		client.FilterProfileAttrs(objType, profile, []string{"w"})
 	}
 
 	restAPI := rest.NewBaseAPI(
@@ -208,8 +208,7 @@ func (client Client) Update(objRef string, newProfile interface{}) (string, erro
 
 	if newProfile, ok := newProfile.(map[string]interface{}); ok {
 		objType := GetObjectTypeFromRef(objRef)
-		validKeys := client.GetValidKeys(objType, []string{"u"})
-		newProfile = FilterProfileKeys(newProfile, validKeys)
+		client.FilterProfileAttrs(objType, newProfile, []string{"u"})
 	}
 
 	restAPI := rest.NewBaseAPI(
@@ -233,6 +232,92 @@ func (client Client) Update(objRef string, newProfile interface{}) (string, erro
 	}
 
 	return updatedObjRef, nil
+}
+
+/*
+FilterProfileAttrs - filters out profile attributes
+Workflow:
+  - as the object can have nested structs, we need to proceed in this way:
+  - we have the object type
+  - we get the object schema
+  - for each schema attr we get:
+      - the type(s)
+      - the authentication rules
+      - the is_array boolean flag
+  - we also have a global map of schemas for structs in the model package
+  SO:
+  - for each object attr:
+    - for each attribute type
+      - if type is not in global struct map
+        - delete attribute from profile if not valid
+      - else (it's a struct, we have hence metadata for it from model...):
+        - if is_array:
+          - for each array item (needs to have a pointer to the struct):
+            - for each attr in item:
+              - delete from item if not valid
+------------------------------------------------------------------------------*/
+func (client Client) FilterProfileAttrs(objType string, profile map[string]interface{}, filter []string) {
+
+	log.Println("Filtering profile:\n", profile)
+
+	structsAttrData := model.StructAttrs()
+
+	schema, err := client.GetObjectSchema(objType)
+	if err != nil {
+		log.Printf("Error getting schema for object %s, error: %+v\n", objType, err)
+	}
+	fields := schema["fields"].([]interface{})
+	for _, field := range fields {
+		log.Println("Analizing field: ", field)
+		fieldAsMap := field.(map[string]interface{})
+		if profileItem, found := profile[fieldAsMap["name"].(string)]; found {
+			for _, attrType := range fieldAsMap["type"].([]interface{}) {
+				if structData, found := structsAttrData[attrType.(string)]; found {
+					log.Println("Type is a struct", attrType)
+					log.Println("Struct metadata:\n", structData)
+					// attribute is a struct...
+					if fieldAsMap["is_array"].(bool) == true {
+						for _, item := range profileItem.([]map[string]interface{}) {
+							filterStruct(item, structData.(map[string]model.SchemaAttr), filter)
+						}
+					}
+				} else {
+					// attribute is a scalar...
+					filterAttr(profile, fieldAsMap, filter)
+				}
+			}
+		} else {
+			log.Printf("Attribute %s not defined in profile\n", fieldAsMap["name"].(string))
+		}
+	}
+}
+
+func filterStruct(item map[string]interface{}, attrData map[string]model.SchemaAttr, filter []string) {
+	for attr := range item {
+		valid := false
+		for _, operation := range filter {
+			if strings.Contains(attrData[attr].Supports, operation) {
+				valid = true
+				break
+			}
+		}
+		if valid == false {
+			delete(item, attr)
+		}
+	}
+}
+
+func filterAttr(item map[string]interface{}, attrData map[string]interface{}, filter []string) {
+	valid := false
+	for _, operation := range filter {
+		if strings.Contains(attrData["supports"].(string), operation) {
+			valid = true
+			break
+		}
+	}
+	if valid == false {
+		delete(item, attrData["name"].(string))
+	}
 }
 
 // GetValidKeys - retrieves the list of valid keys for the performed operation

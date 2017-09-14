@@ -201,4 +201,45 @@ func TestAllAPI(t *testing.T) {
 	assert.Equal(t, 2, len(user))
 	assert.Equal(t, newUserRef, user["_ref"])
 	assert.Equal(t, newUser["name"], user["name"])
+
+	refObj, err = client.Delete(newUserRef)
+	if err != nil {
+		t.Fatal("Error deleting an adminuser object")
+	}
+}
+
+func TestNestedStructures(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	client, err := getClient()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	delegateToField := map[string]interface{}{
+		"stealth":           false,
+		"tsig_key_alg":      "HMAC-MD5",
+		"use_tsig_key_name": false,
+		"address":           "192.168.100.1",
+		"name":              "ns1.example.com",
+		"shared_with_ms_parent_delegation": false,
+	}
+
+	nsGroupDelegation := map[string]interface{}{
+		"comment":     "Infoblox Terraform Acceptance test",
+		"name":        "acctest-infoblox-ns-group-delegation-" + strconv.Itoa(rand.Intn(1000000)),
+		"delegate_to": []map[string]interface{}{delegateToField},
+	}
+
+	// attribute 'shared_with_ms_parent_delegation' should be
+	// filtered while creating this object...
+	refObj, err := client.Create("nsgroup:delegation", nsGroupDelegation)
+	if err != nil {
+		t.Fatal("Error creating a nsgroup:delegation object")
+	}
+	assert.NotEmpty(t, refObj)
+
+	refObj, err = client.Delete(refObj)
+	if err != nil {
+		t.Fatal("Error deleting object")
+	}
 }

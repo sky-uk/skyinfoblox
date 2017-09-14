@@ -1,5 +1,32 @@
 package model
 
+// SchemaAttr - structures' attributes medatadata
+type SchemaAttr struct {
+	Type     string
+	IsArray  bool
+	Supports string
+}
+
+// StructAttrs - Get structure attribute metadata from schema
+// Returns a map with attributes informations taken from schema
+// this is manually compiled as there is no way to get struct schema
+// from Infoblox
+func StructAttrs() map[string]interface{} {
+	s := map[string]interface{}{
+		"extserver": map[string]SchemaAttr{
+			"address": {Type: "string", IsArray: false, Supports: "rwu"},
+			"name":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"shared_with_ms_parent_delegation": {Type: "string", IsArray: false, Supports: "r"},
+			"stealth":                          {Type: "bool", IsArray: false, Supports: "rwu"},
+			"tsig_key":                         {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_alg":                     {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_name":                    {Type: "string", IsArray: false, Supports: "rwu"},
+		},
+	}
+
+	return s
+}
+
 // ExternalServer : external DNS server
 type ExternalServer struct {
 	Address                      string `json:"address"`
