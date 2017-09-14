@@ -1,6 +1,7 @@
 package skyinfoblox
 
 import (
+	"errors"
 	"github.com/sky-uk/skyinfoblox/api/common/v261/model"
 	"github.com/stretchr/testify/assert"
 	"math/rand"
@@ -10,23 +11,20 @@ import (
 	"time"
 )
 
-func TestAllAPI(t *testing.T) {
-
-	rand.Seed(time.Now().UnixNano())
-
+func getClient() (*Client, error) {
 	server, ok := os.LookupEnv("INFOBLOX_SERVER")
 	if ok == false || server == "" {
-		t.Skipf("INFOBLOX_SERVER env var not set")
+		return nil, errors.New("INFOBLOX_SERVER env var not set")
 	}
 
 	username, ok := os.LookupEnv("INFOBLOX_USERNAME")
 	if ok == false {
-		t.Skip("INFOBLOX_USERNAME env var not set")
+		return nil, errors.New("INFOBLOX_USERNAME env var not set")
 	}
 
 	password, ok := os.LookupEnv("INFOBLOX_PASSWORD")
 	if ok == false {
-		t.Skip("INFOBLOX_PASSWORD env var not set")
+		return nil, errors.New("INFOBLOX_PASSWORD env var not set")
 	}
 
 	params := Params{
@@ -39,6 +37,70 @@ func TestAllAPI(t *testing.T) {
 	}
 
 	client := Connect(params)
+
+	return client, nil
+}
+
+func TestFilterProfileKeys(t *testing.T) {
+	adminuser := map[string]interface{}{
+		"name":         "user1",
+		"comment":      "this is a comment",
+		"email":        "exampleuser@domain.internal.com",
+		"admin_groups": []string{"APP-OVP-INFOBLOX-READONLY"},
+		"password":     "c0a6264f0f128d94cd8ef26652e7d9fd",
+	}
+	validProfile := FilterProfileKeys(
+		adminuser,
+		[]string{"name", "comment"},
+	)
+
+	keys := make([]string, 0)
+	for k := range validProfile {
+		keys = append(keys, k)
+	}
+	assert.Equal(t, 2, len(keys))
+	assert.Equal(t, "user1", validProfile["name"])
+	assert.Equal(t, "this is a comment", validProfile["comment"])
+}
+
+func TestGetValidKeys(t *testing.T) {
+	client, err := getClient()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	validKeysWhileReading := client.GetValidKeys("adminuser", []string{"r"})
+	assert.Equal(t, 9, len(validKeysWhileReading))
+	validKeysWhileWriting := client.GetValidKeys("adminuser", []string{"w"})
+	assert.Equal(t, 10, len(validKeysWhileWriting))
+	validKeysWhileUpdating := client.GetValidKeys("adminuser", []string{"u"})
+	assert.Equal(t, 10, len(validKeysWhileUpdating))
+}
+
+func TestGetObjectTypeFromRef(t *testing.T) {
+	ref := "adminrole/b25lLnJvbGUkdGVzdDQ2Mw:test463"
+	objType := GetObjectTypeFromRef(ref)
+	assert.Equal(t, "adminrole", objType)
+}
+
+func TestFilterReturnFields(t *testing.T) {
+	required := []string{"one", "two", "three"}
+	allowed := []string{"one", "three"}
+	filtered := FilterReturnFields(required, allowed)
+	assert.Equal(t, 2, len(filtered))
+	assert.Equal(t, "one", filtered[0])
+	assert.Equal(t, "three", filtered[1])
+
+}
+
+func TestAllAPI(t *testing.T) {
+
+	rand.Seed(time.Now().UnixNano())
+
+	client, err := getClient()
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	// this API works with a defined struct...
 	/*
@@ -118,4 +180,25 @@ func TestAllAPI(t *testing.T) {
 	}
 	assert.NotEmpty(t, refObj)
 	t.Log("Object deleted, REFOBJ: ", refObj)
+
+	// now creating and reading a user to check
+	// control on attributes
+	newUser := make(map[string]interface{})
+	newUser["name"] = "user_" + strconv.Itoa(rand.Intn(1000))
+	newUser["password"] = "foooooo" // at least 4 chars...
+	newUser["comment"] = "test user for attributes check"
+	newUser["admin_groups"] = []string{"APP-OVP-INFOBLOX-READONLY"}
+	newUserRef, err := client.Create("adminuser", newUser)
+	if err != nil {
+		t.Fatal("Error creating an adminuser object")
+	}
+	// now we try to read the password (which is forbidden)
+	user := make(map[string]interface{})
+	err = client.Read(newUserRef, []string{"name", "password"}, &user)
+	if err != nil {
+		t.Fatal("Error reading an adminuser object")
+	}
+	assert.Equal(t, 2, len(user))
+	assert.Equal(t, newUserRef, user["_ref"])
+	assert.Equal(t, newUser["name"], user["name"])
 }
