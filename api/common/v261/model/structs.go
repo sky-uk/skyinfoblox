@@ -22,6 +22,18 @@ func StructAttrs() map[string]interface{} {
 			"tsig_key_alg":                     {Type: "string", IsArray: false, Supports: "rwu"},
 			"tsig_key_name":                    {Type: "string", IsArray: false, Supports: "rwu"},
 		},
+		"addressac": map[string]SchemaAttr{
+			"_struct":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"address":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"permission": {Type: "string", IsArray: false, Supports: "rwu"},
+		},
+		"tsigac": map[string]SchemaAttr{
+			"_struct":           {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key":          {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_alg":      {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_name":     {Type: "string", IsArray: false, Supports: "rwu"},
+			"use_tsig_key_name": {Type: "bool", IsArray: false, Supports: "rwu"},
+		},
 	}
 
 	return s

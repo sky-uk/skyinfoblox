@@ -227,7 +227,7 @@ func TestNestedStructures(t *testing.T) {
 	nsGroupDelegation := map[string]interface{}{
 		"comment":     "Infoblox Terraform Acceptance test",
 		"name":        "acctest-infoblox-ns-group-delegation-" + strconv.Itoa(rand.Intn(1000000)),
-		"delegate_to": []map[string]interface{}{delegateToField},
+		"delegate_to": []interface{}{delegateToField},
 	}
 
 	// attribute 'shared_with_ms_parent_delegation' should be

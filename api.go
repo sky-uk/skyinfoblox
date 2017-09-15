@@ -272,13 +272,26 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 		fieldAsMap := field.(map[string]interface{})
 		if profileItem, found := profile[fieldAsMap["name"].(string)]; found {
 			for _, attrType := range fieldAsMap["type"].([]interface{}) {
+				log.Println("Looking for attribute type: ", attrType)
 				if structData, found := structsAttrData[attrType.(string)]; found {
 					log.Println("Type is a struct", attrType)
 					log.Println("Struct metadata:\n", structData)
+
 					// attribute is a struct...
+
 					if fieldAsMap["is_array"].(bool) == true {
-						for _, item := range profileItem.([]map[string]interface{}) {
-							filterStruct(item, structData.(map[string]model.SchemaAttr), filter)
+						for _, item := range profileItem.([]interface{}) {
+
+							itemAsMap := item.(map[string]interface{})
+
+							if structType, exists := itemAsMap["_struct"]; exists {
+								log.Printf("Struct is of type %s and metadata are for type %s\n", structType, attrType)
+								if structType != attrType {
+									continue
+								}
+							}
+
+							filterStruct(itemAsMap, structData.(map[string]model.SchemaAttr), filter)
 						}
 					}
 				} else {
@@ -293,18 +306,46 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 }
 
 func filterStruct(item map[string]interface{}, attrData map[string]model.SchemaAttr, filter []string) {
+
+	// if purely by chance the param attrData["_struct"] exists, we first check that all attributes
+	// belong to the right struct type...
+	if structType, exists := item["_struct"]; exists {
+		log.Println("_struct exists and is ", structType)
+		log.Println("And my attributes metadata are: \n", attrData)
+		for attr := range item {
+			log.Printf("Looking if attr %s belongs to struct %s..\n", attr, structType)
+			if _, exists := attrData[attr]; exists == false {
+				log.Println("It seems that does not belong...")
+				delete(item, attr)
+			}
+		}
+	}
+
+	log.Printf("Currently my structure is:\n%+v\n", item)
+
 	for attr := range item {
-		valid := false
+		valid := true
 		for _, operation := range filter {
-			if strings.Contains(attrData[attr].Supports, operation) {
-				valid = true
-				break
+			if data, exists := attrData[attr]; exists {
+				if strings.Contains(data.Supports, operation) == false {
+					valid = false
+					break
+				}
 			}
 		}
 		if valid == false {
 			delete(item, attr)
+			return
+		}
+
+		// this to avoid sending empty strings...
+		if attrAsStr, ok := item[attr].(string); ok {
+			if attrAsStr == "" {
+				delete(item, attr)
+			}
 		}
 	}
+	log.Printf("After authorization checking my structure is:\n%+v\n", item)
 }
 
 func filterAttr(item map[string]interface{}, attrData map[string]interface{}, filter []string) {
