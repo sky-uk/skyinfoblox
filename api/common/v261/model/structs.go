@@ -34,6 +34,17 @@ func StructAttrs() map[string]interface{} {
 			"tsig_key_name":     {Type: "string", IsArray: false, Supports: "rwu"},
 			"use_tsig_key_name": {Type: "bool", IsArray: false, Supports: "rwu"},
 		},
+		"setting:scavenging": map[string]SchemaAttr{
+			"ea_expression_list":          {Type: "array", IsArray: true, Supports: "rwu"},
+			"enable_auto_reclamation":     {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_recurrent_scavenging": {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_rr_last_queried":      {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_scavenging":           {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_zone_last_queried":    {Type: "bool", IsArray: false, Supports: "rwu"},
+			"expression_list":             {Type: "array", IsArray: false, Supports: "rwu"},
+			"reclaim_associated_records":  {Type: "bool", IsArray: false, Supports: "rwu"},
+			"scavenging_schedule":         {Type: "SchedulingSetting", IsArray: false, Supports: "rwu"},
+		},
 	}
 
 	return s
