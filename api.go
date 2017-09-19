@@ -7,6 +7,7 @@ import (
 	"github.com/sky-uk/skyinfoblox/api/common/v261/model"
 	"log"
 	"net/http"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -99,6 +100,58 @@ func (client Client) Create(objType string, profile interface{}) (string, error)
 	}
 
 	return objRef, nil
+}
+
+// CreateAndRead - Creates the object and, upon success, reads it back
+// returns the newly create object profile or error otherwise
+func (client Client) CreateAndRead(objType string, profile interface{}) (map[string]interface{}, error) {
+
+	ref, err := client.Create(objType, profile)
+	if err != nil {
+		return nil, err
+	}
+
+	obj := make(map[string]interface{})
+	keys := []string{}
+
+	if profile, ok := profile.(map[string]interface{}); ok {
+		keys = getProfileKeys(profile)
+		err = client.Read(ref, keys, &obj)
+		checkAttrs(profile, obj)
+	} else {
+		err = client.Read(ref, keys, &obj)
+	}
+	return obj, nil
+}
+
+func checkAttrs(src, dest map[string]interface{}) {
+	for key, v := range src {
+		log.Println("Looking for the type of key: ", key)
+		t := reflect.TypeOf(v).Kind()
+		log.Println("Type: ", t)
+		switch t {
+		case reflect.Slice:
+			log.Println("Is an array")
+			srcArray := src[key].([]interface{})
+			dstArray := dest[key].([]interface{})
+			for idx := range srcArray {
+				switch reflect.TypeOf(srcArray[idx]).Kind() {
+				case reflect.Map:
+					checkAttrs(srcArray[idx].(map[string]interface{}), dstArray[idx].(map[string]interface{}))
+				}
+			}
+		case reflect.Map:
+			log.Println("Is a map")
+			checkAttrs(src[key].(map[string]interface{}), dest[key].(map[string]interface{}))
+		}
+		// if key exists in profile but not in the returned object
+		// we assume is Infoblox that hasn't returned the key.....
+		if _, dstExists := dest[key]; dstExists == false {
+			log.Printf("Key %s doesn't exists in dest! Adding with value %+v\n", key, v)
+			dest[key] = v
+		}
+	}
+	log.Println("Returning object:\n", dest)
 }
 
 // Delete - deletes an object
@@ -234,6 +287,26 @@ func (client Client) Update(objRef string, newProfile interface{}) (string, erro
 	return updatedObjRef, nil
 }
 
+// UpdateAndRead - updates an object and returns the updated object back
+func (client Client) UpdateAndRead(objRef string, newProfile interface{}) (map[string]interface{}, error) {
+	newRef, err := client.Update(objRef, newProfile)
+	if err != nil {
+		return nil, err
+	}
+
+	updatedObj := make(map[string]interface{})
+	keys := []string{}
+	if newProfile, ok := newProfile.(map[string]interface{}); ok {
+		keys = getProfileKeys(newProfile)
+		err = client.Read(newRef, keys, &updatedObj)
+		checkAttrs(newProfile, updatedObj)
+	} else {
+		err = client.Read(newRef, keys, &updatedObj)
+	}
+
+	return updatedObj, nil
+}
+
 /*
 FilterProfileAttrs - filters out profile attributes
 Workflow:
@@ -265,6 +338,7 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 	schema, err := client.GetObjectSchema(objType)
 	if err != nil {
 		log.Printf("Error getting schema for object %s, error: %+v\n", objType, err)
+		return
 	}
 	fields := schema["fields"].([]interface{})
 	for _, field := range fields {
@@ -276,9 +350,6 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 				if structData, found := structsAttrData[attrType.(string)]; found {
 					log.Println("Type is a struct", attrType)
 					log.Println("Struct metadata:\n", structData)
-
-					// attribute is a struct...
-
 					if fieldAsMap["is_array"].(bool) == true {
 						for _, item := range profileItem.([]interface{}) {
 
@@ -369,6 +440,7 @@ func (client Client) GetValidKeys(objType string, filter []string) []string {
 	schema, err := client.GetObjectSchema(objType)
 	if err != nil {
 		log.Printf("Error getting schema for object %s, error: %+v\n", objType, err)
+		return validKeys
 	}
 	fields := schema["fields"].([]interface{})
 	for _, field := range fields {
