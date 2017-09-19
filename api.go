@@ -32,7 +32,7 @@ type Params struct {
 	WapiVersion string
 }
 
-// Connect - connects to the Infoblox server...
+// Connect - creates a client object and returns it
 func Connect(params Params) *Client {
 
 	client := new(Client)
@@ -117,9 +117,17 @@ func (client Client) CreateAndRead(objType string, profile interface{}) (map[str
 	if profile, ok := profile.(map[string]interface{}); ok {
 		keys = getProfileKeys(profile)
 		err = client.Read(ref, keys, &obj)
+		if err != nil {
+			log.Println("Error reading object: ", err)
+			return nil, err
+		}
 		checkAttrs(profile, obj)
 	} else {
 		err = client.Read(ref, keys, &obj)
+		if err != nil {
+			log.Println("Error reading object: ", err)
+			return nil, err
+		}
 	}
 	return obj, nil
 }
@@ -145,7 +153,7 @@ func checkAttrs(src, dest map[string]interface{}) {
 			checkAttrs(src[key].(map[string]interface{}), dest[key].(map[string]interface{}))
 		}
 		// if key exists in profile but not in the returned object
-		// we assume is Infoblox that hasn't returned the key.....
+		// we assume it's Infoblox that hasn't returned the key.....
 		if _, dstExists := dest[key]; dstExists == false {
 			log.Printf("Key %s doesn't exists in dest! Adding with value %+v\n", key, v)
 			dest[key] = v

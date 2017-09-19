@@ -4,5 +4,5 @@ package model
 type AdminRole struct {
 	Name    string `json:"name"`
 	Comment string `json:"comment,omitempty"`
-	Disable *bool  `json:"disable,omitempty"`
+	Disable bool   `json:"disable,omitempty"`
 }
