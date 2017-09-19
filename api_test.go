@@ -102,26 +102,7 @@ func TestAllAPI(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// this API works with a defined struct...
-	/*
-		disable := true
-		superUser := false
-
-
-			adminGroup := model.IBXAdminGroup{
-				AccessMethod:   []string{"API"},
-				Comment:        "API Access only",
-				Disable:        &disable,
-				EmailAddresses: []string{"test@example-test.com"},
-				Name:           "test",
-				Roles:          []string{"test-role"},
-				SuperUser:      &superUser,
-			}
-	*/
-
-	// or with a generic map (that matches a given schema...)
-	//adminGroup := make(map[string]interface{})
-	//adminGroup["name"] = "test"
+	// With a generic map (that matches a given schema...)
 	adminRole := make(map[string]interface{})
 	adminRole["name"] = "test" + strconv.Itoa(rand.Intn(1000))
 	adminRole["comment"] = "An initial comment"
@@ -133,6 +114,22 @@ func TestAllAPI(t *testing.T) {
 	}
 	assert.NotEmpty(t, refObj)
 	t.Log("Object created, REFOBJ: ", refObj)
+
+	// ...or with a defined struct...
+	adminGroup := model.AdminGroup{
+		AccessMethod:   []string{"API"},
+		Comment:        "API Access only",
+		Disable:        true,
+		EmailAddresses: []string{"test@example-test.com"},
+		Name:           "test" + strconv.Itoa(rand.Intn(1000)),
+		Roles:          []string{adminRole["name"].(string)},
+		SuperUser:      false,
+	}
+
+	refObj, err = client.Create("admingroup", adminGroup)
+	if err != nil {
+		t.Fatal("Error creating an admingroup object")
+	}
 
 	//reading the object...
 	role := make(map[string]interface{})
@@ -174,7 +171,7 @@ func TestAllAPI(t *testing.T) {
 	assert.Equal(t, "Object updated", role["comment"])
 
 	//deleting the object
-	refObj, err = client.Delete(refObj)
+	refObj, err = client.Delete(updatedRefObj)
 	if err != nil {
 		t.Fatal("Error creating an adminrole object")
 	}
