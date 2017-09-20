@@ -105,7 +105,10 @@ func (restClient *Client) Do(api *BaseAPI) error {
 	}
 
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: restClient.IgnoreSSL},
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: restClient.IgnoreSSL},
+		MaxIdleConns:      10,
+		IdleConnTimeout:   30 * time.Second,
+		DisableKeepAlives: true,
 	}
 
 	httpClient := &http.Client{
@@ -115,7 +118,7 @@ func (restClient *Client) Do(api *BaseAPI) error {
 
 	res, err := httpClient.Do(req)
 	if err != nil {
-		log.Println("ERROR executing request: ", err)
+		log.Println("Error executing request: ", err)
 		return err
 	}
 	defer res.Body.Close()
