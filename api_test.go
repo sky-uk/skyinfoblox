@@ -102,26 +102,7 @@ func TestAllAPI(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// this API works with a defined struct...
-	/*
-		disable := true
-		superUser := false
-
-
-			adminGroup := model.IBXAdminGroup{
-				AccessMethod:   []string{"API"},
-				Comment:        "API Access only",
-				Disable:        &disable,
-				EmailAddresses: []string{"test@example-test.com"},
-				Name:           "test",
-				Roles:          []string{"test-role"},
-				SuperUser:      &superUser,
-			}
-	*/
-
-	// or with a generic map (that matches a given schema...)
-	//adminGroup := make(map[string]interface{})
-	//adminGroup["name"] = "test"
+	// With a generic map (that matches a given schema...)
 	adminRole := make(map[string]interface{})
 	adminRole["name"] = "test" + strconv.Itoa(rand.Intn(1000))
 	adminRole["comment"] = "An initial comment"
@@ -133,6 +114,22 @@ func TestAllAPI(t *testing.T) {
 	}
 	assert.NotEmpty(t, refObj)
 	t.Log("Object created, REFOBJ: ", refObj)
+
+	// ...or with a defined struct...
+	adminGroup := model.AdminGroup{
+		AccessMethod:   []string{"API"},
+		Comment:        "API Access only",
+		Disable:        true,
+		EmailAddresses: []string{"test@example-test.com"},
+		Name:           "test" + strconv.Itoa(rand.Intn(1000)),
+		Roles:          []string{adminRole["name"].(string)},
+		SuperUser:      false,
+	}
+
+	refObj, err = client.Create("admingroup", adminGroup)
+	if err != nil {
+		t.Fatal("Error creating an admingroup object")
+	}
 
 	//reading the object...
 	role := make(map[string]interface{})
@@ -174,7 +171,7 @@ func TestAllAPI(t *testing.T) {
 	assert.Equal(t, "Object updated", role["comment"])
 
 	//deleting the object
-	refObj, err = client.Delete(refObj)
+	refObj, err = client.Delete(updatedRefObj)
 	if err != nil {
 		t.Fatal("Error creating an adminrole object")
 	}
@@ -201,4 +198,45 @@ func TestAllAPI(t *testing.T) {
 	assert.Equal(t, 2, len(user))
 	assert.Equal(t, newUserRef, user["_ref"])
 	assert.Equal(t, newUser["name"], user["name"])
+
+	refObj, err = client.Delete(newUserRef)
+	if err != nil {
+		t.Fatal("Error deleting an adminuser object")
+	}
+}
+
+func TestNestedStructures(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	client, err := getClient()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	delegateToField := map[string]interface{}{
+		"stealth":           false,
+		"tsig_key_alg":      "HMAC-MD5",
+		"use_tsig_key_name": false,
+		"address":           "192.168.100.1",
+		"name":              "ns1.example.com",
+		"shared_with_ms_parent_delegation": false,
+	}
+
+	nsGroupDelegation := map[string]interface{}{
+		"comment":     "Infoblox Terraform Acceptance test",
+		"name":        "acctest-infoblox-ns-group-delegation-" + strconv.Itoa(rand.Intn(1000000)),
+		"delegate_to": []interface{}{delegateToField},
+	}
+
+	// attribute 'shared_with_ms_parent_delegation' should be
+	// filtered while creating this object...
+	refObj, err := client.Create("nsgroup:delegation", nsGroupDelegation)
+	if err != nil {
+		t.Fatal("Error creating a nsgroup:delegation object")
+	}
+	assert.NotEmpty(t, refObj)
+
+	refObj, err = client.Delete(refObj)
+	if err != nil {
+		t.Fatal("Error deleting object")
+	}
 }

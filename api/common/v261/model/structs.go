@@ -1,33 +1,87 @@
 package model
 
+// SchemaAttr - structures' attributes medatadata
+type SchemaAttr struct {
+	Type     string
+	IsArray  bool
+	Supports string
+}
+
+// StructAttrs - Get structure attribute metadata from schema
+// Returns a map with attributes informations taken from schema
+// this is manually compiled as there is no way to get struct schema
+// from Infoblox
+func StructAttrs() map[string]interface{} {
+	s := map[string]interface{}{
+		"extserver": map[string]SchemaAttr{
+			"address": {Type: "string", IsArray: false, Supports: "rwu"},
+			"name":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"shared_with_ms_parent_delegation": {Type: "string", IsArray: false, Supports: "r"},
+			"stealth":                          {Type: "bool", IsArray: false, Supports: "rwu"},
+			"tsig_key":                         {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_alg":                     {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_name":                    {Type: "string", IsArray: false, Supports: "rwu"},
+		},
+		"addressac": map[string]SchemaAttr{
+			"_struct":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"address":    {Type: "string", IsArray: false, Supports: "rwu"},
+			"permission": {Type: "string", IsArray: false, Supports: "rwu"},
+		},
+		"tsigac": map[string]SchemaAttr{
+			"_struct":           {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key":          {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_alg":      {Type: "string", IsArray: false, Supports: "rwu"},
+			"tsig_key_name":     {Type: "string", IsArray: false, Supports: "rwu"},
+			"use_tsig_key_name": {Type: "bool", IsArray: false, Supports: "rwu"},
+		},
+		"setting:scavenging": map[string]SchemaAttr{
+			"ea_expression_list":          {Type: "array", IsArray: true, Supports: "rwu"},
+			"enable_auto_reclamation":     {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_recurrent_scavenging": {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_rr_last_queried":      {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_scavenging":           {Type: "bool", IsArray: false, Supports: "rwu"},
+			"enable_zone_last_queried":    {Type: "bool", IsArray: false, Supports: "rwu"},
+			"expression_list":             {Type: "array", IsArray: false, Supports: "rwu"},
+			"reclaim_associated_records":  {Type: "bool", IsArray: false, Supports: "rwu"},
+			"scavenging_schedule":         {Type: "SchedulingSetting", IsArray: false, Supports: "rwu"},
+		},
+		"zonenameserver": map[string]SchemaAttr{
+			"address":         {Type: "string", IsArray: false, Supports: "rwu"},
+			"auto_create_ptr": {Type: "bool", IsArray: false, Supports: "rwu"},
+		},
+	}
+
+	return s
+}
+
 // ExternalServer : external DNS server
 type ExternalServer struct {
 	Address                      string `json:"address"`
 	Name                         string `json:"name"`
-	SharedWithMSParentDelegation *bool  `json:"shared_with_ms_parent_delegation,omitempty"` //cannot be updated nor written
-	Stealth                      *bool  `json:"stealth,omitempty"`                          //defaults to false
+	SharedWithMSParentDelegation bool   `json:"shared_with_ms_parent_delegation,omitempty"` //cannot be updated nor written
+	Stealth                      bool   `json:"stealth,omitempty"`                          //defaults to false
 	TsigKey                      string `json:"tsig_key,omitempty"`                         //defaults to empty
 	TsigKeyAlg                   string `json:"tsig_key_alg,omitempty"`                     // defaults to HMAC-MD5
 	TsigKeyName                  string `json:"tsig_key_name,omitempty"`                    //defaults to empty
-	UseTsigKeyName               *bool  `json:"use_tsig_key_name,omitempty"`                //defaults to false
+	UseTsigKeyName               bool   `json:"use_tsig_key_name,omitempty"`                //defaults to false
 }
 
 // MemberServer : Grid member struct
 type MemberServer struct {
-	GridReplicate           *bool            `json:"grid_replicate,omitempty"`
-	Lead                    *bool            `json:"lead,omitempty"`
+	GridReplicate           bool             `json:"grid_replicate,omitempty"`
+	Lead                    bool             `json:"lead,omitempty"`
 	Name                    string           `json:"name,omitempty"`
-	EnablePreferedPrimaries *bool            `json:"enable_preferred_primaries,omitempty"`
+	EnablePreferedPrimaries bool             `json:"enable_preferred_primaries,omitempty"`
 	PreferredPrimaries      []ExternalServer `json:"preferred_primaries,omitempty"`
-	Stealth                 *bool            `json:"stealth,omitempty"`
+	Stealth                 bool             `json:"stealth,omitempty"`
 }
 
 // ForwardingMemberServer - used by the zoneforward resource
 type ForwardingMemberServer struct {
 	Name                  string           `json:"name"`
 	ForwardTo             []ExternalServer `json:"forward_to,omitempty"`
-	ForwardersOnly        *bool            `json:"forwarders_only,omitempty"`
-	UseOverrideForwarders *bool            `json:"use_override_forwarders,omitempty"`
+	ForwardersOnly        bool             `json:"forwarders_only,omitempty"`
+	UseOverrideForwarders bool             `json:"use_override_forwarders,omitempty"`
 }
 
 // DHCPMember : Grid member serving DHCP
@@ -41,7 +95,7 @@ type DHCPMember struct {
 type DHCPOption struct {
 	Name        string `json:"name,omitempty"`
 	Num         uint   `json:"num,omitempty"`
-	UseOption   *bool  `json:"use_option,omitempty"`
+	UseOption   bool   `json:"use_option,omitempty"`
 	Value       string `json:"value,omitempty"`
 	VendorClass string `json:"vendor_class,omitempty"`
 }
@@ -55,14 +109,14 @@ type ZoneAssociation struct {
 
 // DNSSecKeyParameters : DNSSec Key Parameters
 type DNSSecKeyParameters struct {
-	EnableKskAutoRollover         *bool                `json:"enable_ksk_auto_rollover,omitempty"`
+	EnableKskAutoRollover         bool                 `json:"enable_ksk_auto_rollover,omitempty"`
 	KskAlgorithm                  string               `json:"ksk_algorithm,omitempty"`
 	KskAlgorithms                 []DNSSecKeyAlgorithm `json:"ksk_algorithms,omitempty"`
-	KskEmailNotificationEnabled   *bool                `json:"ksk_email_notification_enabled,omitempty"`
+	KskEmailNotificationEnabled   bool                 `json:"ksk_email_notification_enabled,omitempty"`
 	KskRollover                   uint                 `json:"ksk_rollover,omitempty"`
 	KskRolloverNotificationConfig string               `json:"ksk_rollover_notification_config,omitempty"`
 	KskSize                       uint                 `json:"ksk_size,omitempty"`
-	KskSnmpNotificationEnabled    *bool                `json:"ksk_snmp_notification_enabled,omitempty"`
+	KskSnmpNotificationEnabled    bool                 `json:"ksk_snmp_notification_enabled,omitempty"`
 	NextSecureType                string               `json:"next_secure_type,omitempty"`
 	NSec3Iterations               uint                 `json:"nsec3_iterations,omitempty"`
 	NSec3SaltMaxLength            uint                 `json:"nsec3_salt_max_length,omitempty"`
@@ -100,7 +154,7 @@ type TsigAC struct {
 	TsigKey        string `json:"tsig_key,omitempty"`
 	TsigKeyAlg     string `json:"tsig_key_alg,omitempty"`
 	TsigKeyName    string `json:"tsig_key_name,omitempty"`
-	UseTsigKeyName *bool  `json:"use_tsig_key_name,omitempty"`
+	UseTsigKeyName bool   `json:"use_tsig_key_name,omitempty"`
 }
 
 // AwsRte53ZoneInfo : Additional information for AWS Route53 zone
@@ -120,7 +174,7 @@ type CloudInformation struct {
 	DelegatedRoot   string     `json:"delegated_root,omitempty"`
 	DelegatedScope  string     `json:"delegated_scope,omitempty"`
 	MGMTPlatform    string     `json:"mgmt_platform,omitempty"`
-	OwnedByAdaptor  *bool      `json:"owned_by_adaptor,omitempty"`
+	OwnedByAdaptor  bool       `json:"owned_by_adaptor,omitempty"`
 	Tenant          string     `json:"tenant,omitempty"`
 	Usage           string     `json:"usage,omitempty"`
 }
@@ -159,11 +213,11 @@ type ADController struct {
 // MSServer : Microsoft DNS server
 type MSServer struct {
 	Address                      string `json:"address,omitempty"`
-	IsMaster                     *bool  `json:"is_master,omitempty"`
+	IsMaster                     bool   `json:"is_master,omitempty"`
 	NSIP                         string `json:"ns_ip,omitempty"`
 	NSName                       string `json:"ns_name,omitempty"`
-	SharedWithMSParentDelegation *bool  `json:"shared_with_ms_parent_delegation,omitempty"`
-	Stealth                      *bool  `json:"stealth,omitempty"`
+	SharedWithMSParentDelegation bool   `json:"shared_with_ms_parent_delegation,omitempty"`
+	Stealth                      bool   `json:"stealth,omitempty"`
 }
 
 // DNSZoneReference : A zone, it's reference and associated FQDN used for finding a zone when getting a list of all zones
@@ -175,20 +229,20 @@ type DNSZoneReference struct {
 // DNSScavengingSettings : Information about DNS Scavenging settings
 type DNSScavengingSettings struct {
 	EAExpressionList          []ExpressionOp  `json:"ea_expression_list,omitempty"`
-	EnableAutoReclamation     *bool           `json:"enable_auto_reclamation,omitempty"`
-	EnableRecurrentScavenging *bool           `json:"enable_recurrent_scavenging,omitempty"`
-	EnableRRLastQueried       *bool           `json:"enable_rr_last_queried,omitempty"`
-	EnableScavenging          *bool           `json:"enable_scavenging,omitempty"`
-	EnableZoneLastQueried     *bool           `json:"enable_zone_last_queried,omitempty"`
+	EnableAutoReclamation     bool            `json:"enable_auto_reclamation,omitempty"`
+	EnableRecurrentScavenging bool            `json:"enable_recurrent_scavenging,omitempty"`
+	EnableRRLastQueried       bool            `json:"enable_rr_last_queried,omitempty"`
+	EnableScavenging          bool            `json:"enable_scavenging,omitempty"`
+	EnableZoneLastQueried     bool            `json:"enable_zone_last_queried,omitempty"`
 	ExpressionList            []ExpressionOp  `json:"expression_list,omitempty"`
-	ReclaimAssociatedRecords  *bool           `json:"reclaim_associated_records,omitempty"`
+	ReclaimAssociatedRecords  bool            `json:"reclaim_associated_records,omitempty"`
 	ScavengingSchedule        ScheduleSetting `json:"scavenging_schedule,omitempty"`
 }
 
 // ScheduleSetting : Schedule settings
 type ScheduleSetting struct {
 	DayOfMonth      uint   `json:"day_of_month,omitempty"`
-	Disable         *bool  `json:"disable,omitempty"`
+	Disable         bool   `json:"disable,omitempty"`
 	Every           uint   `json:"every,omitempty"`
 	Frequency       string `json:"frequency,omitempty"`
 	HourOfDay       uint   `json:"hour_of_day,omitempty"`
@@ -208,4 +262,39 @@ type ExpressionOp struct {
 	OP1Type string `json:"op1_type,omitempty"`
 	OP2     string `json:"op2,omitempty"`
 	OP2Type string `json:"op2_type,omitempty"`
+}
+
+//ZoneNameServer : The Zone Name Server structure provides IP address information for the name server associated with a NS record
+type ZoneNameServer struct {
+	Address                 string `json:"address,omitempty"`
+	AutoCreatePointerRecord bool   `json:"auto_create_ptr,omitempty"`
+}
+
+// DNSSecTrustedKey : This is the the DNSKEY record that holds the KSK as a trust anchor for each zone for which the Grid member returns validated data.
+type DNSSecTrustedKey struct {
+	Algorithim       string `json:"algorithm,omitempty"`
+	FQDN             string `json:"fqdn,omitempty"`
+	Key              string `json:"key,omitempty"`
+	SecureEntryPoint bool   `json:"secure_entry_point,omitempty"`
+}
+
+// FixedRRSetOrderFQDN : A fixed RRset order FQDN contains information about the fixed RRset configuration items.
+type FixedRRSetOrderFQDN struct {
+	FQDN       string `json:"fqdn,omitempty"`
+	RecordType string `json:"record_type,omitempty"`
+}
+
+// DNSResponseRateLimiting : The DNS Response Rate Limiting structure provides information about DNS response rate limiting configuration.
+type DNSResponseRateLimiting struct {
+	EnableRRL          bool `json:"enable_rrl,omitempty"`
+	LogOnly            bool `json:"log_only,omitempty"`
+	ResponsesPerSecond uint `json:"responses_per_second,omitempty"`
+	Slip               uint `json:"slip,omitempty"`
+	Window             uint `json:"window,omitempty"`
+}
+
+// DNSSortlist : A sortlist defines the order of IP addresses listed in responses sent to DNS queries.
+type DNSSortlist struct {
+	Address   string   `json:"address,omitempty"`
+	MatchList []string `json:"match_list,omitempty"`
 }

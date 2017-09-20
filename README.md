@@ -7,7 +7,6 @@ Wapi library documentation can be accessed here:
 https://h1infoblox.devops.int.ovp.bskyb.com/wapidoc/index.html
 
 
-
 ## Run Unit tests
 ```
 make test
@@ -45,7 +44,7 @@ In order to get an API client object first set a list of connnection parameters 
 
 ```
 
-### Creating an object using the API
+### Creating an object
 You can create any object you like setting object profile in a map:
 
 ```
@@ -76,7 +75,7 @@ Or, for a limited selection of objects we directly support, you can use our prov
 
 ```
 
-### Deleting an object with the API
+### Deleting an object
 
 ```
     refObj, err = client.Delete(refObj)
@@ -84,17 +83,38 @@ Or, for a limited selection of objects we directly support, you can use our prov
 
 The Delete() function returns the deleted object reference or an error otherwise
 
-#### Reading an object with the API
+#### Reading an object
 
 ```
     obj := make(map[string]interface{})
     err = client.Read(objRef, []string{<list of attrs you want back>}, &obj)
 ```
 
-### Updating and object with the API
+### Updating an object
 
 ```
     updatedRefObj, err := client.Update(refObj, newObjectProfileAsMap)
+```
+
+### Creating and reading an object
+This function can come handy if you like to get anyhow the created
+object back instead of only its reference.
+It returns the created object as map[string]interface{}
+You can create any object you like setting object profile in a map:
+
+```
+	adminRole := make(map[string]interface{})
+	adminRole["name"] = "a role name"
+	adminRole["comment"] = "An initial comment"
+
+	myObj, err := client.CreateAndRead("adminrole", adminRole)
+```
+
+### Updating and reading an object
+Again this can be handy to get the updated object back
+
+```
+    updatedObj, err := client.UpdateAndRead(refObj, newObjectProfileAsMap)
 ```
 
 
@@ -117,10 +137,12 @@ $ ./skyinfoblox-cli
   -wapiVersion string
     	WAPI version (defaults to v2.6.1) 
   Commands:
+    create-and-read-object
     create-object
     delete-object
     read-all-objects
     read-object
+    update-and-read-object
     update-object
 
 ```
