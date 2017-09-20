@@ -45,7 +45,7 @@ func createAndReadObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 		fmt.Printf("Error creating a %s object, error: %s\n", objType, err)
 		os.Exit(1)
 	}
-	fmt.Printf("\nSuccessfully created object:\n%+v", retObj)
+	PrettyPrintSingle(retObj)
 }
 
 func init() {

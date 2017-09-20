@@ -46,7 +46,7 @@ func updateAndReadObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 		os.Exit(1)
 	}
 
-	fmt.Printf("\nSuccessfully updated object,: %+v\n", newObject)
+	PrettyPrintSingle(newObject)
 }
 
 func init() {
