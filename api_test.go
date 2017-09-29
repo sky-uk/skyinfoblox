@@ -108,12 +108,12 @@ func TestAllAPI(t *testing.T) {
 	adminRole["comment"] = "An initial comment"
 
 	// creating an object...
-	refObj, err := client.Create("adminrole", adminRole)
+	adminRoleObjRef, err := client.Create("adminrole", adminRole)
 	if err != nil {
 		t.Fatal("Error creating an adminrole object")
 	}
-	assert.NotEmpty(t, refObj)
-	t.Log("Object created, REFOBJ: ", refObj)
+	assert.NotEmpty(t, adminRoleObjRef)
+	t.Log("Object created, REFOBJ: ", adminRoleObjRef)
 
 	// ...or with a defined struct...
 	adminGroup := model.AdminGroup{
@@ -126,24 +126,24 @@ func TestAllAPI(t *testing.T) {
 		SuperUser:      false,
 	}
 
-	refObj, err = client.Create("admingroup", adminGroup)
+	adminGroupObjRef, err := client.Create("admingroup", adminGroup)
 	if err != nil {
 		t.Fatal("Error creating an admingroup object")
 	}
 
 	//reading the object...
 	role := make(map[string]interface{})
-	err = client.Read(refObj, []string{"comment"}, &role)
+	err = client.Read(adminRoleObjRef, []string{"comment"}, &role)
 	if err != nil {
-		t.Fatal("Error reading object with ref: ", refObj)
+		t.Fatal("Error reading object with ref: ", adminRoleObjRef)
 	}
 	t.Logf("Object (as map):\n%+v\n", role)
 
 	//reading the object as struct...
 	var roleObj model.AdminRole
-	err = client.Read(refObj, []string{"comment"}, &roleObj)
+	err = client.Read(adminRoleObjRef, []string{"comment"}, &roleObj)
 	if err != nil {
-		t.Fatal("Error reading object with ref: ", refObj)
+		t.Fatal("Error reading object with ref: ", adminRoleObjRef)
 	}
 	t.Logf("Object (as struct):\n%+v\n", roleObj)
 
@@ -156,7 +156,7 @@ func TestAllAPI(t *testing.T) {
 
 	//updating the object...
 	adminRole["comment"] = "Object updated"
-	updatedRefObj, err := client.Update(refObj, adminRole)
+	updatedRefObj, err := client.Update(adminRoleObjRef, adminRole)
 	if err != nil {
 		t.Fatal("Error updating the object")
 	}
@@ -170,10 +170,17 @@ func TestAllAPI(t *testing.T) {
 	t.Log("Updated object comment: ", role["comment"])
 	assert.Equal(t, "Object updated", role["comment"])
 
-	//deleting the object
-	refObj, err = client.Delete(updatedRefObj)
+	//deleting all  objects
+	refObj, err := client.Delete(adminGroupObjRef)
 	if err != nil {
-		t.Fatal("Error creating an adminrole object")
+		t.Fatal("Error deleting object")
+	}
+	assert.NotEmpty(t, refObj)
+	t.Log("Object deleted, REFOBJ: ", refObj)
+
+	refObj, err = client.Delete(adminRoleObjRef)
+	if err != nil {
+		t.Fatal("Error deleting object")
 	}
 	assert.NotEmpty(t, refObj)
 	t.Log("Object deleted, REFOBJ: ", refObj)
