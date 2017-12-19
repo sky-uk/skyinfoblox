@@ -113,7 +113,7 @@ func TestAllAPI(t *testing.T) {
 		t.Fatal("[ERROR] Error creating an adminrole object")
 	}
 	assert.NotEmpty(t, adminRoleObjRef)
-	t.Log("Object created, REFOBJ: ", adminRoleObjRef)
+	t.Log("[DEBUG] Object created, REFOBJ: ", adminRoleObjRef)
 
 	// ...or with a defined struct...
 	adminGroup := model.AdminGroup{

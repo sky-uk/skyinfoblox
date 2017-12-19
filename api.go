@@ -138,7 +138,7 @@ func checkAttrs(src, dest map[string]interface{}) {
 		log.Println("[DEBUG] Type: ", t)
 		switch t {
 		case reflect.Slice:
-			log.Println("Is an array")
+			log.Println("[DEBUG] Is an array")
 			srcArray := src[key].([]interface{})
 			dstArray := dest[key].([]interface{})
 			for idx := range srcArray {
