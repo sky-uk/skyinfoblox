@@ -12,21 +12,21 @@ func deleteObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 	ref := flagSet.Lookup("ref").Value.String()
 
 	if ref == "" {
-		fmt.Printf("\nError: object reference is required [Usage: -ref <object reference>]\n")
+		fmt.Printf("\n[ERROR] Error: object reference is required [Usage: -ref <object reference>]\n")
 		os.Exit(1)
 	}
 
 	if debug == true {
-		fmt.Println("Reference to be deleted: ", ref)
+		fmt.Println("[DEBUG] Reference to be deleted: ", ref)
 	}
 
 	ref, err := client.Delete(ref)
 	if err != nil {
-		fmt.Printf("Error deleting reference %s, error: %s\n", ref, err)
+		fmt.Printf("[ERROR] Error deleting reference %s, error: %s\n", ref, err)
 		os.Exit(1)
 	}
 
-	fmt.Printf("\nSuccessfully delete object reference: %s\n", ref)
+	fmt.Printf("\n[DEBUG] Successfully delete object reference: %s\n", ref)
 }
 
 func init() {

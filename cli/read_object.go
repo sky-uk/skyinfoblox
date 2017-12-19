@@ -19,18 +19,18 @@ func readObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 	}
 
 	if ref == "" {
-		fmt.Printf("\nError: object reference is required [Usage: -ref <object reference>]\n")
+		fmt.Printf("\n[ERROR] Error: object reference is required [Usage: -ref <object reference>]\n")
 		os.Exit(1)
 	}
 
 	if debug == true {
-		fmt.Println("Reference to be read ", ref)
+		fmt.Println("[DEBUG] Reference to be read ", ref)
 	}
 
 	obj := make(map[string]interface{})
 	err := client.Read(ref, fieldsList, &obj)
 	if err != nil {
-		fmt.Printf("Error reading reference %s, error: %s\n", ref, err)
+		fmt.Printf("[ERROR] Error reading reference %s, error: %s\n", ref, err)
 		os.Exit(1)
 	}
 	PrettyPrintSingle(obj)

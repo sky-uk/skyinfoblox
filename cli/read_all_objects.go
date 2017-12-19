@@ -13,13 +13,13 @@ func readAllObjects(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 	objType := flagSet.Lookup("type").Value.String()
 
 	if objType == "" {
-		fmt.Printf("\nError: object type is required [Usage: -type <object type>]\n")
+		fmt.Printf("\n[ERROR] Error: object type is required [Usage: -type <object type>]\n")
 		os.Exit(1)
 	}
 
 	objs, err := client.ReadAll(objType)
 	if err != nil {
-		fmt.Printf("Error reading objects of type %s, error: %s\n", objType, err)
+		fmt.Printf("[ERROR] Error reading objects of type %s, error: %s\n", objType, err)
 		os.Exit(1)
 	}
 	if len(objs) > 0 {
@@ -32,7 +32,7 @@ func readAllObjects(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 		sort.Strings(keys)
 		PrettyPrintMany(keys, objs)
 	} else {
-		fmt.Println("No objects found!")
+		fmt.Println("[DEBUG] No objects found!")
 	}
 }
 
