@@ -89,12 +89,12 @@ func (client Client) Create(objType string, profile interface{}) (string, error)
 
 	err := client.restClient.Do(restAPI)
 	if errStruct.Error != "" {
-		log.Printf("Error creating object %s, Error: %s, code: %s, text: %s\n",
+		log.Printf("[ERROR] Error creating object %s, Error: %s, code: %s, text: %s\n",
 			objType, errStruct.Error, errStruct.Code, errStruct.Text)
 		return "", errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return "", err
 	}
 
@@ -117,14 +117,14 @@ func (client Client) CreateAndRead(objType string, profile interface{}) (map[str
 		keys = getProfileKeys(profile)
 		err = client.Read(ref, keys, &obj)
 		if err != nil {
-			log.Println("Error reading object: ", err)
+			log.Println("[ERROR] Error reading object: ", err)
 			return nil, err
 		}
 		checkAttrs(profile, obj)
 	} else {
 		err = client.Read(ref, keys, &obj)
 		if err != nil {
-			log.Println("Error reading object: ", err)
+			log.Println("[ERROR] Error reading object: ", err)
 			return nil, err
 		}
 	}
@@ -135,7 +135,7 @@ func checkAttrs(src, dest map[string]interface{}) {
 	for key, v := range src {
 		log.Println("Looking for the type of key: ", key)
 		t := reflect.TypeOf(v).Kind()
-		log.Println("Type: ", t)
+		log.Println("[DEBUG] Type: ", t)
 		switch t {
 		case reflect.Slice:
 			log.Println("Is an array")
@@ -148,17 +148,17 @@ func checkAttrs(src, dest map[string]interface{}) {
 				}
 			}
 		case reflect.Map:
-			log.Println("Is a map")
+			log.Println("[DEBUG] Is a map")
 			checkAttrs(src[key].(map[string]interface{}), dest[key].(map[string]interface{}))
 		}
 		// if key exists in profile but not in the returned object
 		// we assume it's Infoblox that hasn't returned the key.....
 		if _, dstExists := dest[key]; dstExists == false {
-			log.Printf("Key %s doesn't exists in dest! Adding with value %+v\n", key, v)
+			log.Printf("[DEBUG] Key %s doesn't exists in dest! Adding with value %+v\n", key, v)
 			dest[key] = v
 		}
 	}
-	log.Println("Returning object:\n", dest)
+	log.Println("[DEBUG] Returning object:\n", dest)
 }
 
 // Delete - deletes an object
@@ -178,12 +178,12 @@ func (client Client) Delete(objRef string) (string, error) {
 
 	err := client.restClient.Do(restAPI)
 	if errStruct.Error != "" {
-		log.Printf("Error deleting object %s, Error: %s, code: %s, text: %s",
+		log.Printf("[ERROR] Error deleting object %s, Error: %s, code: %s, text: %s",
 			objRef, errStruct.Error, errStruct.Code, errStruct.Text)
 		return "", errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return "", err
 	}
 	return objRef, nil
@@ -215,12 +215,12 @@ func (client Client) Read(objRef string, returnFields []string, obj interface{})
 
 	err := client.restClient.Do(restAPI)
 	if errStruct.Error != "" {
-		log.Printf("Error deleting object %s, Error: %s, code: %s, text: %s",
+		log.Printf("[ERROR] Error deleting object %s, Error: %s, code: %s, text: %s",
 			objRef, errStruct.Error, errStruct.Code, errStruct.Text)
 		return errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return err
 	}
 
@@ -242,12 +242,12 @@ func (client Client) ReadAll(objType string) ([]map[string]interface{}, error) {
 
 	err := client.restClient.Do(restAPI)
 	if errStruct.Error != "" {
-		log.Printf("Error reading all objects of type %s, Error: %s, code: %s, text: %s",
+		log.Printf("[ERROR] Error reading all objects of type %s, Error: %s, code: %s, text: %s",
 			objType, errStruct.Error, errStruct.Code, errStruct.Text)
 		return nil, errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return nil, err
 	}
 	return objs, nil
@@ -276,12 +276,12 @@ func (client Client) Update(objRef string, newProfile interface{}) (string, erro
 
 	err := client.restClient.Do(restAPI)
 	if errStruct.Error != "" {
-		log.Printf("Error updating object %s, Error: %s, code: %s, text: %s",
+		log.Printf("[ERROR] Error updating object %s, Error: %s, code: %s, text: %s",
 			objRef, errStruct.Error, errStruct.Code, errStruct.Text)
 		return "", errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return "", err
 	}
 
@@ -338,7 +338,7 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 
 	schema, err := client.GetObjectSchema(objType)
 	if err != nil {
-		log.Printf("Error getting schema for object %s, error: %+v\n", objType, err)
+		log.Printf("[ERROR] Error getting schema for object %s, error: %+v\n", objType, err)
 		return
 	}
 	fields := schema["fields"].([]interface{})
@@ -347,17 +347,17 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 		fieldAsMap := field.(map[string]interface{})
 		if profileItem, found := profile[fieldAsMap["name"].(string)]; found {
 			for _, attrType := range fieldAsMap["type"].([]interface{}) {
-				log.Println("Looking for attribute type: ", attrType)
+				log.Println("[DEBUG] Looking for attribute type: ", attrType)
 				if structData, found := structsAttrData[attrType.(string)]; found {
-					log.Println("Type is a struct", attrType)
-					log.Println("Struct metadata:\n", structData)
+					log.Println("[DEBUG] Type is a struct", attrType)
+					log.Println("[DEBUG] Struct metadata:\n", structData)
 					if fieldAsMap["is_array"].(bool) == true {
 						for _, item := range profileItem.([]interface{}) {
 
 							itemAsMap := item.(map[string]interface{})
 
 							if structType, exists := itemAsMap["_struct"]; exists {
-								log.Printf("Struct is of type %s and metadata are for type %s\n", structType, attrType)
+								log.Printf("[DEBUG] Struct is of type %s and metadata are for type %s\n", structType, attrType)
 								if structType != attrType {
 									continue
 								}
@@ -372,7 +372,7 @@ func (client Client) FilterProfileAttrs(objType string, profile map[string]inter
 				}
 			}
 		} else {
-			log.Printf("Attribute %s not defined in profile\n", fieldAsMap["name"].(string))
+			log.Printf("[DEBUG] Attribute %s not defined in profile\n", fieldAsMap["name"].(string))
 		}
 	}
 }
@@ -382,18 +382,18 @@ func filterStruct(item map[string]interface{}, attrData map[string]model.SchemaA
 	// if purely by chance the param attrData["_struct"] exists, we first check that all attributes
 	// belong to the right struct type...
 	if structType, exists := item["_struct"]; exists {
-		log.Println("_struct exists and is ", structType)
-		log.Println("And my attributes metadata are: \n", attrData)
+		log.Println("[DEBUG] _struct exists and is ", structType)
+		log.Println("[DEBUG] And my attributes metadata are: \n", attrData)
 		for attr := range item {
-			log.Printf("Looking if attr %s belongs to struct %s..\n", attr, structType)
+			log.Printf("[DEBUG] Looking if attr %s belongs to struct %s..\n", attr, structType)
 			if _, exists := attrData[attr]; exists == false {
-				log.Println("It seems that does not belong...")
+				log.Println("[DEBUG] It seems that does not belong...")
 				delete(item, attr)
 			}
 		}
 	}
 
-	log.Printf("Currently my structure is:\n%+v\n", item)
+	log.Printf("[DEBUG] Currently my structure is:\n%+v\n", item)
 
 	for attr := range item {
 		valid := true
@@ -417,7 +417,7 @@ func filterStruct(item map[string]interface{}, attrData map[string]model.SchemaA
 			}
 		}
 	}
-	log.Printf("After authorization checking my structure is:\n%+v\n", item)
+	log.Printf("[DEBUG] After authorization checking my structure is:\n%+v\n", item)
 }
 
 func filterAttr(item map[string]interface{}, attrData map[string]interface{}, filter []string) {
@@ -440,7 +440,7 @@ func (client Client) GetValidKeys(objType string, filter []string) []string {
 	validKeys := []string{}
 	schema, err := client.GetObjectSchema(objType)
 	if err != nil {
-		log.Printf("Error getting schema for object %s, error: %+v\n", objType, err)
+		log.Printf("[ERROR] Error getting schema for object %s, error: %+v\n", objType, err)
 		return validKeys
 	}
 	fields := schema["fields"].([]interface{})
@@ -489,12 +489,12 @@ func (client Client) GetObjectSchema(objType string) (map[string]interface{}, er
 
 	err := client.restClient.Do(api)
 	if errStruct.Error != "" {
-		log.Printf("Error getting schema for object type %s, Error: %s, code: %s, text: %s",
+		log.Printf("[ERROR] Error getting schema for object type %s, Error: %s, code: %s, text: %s",
 			objType, errStruct.Error, errStruct.Code, errStruct.Text)
 		return nil, errors.New(errStruct.Error)
 	}
 	if err != nil {
-		log.Println(err)
+		log.Println("[ERROR] ", err)
 		return nil, err
 	}
 	return schema, nil

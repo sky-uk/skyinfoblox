@@ -14,17 +14,17 @@ import (
 func getClient() (*Client, error) {
 	server, ok := os.LookupEnv("INFOBLOX_SERVER")
 	if ok == false || server == "" {
-		return nil, errors.New("INFOBLOX_SERVER env var not set")
+		return nil, errors.New("[ERROR] INFOBLOX_SERVER env var not set")
 	}
 
 	username, ok := os.LookupEnv("INFOBLOX_USERNAME")
 	if ok == false {
-		return nil, errors.New("INFOBLOX_USERNAME env var not set")
+		return nil, errors.New("[ERROR] INFOBLOX_USERNAME env var not set")
 	}
 
 	password, ok := os.LookupEnv("INFOBLOX_PASSWORD")
 	if ok == false {
-		return nil, errors.New("INFOBLOX_PASSWORD env var not set")
+		return nil, errors.New("[ERROR] INFOBLOX_PASSWORD env var not set")
 	}
 
 	params := Params{
@@ -110,7 +110,7 @@ func TestAllAPI(t *testing.T) {
 	// creating an object...
 	adminRoleObjRef, err := client.Create("adminrole", adminRole)
 	if err != nil {
-		t.Fatal("Error creating an adminrole object")
+		t.Fatal("[ERROR] Error creating an adminrole object")
 	}
 	assert.NotEmpty(t, adminRoleObjRef)
 	t.Log("Object created, REFOBJ: ", adminRoleObjRef)
@@ -128,62 +128,62 @@ func TestAllAPI(t *testing.T) {
 
 	adminGroupObjRef, err := client.Create("admingroup", adminGroup)
 	if err != nil {
-		t.Fatal("Error creating an admingroup object")
+		t.Fatal("[ERROR] Error creating an admingroup object")
 	}
 
 	//reading the object...
 	role := make(map[string]interface{})
 	err = client.Read(adminRoleObjRef, []string{"comment"}, &role)
 	if err != nil {
-		t.Fatal("Error reading object with ref: ", adminRoleObjRef)
+		t.Fatal("[ERROR] Error reading object with ref: ", adminRoleObjRef)
 	}
-	t.Logf("Object (as map):\n%+v\n", role)
+	t.Logf("[DEBUG] Object (as map):\n%+v\n", role)
 
 	//reading the object as struct...
 	var roleObj model.AdminRole
 	err = client.Read(adminRoleObjRef, []string{"comment"}, &roleObj)
 	if err != nil {
-		t.Fatal("Error reading object with ref: ", adminRoleObjRef)
+		t.Fatal("[ERROR] Error reading object with ref: ", adminRoleObjRef)
 	}
-	t.Logf("Object (as struct):\n%+v\n", roleObj)
+	t.Logf("[DEBUG] Object (as struct):\n%+v\n", roleObj)
 
 	//getting all roles...
 	roles, err := client.ReadAll("adminrole")
 	if err != nil {
-		t.Fatal("Error reading all roles")
+		t.Fatal("[ERROR] Error reading all roles")
 	}
-	t.Logf("Objects:\n%+v\n", roles)
+	t.Logf("[DEBUG] Objects:\n%+v\n", roles)
 
 	//updating the object...
 	adminRole["comment"] = "Object updated"
 	updatedRefObj, err := client.Update(adminRoleObjRef, adminRole)
 	if err != nil {
-		t.Fatal("Error updating the object")
+		t.Fatal("[ERROR] Error updating the object")
 	}
-	t.Logf("Object %s updated\n", updatedRefObj)
+	t.Logf("[DEBUG] Object %s updated\n", updatedRefObj)
 
 	// getting the updated object and chedking for the comment...
 	err = client.Read(updatedRefObj, []string{"comment"}, &role)
 	if err != nil {
-		t.Fatal("Error reading object with ref: ", updatedRefObj)
+		t.Fatal("[ERROR] Error reading object with ref: ", updatedRefObj)
 	}
-	t.Log("Updated object comment: ", role["comment"])
+	t.Log("[DEBUG] Updated object comment: ", role["comment"])
 	assert.Equal(t, "Object updated", role["comment"])
 
 	//deleting all  objects
 	refObj, err := client.Delete(adminGroupObjRef)
 	if err != nil {
-		t.Fatal("Error deleting object")
+		t.Fatal("[ERROR] Error deleting object")
 	}
 	assert.NotEmpty(t, refObj)
-	t.Log("Object deleted, REFOBJ: ", refObj)
+	t.Log("[DEBUG] Object deleted, REFOBJ: ", refObj)
 
 	refObj, err = client.Delete(adminRoleObjRef)
 	if err != nil {
-		t.Fatal("Error deleting object")
+		t.Fatal("[ERROR] Error deleting object")
 	}
 	assert.NotEmpty(t, refObj)
-	t.Log("Object deleted, REFOBJ: ", refObj)
+	t.Log("[DEBUG] Object deleted, REFOBJ: ", refObj)
 
 	// now creating and reading a user to check
 	// control on attributes
@@ -194,13 +194,13 @@ func TestAllAPI(t *testing.T) {
 	newUser["admin_groups"] = []string{"APP-OVP-INFOBLOX-READONLY"}
 	newUserRef, err := client.Create("adminuser", newUser)
 	if err != nil {
-		t.Fatal("Error creating an adminuser object")
+		t.Fatal("[ERROR] Error creating an adminuser object")
 	}
 	// now we try to read the password (which is forbidden)
 	user := make(map[string]interface{})
 	err = client.Read(newUserRef, []string{"name", "password"}, &user)
 	if err != nil {
-		t.Fatal("Error reading an adminuser object")
+		t.Fatal("[ERROR] Error reading an adminuser object")
 	}
 	assert.Equal(t, 2, len(user))
 	assert.Equal(t, newUserRef, user["_ref"])
@@ -208,7 +208,7 @@ func TestAllAPI(t *testing.T) {
 
 	refObj, err = client.Delete(newUserRef)
 	if err != nil {
-		t.Fatal("Error deleting an adminuser object")
+		t.Fatal("[ERROR] Error deleting an adminuser object")
 	}
 }
 
@@ -238,12 +238,12 @@ func TestNestedStructures(t *testing.T) {
 	// filtered while creating this object...
 	refObj, err := client.Create("nsgroup:delegation", nsGroupDelegation)
 	if err != nil {
-		t.Fatal("Error creating a nsgroup:delegation object")
+		t.Fatal("[ERROR] Error creating a nsgroup:delegation object")
 	}
 	assert.NotEmpty(t, refObj)
 
 	refObj, err = client.Delete(refObj)
 	if err != nil {
-		t.Fatal("Error deleting object")
+		t.Fatal("[ERROR] Error deleting object")
 	}
 }

@@ -15,12 +15,12 @@ func createAndReadObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 	objFile := flagSet.Lookup("profile").Value.String()
 
 	if objType == "" {
-		fmt.Printf("\nError: object type is required [Usage: -type <object type>]\n")
+		fmt.Printf("\n[ERROR] Error: object type is required [Usage: -type <object type>]\n")
 		os.Exit(1)
 	}
 
 	if objFile == "" {
-		fmt.Printf("\nError: object profile is required [Usage: -profile <a json-encoded file>]\n")
+		fmt.Printf("\n[ERROR] Error: object profile is required [Usage: -profile <a json-encoded file>]\n")
 		os.Exit(1)
 	}
 
@@ -37,12 +37,12 @@ func createAndReadObject(client *skyinfoblox.Client, flagSet *flag.FlagSet) {
 	}
 
 	if debug == true {
-		fmt.Printf("Object as Map:\n%+v\n", objAsMap)
+		fmt.Printf("[DEBUG] Object as Map:\n%+v\n", objAsMap)
 	}
 
 	retObj, err := client.CreateAndRead(objType, objAsMap)
 	if err != nil {
-		fmt.Printf("Error creating a %s object, error: %s\n", objType, err)
+		fmt.Printf("[ERROR] Error creating a %s object, error: %s\n", objType, err)
 		os.Exit(1)
 	}
 	PrettyPrintSingle(retObj)
