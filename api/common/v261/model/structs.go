@@ -150,7 +150,7 @@ type AddressAC struct {
 
 // TsigAC : TSIG key
 type TsigAC struct {
-	StructType     string `json:"_struct,omitemtpy"`
+	StructType     string `json:"_struct,omitempty"`
 	TsigKey        string `json:"tsig_key,omitempty"`
 	TsigKeyAlg     string `json:"tsig_key_alg,omitempty"`
 	TsigKeyName    string `json:"tsig_key_name,omitempty"`
